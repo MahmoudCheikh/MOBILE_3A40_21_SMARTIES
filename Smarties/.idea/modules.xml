@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/KitchenSink.iml" filepath="$PROJECT_DIR$/KitchenSink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cn1libs/GoogleMaps/kitchensink-GoogleMaps.iml" filepath="$PROJECT_DIR$/cn1libs/GoogleMaps/kitchensink-GoogleMaps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cn1libs/kitchensink-cn1libs.iml" filepath="$PROJECT_DIR$/cn1libs/kitchensink-cn1libs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/kitchensink-common.iml" filepath="$PROJECT_DIR$/common/kitchensink-common.iml" />
+    </modules>
+  </component>
+</project>
