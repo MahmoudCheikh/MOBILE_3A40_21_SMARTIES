@@ -1,6 +1,6 @@
 A faire :
 
 creer un fichier ENTITY dans /com.mycompany.entity
-creer
+creer un fichier
 
 
