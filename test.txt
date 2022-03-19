@@ -1,1 +1,6 @@
-test test
+A faire :
+
+creer un fichier ENTITY dans /com.mycompany.entity
+creer
+
+
