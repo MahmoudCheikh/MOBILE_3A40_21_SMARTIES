@@ -74,7 +74,7 @@ public class ProfileForm extends BaseForm {
                     GridLayout.encloseIn(3, 
                             facebook,
                             FlowLayout.encloseCenter(
-                                new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond")),
+                                new Label(res.getImage("event8.jpg"), "PictureWhiteBackgrond")),
                             twitter
                     )
                 )

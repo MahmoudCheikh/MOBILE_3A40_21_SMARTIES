@@ -10,6 +10,6 @@ package com.mycompany.utils;
  * @author PC
  */
 public class PageWeb {
-    public static final String BASE_URL="http://localhost/PI_3A40_21_SMARTIES/pi/public/index.php/";
+    public static final String BASE_URL="http://127.0.0.1:8000";
     
 }

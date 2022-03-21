@@ -5,6 +5,8 @@
  */
 package com.mycompany.entity;
 
+import java.util.Collection;
+
 /**
  *
  * @author PC
@@ -18,7 +20,45 @@ public class Produit {
     private String image;
     private String description;
     private int prix;
-    private String type;  
+    private String type;
+    private Collection<Favoris> favoris ;
+    private Achat achats;
+    private Commande commandes;
+    private Stock stock;
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public Achat getAchats() {
+        return achats;
+    }
+
+    public void setAchats(Achat achats) {
+        this.achats = achats;
+    }
+
+    public Commande getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(Commande commandes) {
+        this.commandes = commandes;
+    }
+
+    public Collection<Favoris> getFavoris() {
+        return favoris;
+    }
+
+    public void setFavoris(Collection<Favoris> favoris) {
+        this.favoris = favoris;
+    }
+   
+    
     
  //getters & setters
 
@@ -90,6 +130,15 @@ public class Produit {
         this.description = description;
         this.prix = prix;
         this.type = type;
+    }
+
+    public Produit(String libelle, String image, String description, int prix, String type, Favoris favoris) {
+        this.libelle = libelle;
+        this.image = image;
+        this.description = description;
+        this.prix = prix;
+        this.type = type;
+        //this.favoris = favoris;
     }
 
     public Produit() {

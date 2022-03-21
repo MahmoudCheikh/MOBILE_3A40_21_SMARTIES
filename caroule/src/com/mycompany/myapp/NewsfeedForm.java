@@ -109,11 +109,11 @@ public class NewsfeedForm extends BaseForm {
         ButtonGroup barGroup = new ButtonGroup();
         RadioButton all = RadioButton.createToggle("All", barGroup);
         all.setUIID("SelectBar");
-        RadioButton featured = RadioButton.createToggle("Featured", barGroup);
+        RadioButton featured = RadioButton.createToggle("Forum", barGroup);
         featured.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        RadioButton popular = RadioButton.createToggle("Produits", barGroup);
         popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
+        RadioButton myFavorite = RadioButton.createToggle("Evenements", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         

@@ -1,6 +1,12 @@
 A faire :
 
 creer un fichier ENTITY dans /com.mycompany.entity
-creer un fichier
+creer
 
 
+String DateConverter = obj.get("date").toString().substring(obj.get("date").toString().toString().indexOf("timestamp") + 10, obj.get("obj").toString().lastIndexOf("}"));
+ Date currentTime = new Date(Double.valueOf(DateConverter).longValue() * 1000);
+
+SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+String dateString = formatter.format(currentTime);
+event.setDateD(dateString);
