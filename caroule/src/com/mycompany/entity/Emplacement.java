@@ -11,9 +11,26 @@ package com.mycompany.entity;
  */
 public class Emplacement {
     private int id;
-    private int lieu;
+    private String lieu;
     private int capacite;
-    private int Stock;
+    private Stock Stock;
+    private Produit idProduit;
+
+    public Produit getIdProduit() {
+        return idProduit;
+    }
+
+    public void setIdProduit(Produit idProduit) {
+        this.idProduit = idProduit;
+    }
+
+    public Stock getStock() {
+        return Stock;
+    }
+
+    public void setStock(Stock Stock) {
+        this.Stock = Stock;
+    }
 
     public int getId() {
         return id;
@@ -23,11 +40,11 @@ public class Emplacement {
         this.id = id;
     }
 
-    public int getLieu() {
+    public String getLieu() {
         return lieu;
     }
 
-    public void setLieu(int lieu) {
+    public void setLieu(String lieu) {
         this.lieu = lieu;
     }
 
@@ -39,27 +56,26 @@ public class Emplacement {
         this.capacite = capacite;
     }
 
-    public int getStock() {
-        return Stock;
-    }
-
-    public void setStock(int Stock) {
-        this.Stock = Stock;
-    }
-
  //constructeurs
 
-    public Emplacement(int id, int lieu, int capacite, int Stock) {
+    public Emplacement(int id, String lieu, int capacite) {
         this.id = id;
         this.lieu = lieu;
         this.capacite = capacite;
-        this.Stock = Stock;
+
     }
 
-    public Emplacement(int lieu, int capacite, int Stock) {
+    public Emplacement(String lieu, int capacite) {
+        this.lieu = lieu;
+        this.capacite = capacite;
+
+    }
+
+    public Emplacement(String lieu, int capacite, Stock Stock, Produit idProduit) {
         this.lieu = lieu;
         this.capacite = capacite;
         this.Stock = Stock;
+        this.idProduit = idProduit;
     }
 
     public Emplacement() {

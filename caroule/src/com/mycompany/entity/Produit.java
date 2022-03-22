@@ -19,7 +19,7 @@ public class Produit {
     private String libelle;
     private String image;
     private String description;
-    private int prix;
+    private float prix;
     private String type;
     private Collection<Favoris> favoris ;
     private Achat achats;
@@ -62,11 +62,11 @@ public class Produit {
     
  //getters & setters
 
-    public int getPrix() {
+    public float getPrix() {
         return prix;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(float prix) {
         this.prix = prix;
     }
 
@@ -114,7 +114,7 @@ public class Produit {
     
    //constructeurs 
 
-        public Produit(int id, String libelle, String image, String description, int prix, String type) {
+        public Produit(int id, String libelle, String image, String description, float prix, String type) {
         this.id = id;
         this.libelle = libelle;
         this.image = image;
@@ -124,7 +124,7 @@ public class Produit {
     }
         
         
-    public Produit(String libelle, String image, String description, int prix, String type) {
+    public Produit(String libelle, String image, String description, float prix, String type) {
         this.libelle = libelle;
         this.image = image;
         this.description = description;
@@ -132,7 +132,7 @@ public class Produit {
         this.type = type;
     }
 
-    public Produit(String libelle, String image, String description, int prix, String type, Favoris favoris) {
+    public Produit(String libelle, String image, String description, float prix, String type, Favoris favoris) {
         this.libelle = libelle;
         this.image = image;
         this.description = description;
@@ -141,7 +141,18 @@ public class Produit {
         //this.favoris = favoris;
     }
 
+    public Produit(String libelle, String description, String type) {
+        this.libelle = libelle;
+        this.description = description;
+        
+        this.type = type;
+    }
+
     public Produit() {
+    }
+
+    public void setPrix(String prix) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 
