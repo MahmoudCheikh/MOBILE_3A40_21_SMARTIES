@@ -36,6 +36,7 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -115,15 +116,14 @@ public class NewsfeedForm extends BaseForm {
         all.setUIID("SelectBar");
         RadioButton Evenement= RadioButton.createToggle("Evenement", barGroup);
         Evenement.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
+        RadioButton Produit = RadioButton.createToggle("Produit", barGroup);
+        Produit.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
                 GridLayout.encloseIn(4, all,Evenement, Produit, myFavorite),
-                GridLayout.encloseIn(4, all, Evenement, popular, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -135,7 +135,7 @@ public class NewsfeedForm extends BaseForm {
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Evenement, arrow);
-        bindButtonSelection(popular, arrow);
+        bindButtonSelection(Produit, arrow);
         bindButtonSelection(myFavorite, arrow);
         
         // special case for rotation
