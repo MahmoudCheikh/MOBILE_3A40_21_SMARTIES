@@ -18,7 +18,7 @@ import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.mycompany.MyApplication;
+import com.mycompany.myapp.MyApplication;
 import com.mycompany.entity.Evenement;
 import com.mycompany.services.ServiceEvenement;
 /**
