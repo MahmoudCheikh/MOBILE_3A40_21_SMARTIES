@@ -6,6 +6,8 @@
 package com.mycompany.entity;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -94,7 +96,7 @@ public class Evenement {
         return activite;
     }
 
-    public void setActivite(Collection<Activite> activite) {
+    public void setActivite(List<Activite> activite) {
         this.activite = activite;
     }
     
@@ -126,5 +128,5 @@ public class Evenement {
         this.activite = activite;
 
     }
-    
+
 }

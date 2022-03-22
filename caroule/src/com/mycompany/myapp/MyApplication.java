@@ -51,7 +51,7 @@ public class MyApplication {
             current.show();
             return;
         }
-        new AffichageProduit(theme).show();
+        new WalkthruForm(theme).show();
     }
 
     public void stop() {

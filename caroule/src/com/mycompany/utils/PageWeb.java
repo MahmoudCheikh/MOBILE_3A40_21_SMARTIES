@@ -10,10 +10,8 @@ package com.mycompany.utils;
  * @author PC
  */
 public class PageWeb {
-<<<<<<< Updated upstream
-    public static final String BASE_URL="http://127.0.0.1:8000";
-=======
+
     public static final String BASE_URL="http://localhost:81/PI_3A40_21_SMARTIES/pi/public/index.php/";
->>>>>>> Stashed changes
+
     
 }
