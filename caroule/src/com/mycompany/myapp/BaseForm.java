@@ -20,6 +20,7 @@
 package com.mycompany.myapp;
 
 import com.codename1.components.ScaleImageLabel;
+import static com.codename1.io.Log.p;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
@@ -32,6 +33,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+
 
 /**
  * Base class for the forms with common functionality
@@ -87,4 +89,8 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
         tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutProduitForm(res).show());
     }
+}
+        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutEvenementForm(res).show());
+  
+           }
 }

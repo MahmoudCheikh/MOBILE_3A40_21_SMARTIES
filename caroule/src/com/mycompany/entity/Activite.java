@@ -52,13 +52,17 @@ public class Activite {
         this.image = image;
     }
 
-    public Evenement getidEvenement() {
+  
+
+    public Evenement getIdEvenement() {
         return idEvenement;
     }
 
-    public void setidEvenement(Evenement idEvenement) {
+    public void setIdEvenement(Evenement idEvenement) {
         this.idEvenement = idEvenement;
     }
+
+   
     //les constructeurs 
 
     public Activite(int id, String nom, String description, String image, Evenement idEvenement) {
