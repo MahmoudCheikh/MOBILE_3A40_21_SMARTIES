@@ -13,6 +13,7 @@ import com.codename1.components.ToastBar;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.MultipartRequest;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
@@ -50,12 +51,13 @@ import com.mycompany.entity.Produit;
 import com.mycompany.services.ServiceProduit;
 import java.io.IOException;
 import static java.lang.System.out;
+import java.util.Date;
 
 /**
  *
  * @author PC
  */
-public class AjoutProduitForm extends BaseForm {
+public class AjoutProduitForm extends Form {
     
      String file ;
   
@@ -65,45 +67,38 @@ public class AjoutProduitForm extends BaseForm {
 
     
      public AjoutProduitForm(Resources res)  {
-                super("Publicite", BoxLayout.y());
+                super("Produits", BoxLayout.y());
                 //System.out.println("emailllll+ "+email);
-                   TextField Libelle = new TextField("", "Libelle", 20, TextArea.TEXT_CURSOR);
+                   TextField libelle = new TextField("", "Libelle", 20, TextArea.CENTER);
                 
-                TextField Image = new TextField("", "Image", 20, TextArea.TEXT_CURSOR);
+                //TextField image = new TextField("", "Image", 20, TextArea.TEXT_CURSOR);
                 
-                 TextField Description = new TextField("", "Description", 20, TextArea.EMAILADDR);
+                 TextField description = new TextField("", "Description", 20, TextArea.EMAILADDR);
                  
                  TextField prix = new TextField("", "prix", 20, TextArea.TEXT_CURSOR);
                  
                  TextField type = new TextField("", "type", 20, TextArea.NUMERIC);
-                 
-                 
-                 
-                 TextField affichage = new TextField("", "Affichage", 20, TextArea.TEXT_CURSOR);
-                 Label lab = new Label("0 DT");
-                 affichage.addActionListener(www->{
-                     
-                    lab.setText(String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT");
-                 });
+
                  
                   Button upload = new Button("Upload Image");
                   
-                         Validator val_firstname = new Validator();
-                            val_firstname.addConstraint(Libelle, new LengthConstraint(5));
+                        Validator val_lib = new Validator();
+                            val_lib.addConstraint(libelle, new LengthConstraint(3));
                             String text_saisir_des_caracteres = "^[0-9]+$";
-                            val_firstname.addConstraint(Description, new RegexConstraint(text_saisir_des_caracteres, ""));
-                            // val lastname   
+                            val_lib.addConstraint(libelle, new RegexConstraint(text_saisir_des_caracteres, ""));
+                           /* // val lastname   
                             Validator val_lastname = new Validator();
                             val_lastname.addConstraint(Libelle, new LengthConstraint(8));
                             val_lastname.addConstraint(Libelle, new RegexConstraint(text_saisir_des_caracteres, ""));
                   
                   
-           String text_mail="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+           String text_mail="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";*/
                             
                              // val mail   
-                            Validator val_mail = new Validator();
+                            /*Validator val_mail = new Validator();
                             val_mail.addConstraint(Libelle, new LengthConstraint(8));
-                            val_mail.addConstraint(Libelle, new RegexConstraint(text_mail, ""));
+                            val_mail.addConstraint(Libelle, new RegexConstraint(text_mail, ""));*/
+                            
         Button save = new Button("Ajouter");
         
                  
@@ -114,11 +109,11 @@ public class AjoutProduitForm extends BaseForm {
                     String fileNameInServer = "";
                     MultipartRequest cr = new MultipartRequest();
                     String filepath = Capture.capturePhoto(-1, -1);
-                    cr.setUrl("http://localhost/image/uploadimage.php");
+                    cr.setUrl("http://localhost/image/");
                     cr.setPost(true);
-                    String mime = "image/jpeg";
+                    String mime = "/image";
                     cr.addData("file", filepath, mime);
-                    //String out = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+                    String out = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
                     cr.setFilename("file", out + ".jpg");//any unique name you want
                     
                     fileNameInServer += out + ".jpg";
@@ -138,49 +133,43 @@ public class AjoutProduitForm extends BaseForm {
                                 -> {
 
                           
-                            if (Libelle.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
+                            if (libelle.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de libelle ", "OK", null);
 
-                            } else if (val_firstname.isValid()) {
-                                Dialog.show("Erreur FIRSTNAME !", "il faut saisir des caracteres  !", "OK", null);
+                            } else if (val_lib.isValid()) {
+                                Dialog.show("Erreur libelle !", "il faut saisir des caracteres  !", "OK", null);
 
-                            } else if (Description.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
+                            } else if (description.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de libelle ", "OK", null);
 
-                            }else if (val_lastname.isValid()) {
-                                Dialog.show("Erreur LASTNAME !", "il faut saisir des caracteres  !", "OK", null);
-
-                            } 
-                            
-                            
-                            else if (type.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de email ", "OK", null);
-
-                            } else if (!val_mail.isValid()) {
-                                Dialog.show("Erreur EMAIL !", "email incorrect", "OK", null);
-
-                            }  
-                              else if (prix.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de domaine ", "OK", null);
-
+                           /* }else if (val_lastname.isValid()) {
+                                Dialog.show("Erreur LASTNAME !", "il faut saisir des caracteres  !", "OK", null);*/
                             }
-                            
-                            else {
-                                          
-                                          
+                            else if (prix.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de prix ", "OK", null);
+                            }
+                            else if (type.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de type ", "OK", null);
+
+                            /*} else if (!val_mail.isValid()) {
+                                Dialog.show("Erreur EMAIL !", "email incorrect", "OK", null);*/
+                            }  
+                              
+                            else {         
                                 Produit p = new Produit();
-                                p.setLibelle(Libelle.getText());
+                                p.setLibelle(libelle.getText());
                                 p.setImage(file);
-                                p.setDescription(Description.getText());
-                                 p.setPrix(prix.getText());
-                                        p.setType(type.getText());
+                                p.setDescription(description.getText());
+                               // p.setPrix(prix.getText());
+                                p.setType(type.getText());
                                 
-                                
-                                p.setPrix(Integer.valueOf(prix.getText()));
+                                //p.setPrix(Integer.valueOf(prix.getText()));
                                 ServiceProduit sp = new ServiceProduit();
-                                //sp.AjouterProduit(p, previous);
+                                Form previous = null;
+                                sp.AjouterProduit(p, previous, res);
                                  Dialog.show("Ajout", "Ajout", "OK", null);
                                  // String url = "http://localhost/pdf/ex.php";
+                                 
 /*Button btn = new Button("hee");
 this.add(btn);
 
@@ -188,7 +177,7 @@ btn.addActionListener(ll->{
 
 });
 */
-                               ConnectionRequest cnreq = new ConnectionRequest();
+                ConnectionRequest cnreq = new ConnectionRequest();
                 cnreq.setPost(false);/*
                 String data = "Nom : " + Libelle.getText() + "<br>  Prenom : " + Description.getText() + " <br>  mail :" + mail.getText() + " <br> domaine : " + domaine.getText() + " <br> lien : " + lien.getText()+ " <br> Prix : " + String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT"+"<br> Merci pour votre confiance &#128525;";
 
@@ -203,14 +192,7 @@ btn.addActionListener(ll->{
                 }
                 );*/
                                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                                                    
+                                         
                             }
            });
         
@@ -219,12 +201,12 @@ btn.addActionListener(ll->{
         
         
         
-          this.add(Libelle).add(Description).add(prix).add(type).add(upload);
+          this.add(libelle).add(description).add(prix).add(type).add(upload).add(save);
                   Produit p=new Produit();
       // p.setEmail(SessionManager.getEmail());
         
            this.getToolbar().addCommandToOverflowMenu("back", null, ev -> {
-          new WalkthruForm(themee).show();
+          new NewsfeedForm(themee).show();
         });
         
         

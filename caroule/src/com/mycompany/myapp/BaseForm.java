@@ -20,7 +20,8 @@
 package com.mycompany.myapp;
 
 import com.codename1.components.ScaleImageLabel;
-import static com.codename1.io.Log.p;
+import com.codename1.components.ToastBar;
+import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
@@ -33,6 +34,8 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 
 
 /**
@@ -87,8 +90,10 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
-        tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutProduitForm(res).show());
+        tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_ADD, e -> new AjoutProduitForm(res).show());
+        tb.addMaterialCommandToSideMenu("Emplacement", FontImage.MATERIAL_MAP, e -> new AffichageEmplacement(res).show());
         tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutEvenementForm(res).show());
+        
 
     }
 }

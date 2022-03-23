@@ -18,6 +18,7 @@ import com.mycompany.entity.Favoris;
 import com.mycompany.entity.Produit;
 import com.mycompany.entity.Stock;
 import com.mycompany.myapp.AjoutProduitForm;
+import com.mycompany.myapp.ProduitForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -208,7 +209,7 @@ public ArrayList<Produit> Produit;
     }
         
         //Ajouter un produit
- public void AjouterProduit(Produit p ) {
+ public void AjouterProduit(Produit p ,Form previous,Resources res ) {
         String url = PageWeb.BASE_URL + "/AjouterProduit?libelle="+p.getLibelle()+"&description="+p.getDescription()+"&image="+p.getImage()+"&prix="+p.getPrix()+"&type="+p.getType();
         req.setUrl(url);
         req.setPost(false);
@@ -220,10 +221,45 @@ public ArrayList<Produit> Produit;
             }
         });
         
-        //new AjoutProduitForm(previous).show();
+        new ProduitForm(previous,res).show();
         NetworkManager.getInstance().addToQueueAndWait(req);
     
     }
+ 
+ //supprimer Prduit
+
+    public boolean delete(int id) {
+        String url = PageWeb.BASE_URL + "/deleteProd/"+id;
+        req.setUrl(url);
+        //req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    return resultOK;
+    }
     
+    //update produit
+    public void Update(Produit p ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "evenement/updateEvent?id="+p.getId()+ "&libelle="+p.getLibelle()+"&image="+p.getImage()+"&description="+p.getDescription()+"&prix="+p.getPrix()+"&type="+p.getType();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        new ProduitForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    
+    }
 
 }

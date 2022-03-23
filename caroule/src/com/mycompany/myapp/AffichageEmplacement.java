@@ -26,8 +26,6 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -36,26 +34,23 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Emplacement;
-import com.mycompany.entity.Produit;
+
 import com.mycompany.services.ServiceProduit;
 import java.util.ArrayList;
-import static java.util.Collections.list;
-import java.util.Map;
 
 /**
  *
  * @author PC
  */
-public class AffichageProduit extends BaseForm {
+public class AffichageEmplacement extends BaseForm{
     Form current;
-    public ArrayList<Produit> Produit;
-    public ArrayList<Emplacement> Emplecement;
-    public AffichageProduit(Form previous,Resources res){
-       super("Produits", BoxLayout.y());
+public ArrayList<Emplacement> Emplacement;
+    public AffichageEmplacement(Resources res) {
+        super("liste Des Emplacements", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Liste Produits");
+        setTitle("Liste Emplacements");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -105,65 +100,54 @@ public class AffichageProduit extends BaseForm {
         
         Component.setSameSize(radioContainer, spacer1, spacer2);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
-        
+        tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_EXIT_TO_APP, e -> new NewsfeedForm(res).show());
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton Produits = RadioButton.createToggle("Tous les Produits", barGroup);
-        Produits.setUIID("SelectBar");
-        
-        RadioButton Favoris = RadioButton.createToggle("Les Favoris", barGroup);
-        Favoris.setUIID("SelectBar");
-        
-        RadioButton Emplacement = RadioButton.createToggle("Emplacement", barGroup);
-        Emplacement.setUIID("SelectBar");
-               
+       // RadioButton all = RadioButton.createToggle("All", barGroup);
+        //all.setUIID("SelectBar");
+        RadioButton Emplacements = RadioButton.createToggle("Emplacements", barGroup);
+        Emplacements.setUIID("SelectBar");
+       // RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        //popular.setUIID("SelectBar");
+       // RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
+        //myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(3, Produits, Favoris, Emplacement),
+                GridLayout.encloseIn(1, Emplacements),
                 FlowLayout.encloseBottom(arrow)
         ));
         
-        Produits.setSelected(true);
+       // all.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(Produits, arrow);
+            //updateArrowPosition(all, arrow);
         });
-        
-        bindButtonSelection(Produits, arrow);
-        bindButtonSelection(Favoris, arrow);
-        bindButtonSelection(Emplacement, arrow);
-        
+        //bindButtonSelection(all, arrow);
+        bindButtonSelection(Emplacements, arrow);
+       // bindButtonSelection(popular, arrow);
+        //bindButtonSelection(myFavorite, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-
-       SpanLabel sp = new SpanLabel();
-
-       ///Appel affichage données :***********************************************************************************************************
-        Produits.addActionListener((ActionListener) (ActionEvent e) -> {
-        new AffichageProduit(current,res).show();       
-       
-      }); 
-               Produit = ServiceProduit.getInstance().getAllProduits();
-       
-       for( Produit p : Produit){
-          
-           addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix());
-         } 
-    tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_EXIT_TO_APP, e -> new NewsfeedForm(res).show());
-    
-            Emplacement.addActionListener((ActionListener) (ActionEvent e) -> {
-        new AffichageEmplacement(res).show();       
-       
-      }); 
-    }
         
-        //****************************************
+    
+       SpanLabel sp = new SpanLabel();
+Emplacement =ServiceProduit.getInstance().affichageEmplecement();
 
-private void updateArrowPosition(Button b, Label arrow) {
+    for (Emplacement e :Emplacement)
+    { 
+        addButton(res.getImage("news-item-1.jpg"),e.getLieu().toString()+ "\n" +e.getCapacite(), false, 26, 32);
+     //addButton(res.getImage("news-item-1.jpg"),e.getLieu().toString()+ "\n" +e.getCapacite()+"\n" +e.getStock().toString(), false, 26, 32);
+            //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+    }
+    }
+
+    
+   
+    private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
         arrow.getParent().repaint();
         
@@ -202,64 +186,25 @@ private void updateArrowPosition(Button b, Label arrow) {
                             FlowLayout.encloseIn(likes, comments),
                             spacer
                         )
+                        
                 )
+                    
             );
-
+ 
         swipe.addTab("", page1);
     }
-   private void addButton(Image img, String title) {
     
-int height = Display.getInstance().convertToPixels(11.5f);
-       int width = Display.getInstance().convertToPixels(14f);
-       Button image = new Button(img.fill(width, height));
-       image.setUIID("Label");
-       Container cnt = BorderLayout.west(image);
-       cnt.setLeadComponent(image);
-       TextArea ta = new TextArea(title);
-       ta.setUIID("NewsTopLine");
-       ta.setEditable(false);
-
-       Label likes = new Label("NewsBottomLine");
-       likes.setTextPosition(RIGHT);
-       
-           Style s = new Style(likes.getUnselectedStyle());
-           s.setFgColor(0xff2d55);
-           FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
-           likes.setIcon(heartImage);
-       
-       Label comments = new Label( "NewsBottomLine");
-       FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
-       
-       
-       cnt.add(BorderLayout.CENTER, 
-               BoxLayout.encloseY(
-                       ta,
-                       BoxLayout.encloseX()
-               ));
-       add(cnt);
-       image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
-        
-        
-    }
-       private void bindButtonSelection(Button b, Label arrow) {
-        b.addActionListener(e -> {
-            if(b.isSelected()) {
-                updateArrowPosition(b, arrow);
-            }
-        });
-    }
-   /* private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount) {
+  private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount) {
        int height = Display.getInstance().convertToPixels(11.5f);
        int width = Display.getInstance().convertToPixels(14f);
        Button image = new Button(img.fill(width, height));
        image.setUIID("Label");
        Container cnt = BorderLayout.west(image);
        cnt.setLeadComponent(image);
-   
        TextArea ta = new TextArea(title);
        ta.setUIID("NewsTopLine");
        ta.setEditable(false);
-
+        
        Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
        likes.setTextPosition(RIGHT);
        if(!liked) {
@@ -274,13 +219,18 @@ int height = Display.getInstance().convertToPixels(11.5f);
        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
        
        
-       cnt.add(BorderLayout.CENTER, 
+             cnt.add(BorderLayout.CENTER, 
                BoxLayout.encloseY(
                        ta,
                        BoxLayout.encloseX(likes, comments)
                ));
        add(cnt);
+        Button b=new Button("Voire Map");
+	getContentPane().add(b);
+	setVisible(true);      
+        b.addActionListener(e -> new MapForm());
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
+        
    }
     
     private void bindButtonSelection(Button b, Label arrow) {
@@ -289,9 +239,7 @@ int height = Display.getInstance().convertToPixels(11.5f);
                 updateArrowPosition(b, arrow);
             }
         });
-    }*/
-    
-    
-    
+    }
     
 }
+
