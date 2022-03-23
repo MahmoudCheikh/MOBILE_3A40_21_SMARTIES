@@ -36,6 +36,7 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -45,6 +46,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Activite;
+
 
 /**
  * The newsfeed form
@@ -114,14 +116,14 @@ public class NewsfeedForm extends BaseForm {
         all.setUIID("SelectBar");
         RadioButton Evenement= RadioButton.createToggle("Evenement", barGroup);
         Evenement.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
+        RadioButton Produit = RadioButton.createToggle("Produit", barGroup);
+        Produit.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Evenement, popular, myFavorite),
+                GridLayout.encloseIn(4, all,Evenement, Produit, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -133,7 +135,7 @@ public class NewsfeedForm extends BaseForm {
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Evenement, arrow);
-        bindButtonSelection(popular, arrow);
+        bindButtonSelection(Produit, arrow);
         bindButtonSelection(myFavorite, arrow);
         
         // special case for rotation
@@ -146,6 +148,10 @@ public class NewsfeedForm extends BaseForm {
         addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
         addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
         addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
+            
+        Produit.addActionListener((ActionListener) (ActionEvent e) -> {
+            new AffichageProduit(current,res).show();
+        });
         Evenement.addActionListener( (e) -> {
             new AfficherEvenement(current,res).show();
 
