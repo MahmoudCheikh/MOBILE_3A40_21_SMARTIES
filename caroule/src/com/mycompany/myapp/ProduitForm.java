@@ -120,16 +120,16 @@ public class ProduitForm extends Form {
 //Click delete icon
 b5.addPointerPressedListener(l -> {
     Dialog dig = new Dialog("Suprression");
-if(dig.show("Suppression", "Vous voulez supprimeer ce produit ?","Annuler","Oui")) {
-//ProduitForm(Form previous,Resources res).show;
-dig.dispose ();
+        if(dig.show("Suppression", "Vous voulez supprimeer ce produit ?","Annuler","Oui")) {
+        //ProduitForm(Form previous,Resources res).show;
+        dig.dispose ();
 
-}
-else {
-dig.dispose();
-if (ServiceProduit.getInstance().delete(p.getId())) {
-refreshTheme();
-}
+        }
+        else {
+        dig.dispose();
+        if (ServiceProduit.getInstance().delete(p.getId())) {
+        refreshTheme();
+        }
 }
 });
 /**************************************************************************************************************/
