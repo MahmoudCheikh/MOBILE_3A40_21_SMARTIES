@@ -94,7 +94,7 @@ event.setDateF(dateString1);
         return result;
     }*/
      public ArrayList<Evenement> Evenements;
-
+  public static boolean resultOk;
     public static ServiceEvenement instance = null;
     public boolean resultOK;
     private ConnectionRequest req;
@@ -165,6 +165,37 @@ public ArrayList<Evenement> parseEvenements(String jsonText) {
     }
  public void Add(Evenement p ,Form previous,Resources res) {
         String url = PageWeb.BASE_URL + "evenement/addEvent?nom="+p.getNom()+"&dated="+p.getDateD()+"&datef="+p.getDateF()+"&lieu="+p.getLieu()+"&type="+p.getType()+"&nbparticipants="+p.getNb_participants()+"&nbplaces="+p.getNb_places();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        new EvenementForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    
+    }
+  public boolean delete(int id) {
+        String url = PageWeb.BASE_URL + "evenement/deleteEvent/"+id;
+        req.setUrl(url);
+        //req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    return resultOK;
+    }
+   public void Update(Evenement p ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "evenement/updateEvent?id="+p.getId()+ "&nom="+p.getNom()+"&dated="+p.getDateD()+"&datef="+p.getDateF()+"&lieu="+p.getLieu()+"&type="+p.getType()+"&nbparticipants="+p.getNb_participants()+"&nbplaces="+p.getNb_places();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

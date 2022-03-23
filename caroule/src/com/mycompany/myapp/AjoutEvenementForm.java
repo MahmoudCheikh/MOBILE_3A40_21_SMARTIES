@@ -36,16 +36,15 @@ import com.mycompany.services.ServiceEvenement;
  * @author Lenovo
  */
 public class AjoutEvenementForm extends Form{
-     String file ;
-  
-     
-          Resources theme;
-                      Resources themee = UIManager.initFirstTheme("/theme_1");
+    
 
     
      public AjoutEvenementForm(Resources res)  {
                 super("Evenement", BoxLayout.y());
-              
+                Button skip = new Button("back");
+                 skip.setUIID("back");
+        skip.addActionListener(e -> new NewsfeedForm(res).show());
+      add(skip);
                    TextField Nom = new TextField("", "Nom Evenement", 20, TextArea.TEXT_CURSOR);
                 
                 TextField Dated = new TextField("", "Date debut ", 20, TextArea.TEXT_CURSOR);
@@ -59,6 +58,8 @@ public class AjoutEvenementForm extends Form{
                  TextField nb_participants = new TextField("", "nb participants", 20, TextArea.TEXT_CURSOR);
                  
                  TextField nb_places = new TextField("", "nb places", 20, TextArea.TEXT_CURSOR);
+                 
+         
                  /*Label lab = new Label("0 DT");
                  affichage.addActionListener(www->{
                      
@@ -84,8 +85,10 @@ public class AjoutEvenementForm extends Form{
                             val_mail.addConstraint(mail, new LengthConstraint(8));
                             val_mail.addConstraint(mail, new RegexConstraint(text_mail, ""));*/
         Button save = new Button("Ajouter");
-        
-                 
+       Button b7=new Button("liste event"); 
+         setVisible(true);
+         
+       //btnsupp.addActionListener(w -> new NewsfeedForm(res).show())
                
       /*  upload.addActionListener(new ActionListener() {
             @Override
@@ -172,7 +175,7 @@ public class AjoutEvenementForm extends Form{
                                ServiceEvenement sp = new ServiceEvenement();
                                 Form previous = null;
                                sp.Add(p, previous,res);
-                                 Dialog.show("Ajout", "Ajout", "OK", null);
+                                 Dialog.show("Ajout", "Ajout avec succés", "OK", null);
                                 //  String url = "http://localhost/pdf/ex.php";
 /*Button btn = new Button("hee");
 this.add(btn);
@@ -181,6 +184,7 @@ btn.addActionListener(ll->{
 
 });
 */
+ ;
                 ConnectionRequest cnreq = new ConnectionRequest();
                 cnreq.setPost(false);
                /* String data = "Nom : " + Nom.getText() + "<br>  Prenom : " + DateD.getText() + " <br>  mail :" + mail.getText() + " <br> domaine : " + domaine.getText() + " <br> lien : " + lien.getText()+ " <br> Prix : " + String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT"+"<br> Merci pour votre confiance &#128525;";
@@ -207,7 +211,8 @@ btn.addActionListener(ll->{
                             }
            });
         
-        
+         
+                  
         
         
         
@@ -216,12 +221,10 @@ btn.addActionListener(ll->{
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         
-           this.getToolbar().addCommandToOverflowMenu("back", null, ev -> {
-          new NewsfeedForm(themee).show();
-        });
+         
         
-        
-        
-                 
+        add(b7);
+         Form pre = null;
+ b7.addActionListener(e -> new EvenementForm(pre,res).show());                 
      }
 }
