@@ -150,10 +150,6 @@ public class Produit {
 
     public Produit() {
     }
-
-    public void setPrix(String prix) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 
     
