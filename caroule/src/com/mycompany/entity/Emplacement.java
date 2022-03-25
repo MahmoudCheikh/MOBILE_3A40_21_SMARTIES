@@ -14,15 +14,8 @@ public class Emplacement {
     private String lieu;
     private int capacite;
     private Stock Stock;
-    private Produit idProduit;
 
-    public Produit getIdProduit() {
-        return idProduit;
-    }
 
-    public void setIdProduit(Produit idProduit) {
-        this.idProduit = idProduit;
-    }
 
     public Stock getStock() {
         return Stock;
@@ -71,11 +64,10 @@ public class Emplacement {
 
     }
 
-    public Emplacement(String lieu, int capacite, Stock Stock, Produit idProduit) {
+    public Emplacement(String lieu, int capacite, Stock Stock) {
         this.lieu = lieu;
         this.capacite = capacite;
         this.Stock = Stock;
-        this.idProduit = idProduit;
     }
 
     public Emplacement() {

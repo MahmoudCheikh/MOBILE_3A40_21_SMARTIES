@@ -91,7 +91,9 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
         tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_ADD, e -> new AjoutProduitForm(res).show());
-        tb.addMaterialCommandToSideMenu("Emplacement", FontImage.MATERIAL_MAP, e -> new AffichageEmplacement(res).show());
+        tb.addMaterialCommandToSideMenu("+ Emplacement", FontImage.MATERIAL_MAP, e -> new AjoutEmplacementForm(res).show());
+        tb.addMaterialCommandToSideMenu("+ Stock", FontImage.MATERIAL_ADD, e -> new AjoutStockForm(res).show());
+        tb.addMaterialCommandToSideMenu("Statistique", FontImage.MATERIAL_STACKED_BAR_CHART, e -> new StatistiquePieForm(res).show());
         tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutEvenementForm(res).show());
         
 

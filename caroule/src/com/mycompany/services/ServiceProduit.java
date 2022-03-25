@@ -87,7 +87,7 @@ public ArrayList<Produit> Produit;
     public ArrayList<Produit> getAllProduits() {
         
  req = new ConnectionRequest();
-        String url = PageWeb.BASE_URL +"/display";
+        String url = PageWeb.BASE_URL +"display";
         System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
@@ -102,50 +102,11 @@ public ArrayList<Produit> Produit;
         return Produit;
     }
     
-                //affichage des Emplacement
-    public ArrayList<Emplacement>affichageEmplecement(){
-        ArrayList<Emplacement> result = new ArrayList<>();
-        
-        String url = PageWeb.BASE_URL+"/displayEmplacement";
-        req.setUrl(url);
-        
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
-                
-                try{
-                    Map<String,Object>mapEmplacement = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
-                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapEmplacement.get("root");
-                
-                for(Map<String,Object> obj : listOfMaps) {
-                    Emplacement e = new Emplacement();
-                    
-                    float id = Float.parseFloat(obj.get("id").toString());
-                    e.setId((int) id);
-                    float capacite = Float.parseFloat(obj.get("capacite").toString());
-                    e.setId((int) id);
 
-                e.setLieu(obj.get("lieu").toString());
-                e.setCapacite((int) capacite);
-                    
-                //inserer les données dans une liste
-                result.add(e);
-                }                
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
-    }
     
     //afficher les détails d'un produits
     public Produit DetailProduit(int id,Produit prod){
-        String url = PageWeb.BASE_URL+"/exploreProduit"+id;
+        String url = PageWeb.BASE_URL+"exploreProduit"+id;
         req.setUrl(url);
         
         String str = new String (req.getResponseData());
@@ -178,7 +139,7 @@ public ArrayList<Produit> Produit;
         public ArrayList<Favoris>affichageFavoris(){
         ArrayList<Favoris> result = new ArrayList<>();
         
-        String url = PageWeb.BASE_URL+"/displayFavoris";
+        String url = PageWeb.BASE_URL+"displayFavoris";
         req.setUrl(url);
         
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -229,7 +190,7 @@ public ArrayList<Produit> Produit;
  //supprimer Prduit
 
     public boolean delete(int id) {
-        String url = PageWeb.BASE_URL + "/deleteProd/"+id;
+        String url = PageWeb.BASE_URL + "deleteProd/"+id;
         req.setUrl(url);
         //req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -246,7 +207,7 @@ public ArrayList<Produit> Produit;
     
     //update produit
     public void Update(Produit p ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "evenement/updateEvent?id="+p.getId()+ "&libelle="+p.getLibelle()+"&image="+p.getImage()+"&description="+p.getDescription()+"&prix="+p.getPrix()+"&type="+p.getType();
+        String url = PageWeb.BASE_URL + "updateProduit?id="+p.getId()+ "&libelle="+p.getLibelle()+"&image="+p.getImage()+"&description="+p.getDescription()+"&prix="+p.getPrix()+"&type="+p.getType();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

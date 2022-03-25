@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
- *
  * @author PC
  */
 public class ModifierProduitForm extends Form {
@@ -41,7 +40,7 @@ public class ModifierProduitForm extends Form {
          public ModifierProduitForm(Resources res,Produit p)  {
                 super("Produits", BoxLayout.y());
                 //System.out.println("emailllll+ "+email);
-                   TextField libelle = new TextField(p.getLibelle(), "Libelle", 20, TextArea.CENTER);
+                TextField libelle = new TextField(p.getLibelle(), "Libelle", 20, TextArea.CENTER);
                 
                 TextField image = new TextField(p.getImage(), "Image", 20, TextArea.TEXT_CURSOR);
                 
@@ -54,6 +53,8 @@ public class ModifierProduitForm extends Form {
                  ///buttons
                  Button upload = new Button("Upload Image");
                  Button update = new Button("Modifier");
+                 Button b3=new Button("liste event"); 
+                 setVisible(true);
                  
                  //****************************************reupload image 
                  upload.addActionListener(new ActionListener() {
@@ -118,7 +119,7 @@ public class ModifierProduitForm extends Form {
                                 ServiceProduit sp = new ServiceProduit();
                                 Form previous = null;
                                 sp.AjouterProduit(p, previous, res);
-                                 Dialog.show("Ajout", "Ajout", "OK", null);
+                                 Dialog.show("Modifier", "Modifié avec succés", "OK", null);
                                  
                                  ConnectionRequest cnreq = new ConnectionRequest();
                                   cnreq.setPost(false);
@@ -129,5 +130,8 @@ public class ModifierProduitForm extends Form {
                  
                  //passer parametre au bouton
                  this.add(libelle).add(description).add(prix).add(type).add(upload).add(update);
+                 add(b3);
+                 Form pre = null;
+                 b3.addActionListener(l->new ProduitForm(pre,res).show());
 }
 }

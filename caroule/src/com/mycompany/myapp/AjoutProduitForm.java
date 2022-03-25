@@ -68,6 +68,10 @@ public class AjoutProduitForm extends Form {
     
      public AjoutProduitForm(Resources res)  {
                 super("Produits", BoxLayout.y());
+                Button skip = new Button("back");
+                 skip.setUIID("back");
+                skip.addActionListener(j -> new NewsfeedForm(res).show());
+                add(skip);
                 //System.out.println("emailllll+ "+email);
                    TextField libelle = new TextField("", "Libelle", 20, TextArea.CENTER);
                 
@@ -82,10 +86,10 @@ public class AjoutProduitForm extends Form {
                  
                   Button upload = new Button("Upload Image");
                   
-                        Validator val_lib = new Validator();
+                        /*Validator val_lib = new Validator();
                             val_lib.addConstraint(libelle, new LengthConstraint(3));
                             String text_saisir_des_caracteres = "^[0-9]+$";
-                            val_lib.addConstraint(libelle, new RegexConstraint(text_saisir_des_caracteres, ""));
+                            val_lib.addConstraint(libelle, new RegexConstraint(text_saisir_des_caracteres, ""));*/
                            /* // val lastname   
                             Validator val_lastname = new Validator();
                             val_lastname.addConstraint(Libelle, new LengthConstraint(8));
@@ -100,7 +104,8 @@ public class AjoutProduitForm extends Form {
                             val_mail.addConstraint(Libelle, new RegexConstraint(text_mail, ""));*/
                             
         Button save = new Button("Ajouter");
-        
+        Button b2=new Button("liste des Produits"); 
+         setVisible(true);
                  
                
        upload.addActionListener(new ActionListener() {
@@ -136,10 +141,10 @@ public class AjoutProduitForm extends Form {
                             if (libelle.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de libelle ", "OK", null);
 
-                            } else if (val_lib.isValid()) {
+                            /*} else if (val_lib.isValid()) {
                                 Dialog.show("Erreur libelle !", "il faut saisir des caracteres  !", "OK", null);
 
-                            } else if (description.getText().equals("")) {
+                            */} else if (description.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de libelle ", "OK", null);
 
                            /* }else if (val_lastname.isValid()) {
@@ -167,7 +172,7 @@ public class AjoutProduitForm extends Form {
                                 ServiceProduit sp = new ServiceProduit();
                                 Form previous = null;
                                 sp.AjouterProduit(p, previous, res);
-                                 Dialog.show("Ajout", "Ajout", "OK", null);
+                                 Dialog.show("Ajout", "Ajouté avec succés", "OK", null);
                                  // String url = "http://localhost/pdf/ex.php";
                                  
 /*Button btn = new Button("hee");
@@ -210,7 +215,9 @@ btn.addActionListener(ll->{
         });
         
         
-        
+              add(b2);
+         Form pre = null;
+ b2.addActionListener(e -> new ProduitForm(pre,res).show());   
                  
      }
 }

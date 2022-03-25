@@ -18,19 +18,23 @@ import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Toolbar;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.util.Resources;
 import java.io.IOException;
 import java.util.List;
 /**
  *
  * @author PC
  */
-public class MapForm {
+public class MapForm extends Form {
     
 Form f = new Form();
     MapContainer cnt = null;
+   // Form current;
 public MapForm() {
         
     try{
@@ -40,9 +44,15 @@ public MapForm() {
     }
 
         Button btnMoveCamera = new Button("Ma position");
+        //Button btnMoveCamera1 = new Button("Back");
+        
         btnMoveCamera.addActionListener(e->{
             cnt.setCameraPosition(new Coord(36.8189700, 10.1657900));
         });
+    Resources res = null;
+        
+               // btnMoveCamera1.addActionListener(e->new NewsfeedForm(res).show());
+        
         Style s = new Style();
         s.setFgColor(0xff0000);
         s.setBgTransparency(0);
@@ -97,6 +107,9 @@ public MapForm() {
          f.setLayout(new BorderLayout());
          f.addComponent(BorderLayout.CENTER, cnt);
          f.addComponent(BorderLayout.SOUTH, btnMoveCamera);
+         //f.add(btnMoveCamera1);
+         
+         
 f.show();
  //f.getToolbar().addCommandToRightBar("back", null, (ev)->{ new AjoutReclamationForm(f).show()});
 

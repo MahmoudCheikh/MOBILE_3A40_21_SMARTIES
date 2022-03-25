@@ -11,7 +11,6 @@ package com.mycompany.utils;
  */
 public class PageWeb {
 
-    public static final String BASE_URL="http://localhost:81/PI_3A40_21_SMARTIES/pi/public/index.php/";
-
-    
+    public static final String BASE_URL="http://localhost/PI_3A40_21_SMARTIES/pi/public/index.php/";
+ 
 }

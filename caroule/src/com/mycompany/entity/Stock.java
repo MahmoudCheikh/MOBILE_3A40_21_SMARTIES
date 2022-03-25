@@ -67,6 +67,14 @@ public class Stock {
         this.disponibilite = disponibilite;
     }
 
+    public Emplacement getEmplacement() {
+        return emplacement;
+    }
+
+    public void setEmplacement(Emplacement emplacement) {
+        this.emplacement = emplacement;
+    }
+
     public Stock(int id, String libelle, int prix, int quantite, Produit IdProduit, String disponibilite) {
         this.id = id;
         this.libelle = libelle;
