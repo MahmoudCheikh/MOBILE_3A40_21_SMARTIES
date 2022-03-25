@@ -1,22 +1,8 @@
 /*
- * Copyright (c) 2016, Codename One
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions 
- * of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
- * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
- * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-
 package com.mycompany.myapp;
 
 import com.codename1.components.ScaleImageLabel;
@@ -25,6 +11,10 @@ import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
+import static com.codename1.ui.Component.BOTTOM;
+import static com.codename1.ui.Component.CENTER;
+import static com.codename1.ui.Component.LEFT;
+import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
@@ -45,22 +35,25 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Activite;
-
+import com.mycompany.entity.Commande;
+import com.mycompany.services.ServiceCommande;
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.Map;
 
 /**
- * The newsfeed form
  *
- * @author Shai Almog
+ * @author Lenovo
  */
-public class NewsfeedForm extends BaseForm {
- Form current;
-    public NewsfeedForm(Resources res) {
-        super("Newsfeed", BoxLayout.y());
+public class AffichageCommande extends BaseForm {
+    Form current;
+public ArrayList<Commande> Commandes;
+    public AffichageCommande(Form previous,Resources res) {
+        super("liste Commande", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
+        setTitle("Liste Commande");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -110,59 +103,57 @@ public class NewsfeedForm extends BaseForm {
         
         Component.setSameSize(radioContainer, spacer1, spacer2);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
-        
+        tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_EXIT_TO_APP, e -> new NewsfeedForm(res).show());
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
-        all.setUIID("SelectBar");
-        RadioButton Evenement= RadioButton.createToggle("Evenement", barGroup);
-        Evenement.setUIID("SelectBar");
-        RadioButton Produit = RadioButton.createToggle("Produit", barGroup);
-        Produit.setUIID("SelectBar");
+       // RadioButton all = RadioButton.createToggle("All", barGroup);
+        //all.setUIID("SelectBar");
         RadioButton Commande = RadioButton.createToggle("Commande", barGroup);
         Commande.setUIID("SelectBar");
+        RadioButton Achat = RadioButton.createToggle("Achat", barGroup);
+        Achat.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all,Evenement, Produit, Commande),
+                GridLayout.encloseIn(2, Commande,Achat),
                 FlowLayout.encloseBottom(arrow)
         ));
         
-        all.setSelected(true);
+       Commande.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(all, arrow);
+            updateArrowPosition(Commande, arrow);
         });
-        bindButtonSelection(all, arrow);
-        bindButtonSelection(Evenement, arrow);
-        bindButtonSelection(Produit, arrow);
+        //bindButtonSelection(all, arrow);
         bindButtonSelection(Commande, arrow);
+        bindButtonSelection(Achat, arrow);
+        //bindButtonSelection(myFavorite, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
+   
+          Commande.addActionListener((ActionListener) (ActionEvent e) -> {
+        new AffichageCommande(current,res).show();       
        
-         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
-            
-        Produit.addActionListener((ActionListener) (ActionEvent e) -> {
-            new AffichageProduit(current,res).show();
-        });
-        Evenement.addActionListener( (e) -> {
-            new AfficherEvenement(current,res).show();
+      }); 
+                   Achat.addActionListener((ActionListener) (ActionEvent e) -> {
+        new AffichageAchat(current,res).show();       
+       
+      });    
+       SpanLabel sp = new SpanLabel();
+Commandes =ServiceCommande.getInstance().AffichageCommande();
+for (Commande c :Commandes)
+{ 
+    addButton(res.getImage("news-item-1.jpg"),c.getId(),c.getNbProduits());
+      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+    
 
-        });
-         Commande.addActionListener((ActionListener) (ActionEvent e) -> {
-            new AffichageCommande(current,res).show();
-        });
-       /*  Activite.addActionListener( (e) -> {
-            new AffichageActivite(current,res).show();
+}
+ // add(sp);   
 
-        });*/
+ 
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -204,51 +195,58 @@ public class NewsfeedForm extends BaseForm {
                             FlowLayout.encloseIn(likes, comments),
                             spacer
                         )
+                        
                 )
+                    
             );
-
+ 
         swipe.addTab("", page1);
     }
+   
+private void addButton(Image img, int title, int nbProduits) {
     
-   private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount) {
-       int height = Display.getInstance().convertToPixels(11.5f);
+int height = Display.getInstance().convertToPixels(11.5f);
        int width = Display.getInstance().convertToPixels(14f);
        Button image = new Button(img.fill(width, height));
        image.setUIID("Label");
        Container cnt = BorderLayout.west(image);
        cnt.setLeadComponent(image);
-       TextArea ta = new TextArea(title);
+       TextArea ta = new TextArea();
        ta.setUIID("NewsTopLine");
        ta.setEditable(false);
 
-       Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
+       Label likes = new Label("NewsBottomLine");
        likes.setTextPosition(RIGHT);
-       if(!liked) {
-           FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
-       } else {
+       
            Style s = new Style(likes.getUnselectedStyle());
            s.setFgColor(0xff2d55);
            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
            likes.setIcon(heartImage);
-       }
-       Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
+       
+       Label comments = new Label( "NewsBottomLine");
        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
        
        
        cnt.add(BorderLayout.CENTER, 
                BoxLayout.encloseY(
                        ta,
-                       BoxLayout.encloseX(likes, comments)
+                       BoxLayout.encloseX()
                ));
        add(cnt);
-       image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
-   }
-    
-    private void bindButtonSelection(Button b, Label arrow) {
+       image.addActionListener(e -> ToastBar.showMessage("", FontImage.MATERIAL_INFO));
+        
+        
+    }
+       private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {
                 updateArrowPosition(b, arrow);
             }
         });
     }
+    
+ 
+  
+
+  
 }
