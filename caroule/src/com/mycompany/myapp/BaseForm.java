@@ -95,6 +95,7 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("+ Stock", FontImage.MATERIAL_ADD, e -> new AjoutStockForm(res).show());
         tb.addMaterialCommandToSideMenu("Statistique", FontImage.MATERIAL_STACKED_BAR_CHART, e -> new StatistiquePieForm(res).show());
         tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutEvenementForm(res).show());
+        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutSujetForm(res).show());
         
 
     }
