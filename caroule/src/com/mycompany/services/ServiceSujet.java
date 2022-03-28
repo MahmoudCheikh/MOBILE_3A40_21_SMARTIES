@@ -15,6 +15,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Evenement;
 import com.mycompany.entity.Sujet;
+import com.mycompany.myapp.EvenementForm;
 import com.mycompany.myapp.SujetForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
@@ -153,7 +154,7 @@ public class ServiceSujet {
     }
 
     public boolean delete(int id) {
-        String url = PageWeb.BASE_URL + "commande/deletemobile/" + id;
+        String url = PageWeb.BASE_URL + "sujet/deletemobile/" + id;
         req.setUrl(url);
         //req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -169,7 +170,7 @@ public class ServiceSujet {
     }
 
     public void Add(Sujet c, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "commande/ajoutmobile?titre=" + c.getTitre() + "&contenu=" + c.getContenu() + "&idUser=" + "1";
+        String url = PageWeb.BASE_URL + "sujet/ajoutmobile?titre=" + c.getTitre() + "&contenu=" + c.getContenu() + "&idUser=" + 9;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -179,11 +180,12 @@ public class ServiceSujet {
                 req.removeResponseListener(this);
             }
         });
-
+        new SujetForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
     }
 
     public void Update(Sujet c, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "commande/modifiermobile?titre=" + c.getTitre() + "&contenu=" + c.getContenu();
+        String url = PageWeb.BASE_URL + "sujet/modifiermobile?id="+c.getId()+"&titre=" + c.getTitre() + "&contenu=" + c.getContenu() ;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

@@ -90,12 +90,13 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
-        tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_ADD, e -> new AjoutProduitForm(res).show());
-        tb.addMaterialCommandToSideMenu("+ Emplacement", FontImage.MATERIAL_MAP, e -> new AjoutEmplacementForm(res).show());
-        tb.addMaterialCommandToSideMenu("+ Stock", FontImage.MATERIAL_ADD, e -> new AjoutStockForm(res).show());
+        tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_PRODUCTION_QUANTITY_LIMITS, e -> new AjoutProduitForm(res).show());
+        tb.addMaterialCommandToSideMenu("Emplacement", FontImage.MATERIAL_MAP, e -> new AjoutEmplacementForm(res).show());
+        tb.addMaterialCommandToSideMenu("Stock", FontImage.MATERIAL_ADD, e -> new AjoutStockForm(res).show());
         tb.addMaterialCommandToSideMenu("Statistique", FontImage.MATERIAL_STACKED_BAR_CHART, e -> new StatistiquePieForm(res).show());
-        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutEvenementForm(res).show());
-        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutSujetForm(res).show());
+        tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EVENT_AVAILABLE, e -> new AjoutEvenementForm(res).show());
+        tb.addMaterialCommandToSideMenu("Sujet", FontImage.MATERIAL_NOTE_ADD, e -> new AjoutSujetForm(res).show());
+        tb.addMaterialCommandToSideMenu("Messages", FontImage.MATERIAL_MESSAGE, e -> new AjoutMessageForm(res).show());
         
 
     }

@@ -10,12 +10,18 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Message;
+import com.mycompany.entity.Sujet;
+import com.mycompany.myapp.MessageForm;
+import com.mycompany.myapp.SujetForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -31,7 +37,7 @@ public class ServiceMessage {
     public boolean resultOK;
     private ConnectionRequest req;
 
-    private ServiceMessage() {
+    public ServiceMessage() {
         req = new ConnectionRequest();
     }
 
@@ -71,8 +77,6 @@ public class ServiceMessage {
             for (Map<String, Object> obj : list) {
 
                 Message m = new Message();
-                /*  float nb_participants = Float.parseFloat(obj.get("nb_participants").toString());
-                float nb_places = Float.parseFloat(obj.get("nb_places").toString());*/
                 float id = Float.parseFloat(obj.get("id").toString());
                 m.setId((int) id);
                 System.out.println(obj);
@@ -90,17 +94,6 @@ public class ServiceMessage {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
     System.out.println(entry.getKey() + "=" + entry.getValue());
 }
-                //java.util.List<Map<String, Object>> list2 = (java.util.List<Map<String, Object>>) IdUserMap.get("root");
-                // Map<String, Object> user = list2.get(0);
-                //  String userstring = user.get("id").toString();
-                //  System.out.println("user id kezamlekzmaekmazezakml" + userstring);
-                //float idUser = Float.parseFloat(obj.get("idUser").get("id").toString());
-                // m.setId((int) idUser);
-                //System.out.println("eazjlezajelkazlkj" + idUser);
-
-                //h.setNb_participants((int) nb_participants);
-                //h.setNb_places((int) nb_places);
-                //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
                 messages.add(m);
                 System.out.println(messages);
             }
@@ -127,5 +120,88 @@ public class ServiceMessage {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return messages;
+    }
+    //affichage back
+            public ArrayList<Message>afficherMessage(){
+        ArrayList<Message> result = new ArrayList<>();
+        
+        String url = PageWeb.BASE_URL+"message/affichage";
+        req.setUrl(url);
+        
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp;
+                jsonp = new JSONParser();
+                
+                try{
+                    Map<String,Object>mapMessage= jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
+                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapMessage.get("root");
+                
+                for(Map<String,Object> obj : listOfMaps) {
+                    Message m = new Message();
+                    float id = Float.parseFloat(obj.get("id").toString());
+                    
+                //inserer les données dans une liste
+                result.add(m);
+                }                
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return result;
+    }
+    //delete
+        public boolean delete(int id) {
+        String url = PageWeb.BASE_URL + "message/deletemobile/" + id;
+        req.setUrl(url);
+        //req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                req.removeResponseListener(this);
+            }
+        });
+
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return true;
+    }
+        //ajout
+        
+        public void Add(Message m, Form previous, Resources res) {
+        String url = PageWeb.BASE_URL + "message/ajoutmobile?contenu=" + m.getContenu()+ "&idSujet=" + m.getIdSujet()+ "&idUser=" + m.getIdUser();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                req.removeResponseListener(this);
+            }
+        });
+        new MessageForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    }
+        //update
+        
+            public void Update(Message m, Form previous, Resources res) {
+        String url = PageWeb.BASE_URL + "message/modifiermobile?id="+m.getId()+"&contenu=" + m.getContenu()+ "&date=" + m.getDate();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                req.removeResponseListener(this);
+            }
+        });
+
+        new MessageForm(previous, res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+
     }
 }

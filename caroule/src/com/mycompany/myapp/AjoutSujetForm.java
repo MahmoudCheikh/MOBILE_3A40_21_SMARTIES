@@ -30,7 +30,7 @@ public class AjoutSujetForm extends Form {
         skip.addActionListener(e -> new NewsfeedForm(res).show());
         add(skip);
 
-        TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
+        //TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
         TextField contenu = new TextField("", "contenu", 20, TextArea.TEXT_CURSOR);
         TextField titre = new TextField("", "titre", 20, TextArea.TEXT_CURSOR);
         TextField iduser = new TextField("", "iduser", 20, TextArea.TEXT_CURSOR);
@@ -42,10 +42,10 @@ public class AjoutSujetForm extends Form {
         save.addActionListener(l
                 -> {
 
-            if (Id.getText().equals("")) {
+            /*if (Id.getText().equals("")) {
                 Dialog.show("Erreur", "Champ vide  ", "OK", null);
 
-            } else if (contenu.getText().equals("")) {
+            } else */if (contenu.getText().equals("")) {
                 Dialog.show("Erreur", "Champ vide  ", "OK", null);
 
             } else if (titre.getText().equals("")) {
@@ -53,11 +53,11 @@ public class AjoutSujetForm extends Form {
             } else if (iduser.getText().equals("")) {
                 Dialog.show("Erreur", "Champ vide  ", "OK", null);
             } else {
-                Sujet c = new Sujet();
-                c.setContenu(contenu.getText());
-                c.setTitre(titre.getText());
+                Sujet s = new Sujet();
+                s.setContenu(contenu.getText());
+                s.setTitre(titre.getText());
                 ServiceSujet sp = new ServiceSujet();
-                sp.Add(c, this, res);
+                sp.Add(s, this, res);
                 Form previous = null;
                 sp.getAllSujet();
                 Dialog.show("Ajout", "Ajout avec succés", "OK", null);
@@ -70,10 +70,10 @@ public class AjoutSujetForm extends Form {
             }
         });
 
-        this.add(Id).add(titre).add(contenu).add(iduser).add(save);
+        this.add(titre).add(contenu).add(iduser).add(save);
 
         add(b7);
         Form pre = null;
-        b7.addActionListener(e -> new CommandeFrom(pre, res).show());
+        b7.addActionListener(e -> new SujetForm(pre, res).show());
     }
 }

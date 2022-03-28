@@ -19,6 +19,8 @@ public class Sujet {
     private String Date;
     private String titre;
     private String contenu;
+    private User idUser;
+
     private ArrayList<Message> messages;
 
     public int getId() {
@@ -67,6 +69,14 @@ public class Sujet {
 
     public void setContenu(String contenu) {
         this.contenu = contenu;
+    }
+    
+    public User getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(User idUser) {
+        this.idUser = idUser;
     }
 
     public Sujet(int id, String Date, String titre, String contenu) {
