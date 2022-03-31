@@ -66,7 +66,7 @@ public class AjoutCommande extends Form {
                  skip.setUIID("back");
         skip.addActionListener(e -> new NewsfeedForm(res).show());
       add(skip);
-                   TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
+                   //TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
                 
                 TextField NbProduits = new TextField("", "nbProduits",20, TextArea.TEXT_CURSOR);
                 
@@ -134,13 +134,14 @@ public class AjoutCommande extends Form {
                                 -> {
 
                           
-                            if (Id.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
+                            //if (Id.getText().equals("")) {
+                                //Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
 
                             /*} else if (.isValid()) {
                                 Dialog.show("Erreur FIRSTNAME !", "il faut saisir des caracteres  !", "OK", null);*/
 
-                            } else if (NbProduits.getText().equals("")) {
+                            //}
+                            if (NbProduits.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
 
                             }/*else if (val_lastname.isValid()) {
@@ -159,15 +160,15 @@ public class AjoutCommande extends Form {
                                           
                                           
                                 Commande c = new Commande();
-                                //c.setId(Id.getText());
-                                //c.setNbProduits(nbProduits.getText());
+                                //c.setId(Integer.valueOf(Id.getText()));
+                                c.setNbProduits(Integer.valueOf(NbProduits.getText()));
                                
                                 // p.setNb_participants(Integer.valueOf(nb_participants.getText()));
                                // p.setNb_places(Integer.valueOf(nb_places.getText()));
                                
                                ServiceCommande sp = new ServiceCommande();
                                 Form previous = null;
-                               sp.affichageCommande();
+                               sp.Add(c, previous,res);
                                  Dialog.show("Ajout", "Ajout avec succés", "OK", null);
                                 //  String url = "http://localhost/pdf/ex.php";
 /*Button btn = new Button("hee");
@@ -210,7 +211,7 @@ btn.addActionListener(ll->{
         
         
         
-          this.add(Id).add(NbProduits).add(save);
+          this.add(NbProduits).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         

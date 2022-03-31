@@ -12,7 +12,15 @@ package com.mycompany.entity;
 public class Commande {
       
     private int id;
-    //private User idUser;
+
+    public User getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(User idUser) {
+        this.idUser = idUser;
+    }
+    private User idUser;
     private Produit idProduit;
     private int nbProduits;
 

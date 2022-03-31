@@ -62,7 +62,7 @@ public class CommandeFrom extends Form {
 	b7.setUIID("refresh"); 
         b7.addActionListener(l->new CommandeFrom(Current,res).show());
         add(b7);     
-             for (Commande c : new ServiceCommande().getAllCommandes()) {
+             for (Commande c : new ServiceCommande().AffichageCommande()) {
 
             this.add(addItem_Publicite(c,res));
 
@@ -114,25 +114,25 @@ public class CommandeFrom extends Form {
  MultiButton m = new MultiButton();
  //  String url = "http://localhost/image/"+c.getImagee();
    
-    // m.setTextLine1(c.getId());
-     // m.setTextLine2(c.getNbProduits());
+     m.setTextLine1(String.valueOf(c.getId()));
+      m.setTextLine2(String.valueOf(c.getNbProduits()));
       /* m.setTextLine4(String.valueOf(c.getNb_participants()));
       m.setText(String.valueOf(c.getNb_places()));
         m.setText(c.getLieu());
           m.setText(c.getType());*/
-      //   m.setEmblem(theme.getImage("arrow.png"));
+         m.setEmblem(theme.getImage("arrow.png"));
          
       m.setVisible(true);
         Button b5=new Button("supprimer Commande");
 	setVisible(true); 
-        Button b6=new Button("modifier Commande");
+        Button b6=new Button("Modifier Commande");
 	setVisible(true);  
-
         //b.addActionListener(e -> new AffichageActivite(res).show());
          add(b5);
          add(b6);
-       //  b6.addActionListener(l->new ModifierEvenementForm(res,c).show());
+         b6.addActionListener(l->new ModifierCommandeForm(res,c).show());
          
+        
         
        
 //Click delete icon

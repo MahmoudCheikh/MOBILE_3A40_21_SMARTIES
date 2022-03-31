@@ -50,7 +50,9 @@ public class ServiceAchat {
     
     
      //affichage des Commandes :
-    public ArrayList<Achat>affichageAchat(){
+    public ArrayList<Achat> affichageAchat(){
+               //affichage des Emplacement
+    
         ArrayList<Achat> result = new ArrayList<>();
         
         String url = PageWeb.BASE_URL+"achat/displayachats";
@@ -67,65 +69,16 @@ public class ServiceAchat {
                     List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapAchat.get("root");
                 
                 for(Map<String,Object> obj : listOfMaps) {
-                    Achat a = new Achat();
-                    float id = Float.parseFloat(obj.get("id").toString());
-                    //float idUser = Float.parseFloat(obj.get("idUser").toString());
-                    //float idProduit = Float.parseFloat(obj.get("idProduit").toString());
-                    float numeroClient = Float.parseFloat(obj.get("numeroClient").toString());
-                    
-                    a.setNomClient(obj.get("NomClient").toString());
-                a.setDate(obj.get("date").toString());
-                        
-                    
-//inserer les données dans une liste
-                     result.add(a);
-                }                
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
-    }
-
-    public ArrayList<Achat> getAllAchats() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-                //affichage des Emplacement
-    public ArrayList<Achat>AffichageAchat(){
-        ArrayList<Achat> result = new ArrayList<>();
-        
-        String url = PageWeb.BASE_URL+"achat/displayachats";
-        req.setUrl(url);
-        
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
-                
-                try{
-                    Map<String,Object>mapAchat = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
-                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapAchat.get("root");
-                
-                for(Map<String,Object> obj : listOfMaps) {
-                    Achat a = new Achat();
+                    Achat c = new Achat();
                     
                     float id = Float.parseFloat(obj.get("id").toString());
-                    a.setId((int) id);
-                    float NumeroClient = Float.parseFloat(obj.get("Numero Client").toString());
-                    a.setNumeroClient((int) NumeroClient);
-                                    a.setNomClient(obj.get("Nom Client").toString());
-                a.setDate(obj.get("Date").toString());
-
-                    
+                    c.setId((int) id);
+                    c.setDate(obj.get("date").toString());
+                    c.setNomClient(obj.get("nomClient").toString());
+                   c.setNumeroClient(  (int) obj.get("numeroClient"));
                     
                 //inserer les données dans une liste
-                result.add(a);
+                result.add(c);
                 }                
                 }
                 catch(Exception ex){
@@ -135,7 +88,10 @@ public class ServiceAchat {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return result;
+    
     }
+
+      
 
 
 public boolean delete(int id) {

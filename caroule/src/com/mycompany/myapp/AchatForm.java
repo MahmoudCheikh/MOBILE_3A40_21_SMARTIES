@@ -64,7 +64,7 @@ public class AchatForm extends Form {
 	b7.setUIID("refresh"); 
         b7.addActionListener(l->new CommandeFrom(Current,res).show());
         add(b7);     
-             for (Achat a : new ServiceAchat().getAllAchats()) {
+             for (Achat a : new ServiceAchat().affichageAchat()) {
 
             this.add(addItem_Publicite(a,res));
 
