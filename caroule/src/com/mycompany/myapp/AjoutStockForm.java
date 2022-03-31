@@ -14,9 +14,7 @@ import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Produit;
 import com.mycompany.entity.Stock;
-import com.mycompany.services.ServiceEvenement;
 import com.mycompany.services.ServiceStock;
 
 /**
@@ -81,9 +79,7 @@ public class AjoutStockForm extends Form{
                                 s.setQuantite(Integer.valueOf(quantite.getText()));
                                 s.setDisponibilite(disponibilite.getText());
                                 
-                                Produit idProduit = s.getIdProduit();
-                                
-                                s.setIdProduit((Produit) idProduit);
+                                s.setIdProduit(Integer.valueOf(IdProduit.getText()));
                                 
                                 ServiceStock sp = new ServiceStock();
                                 Form previous = null;

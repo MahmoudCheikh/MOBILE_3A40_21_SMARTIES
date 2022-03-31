@@ -35,27 +35,23 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Emplacement;
-import com.mycompany.entity.Produit;
-import com.mycompany.services.ServiceProduit;
+import com.mycompany.entity.Favoris;
 import java.util.ArrayList;
-import static java.util.Collections.list;
-import java.util.Map;
 
 /**
  *
  * @author PC
  */
-public class AffichageProduit extends BaseForm {
+public class AffichageFavoris extends BaseForm {
     Form current;
-    public ArrayList<Produit> Produit;
-    public ArrayList<Emplacement> Emplecement;
-    public AffichageProduit(Form previous,Resources res){
-       super("Produits", BoxLayout.y());
+    //public ArrayList<Produit> Produit;
+    public ArrayList<Favoris> Favoris;
+    public AffichageFavoris(Form previous,Resources res){
+       super("Favoris", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Liste Produits");
+        setTitle("Liste des Favoris");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -147,11 +143,11 @@ public class AffichageProduit extends BaseForm {
         new AffichageProduit(current,res).show();       
        
       }); 
-               Produit = ServiceProduit.getInstance().getAllProduits();
+               this.Favoris = ServiceProduit.getInstance().affichageFavoris();
        
-       for( Produit p : Produit){
+       for( Favoris f : this.Favoris){
           
-           addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix());
+           addButton(res.getImage("news-item-1.jpg"),f.getId()+ "\n" +f.getIdProduit()+ "\n" +f.getIdUser());
          } 
     tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     
@@ -161,7 +157,7 @@ public class AffichageProduit extends BaseForm {
       }); 
             
                         Favoris.addActionListener((ActionListener) (ActionEvent e) -> {
-        new AffichageFavoris(current,res).show();       
+        new AffichageFavoris(current,   res).show();       
        
       }); 
     }

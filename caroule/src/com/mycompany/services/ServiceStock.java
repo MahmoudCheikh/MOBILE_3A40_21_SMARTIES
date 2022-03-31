@@ -13,8 +13,6 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Emplacement;
-import com.mycompany.entity.Produit;
 import com.mycompany.entity.Stock;
 import com.mycompany.myapp.StockForm;
 import com.mycompany.utils.PageWeb;
@@ -29,7 +27,7 @@ import java.util.Map;
 public class ServiceStock {
     public ArrayList<Stock> Stock;
 
-    public static ServiceProduit instance = null;
+    public static ServiceStock instance = null;
     public boolean resultOK;
     private ConnectionRequest req;
 
@@ -37,9 +35,9 @@ public class ServiceStock {
         req = new ConnectionRequest();
     }
 
-    public static ServiceProduit getInstance() {
+    public static ServiceStock getInstance() {
         if (instance == null) {
-            instance = new ServiceProduit();
+            instance = new ServiceStock();
         }
         return instance;
     }
@@ -47,7 +45,7 @@ public class ServiceStock {
     //ajout
     
          public void AjouterStock(Stock s ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "AjouterStock?libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite()+"&idProduit="+s.getIdProduit();
+        String url = PageWeb.BASE_URL + "AjouterStock?libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite() + "&idProduit=" + 101;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -114,12 +112,11 @@ public class ServiceStock {
                 float id = Float.parseFloat(obj.get("id").toString());
                 float prix = Float.parseFloat(obj.get("prix").toString());
 //                float quantite = Float.parseFloat(obj.get("quantite").toString());
-                Produit idProduit = s.getIdProduit();
-                s.setId((int) id);
+
 
                 s.setLibelle(obj.get("libelle").toString());
 //                s.setDisponibilite(obj.get("disponibilite").toString());
-                s.setIdProduit((Produit) idProduit);
+                
                 s.setPrix((int)prix);
                // s.setQuantite((int) quantite);
                
@@ -140,7 +137,7 @@ public class ServiceStock {
     public ArrayList<Stock> getAllStocks() {
         
  req = new ConnectionRequest();
-        String url = PageWeb.BASE_URL +"display";
+        String url = PageWeb.BASE_URL +"displayStock";
         System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
