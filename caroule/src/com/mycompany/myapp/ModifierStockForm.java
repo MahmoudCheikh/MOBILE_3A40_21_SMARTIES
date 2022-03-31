@@ -74,9 +74,7 @@ public class ModifierStockForm extends Form {
                                 s.setPrix(Integer.valueOf(prix.getText()));
                                 s.setQuantite(Integer.valueOf(quantite.getText()));
                                 s.setDisponibilite(dispo.getText());
-                                Produit idProduit = s.getIdProduit();
-                                
-                                s.setIdProduit((Produit) idProduit);
+                                s.setIdProduit(Integer.valueOf(idProd.getText()));
                                
                                 ServiceStock sp = new ServiceStock();
                                 Form previous = null;

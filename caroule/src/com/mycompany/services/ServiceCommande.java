@@ -83,12 +83,11 @@ public class ServiceCommande {
         return result;
     }
 
-    public ArrayList<Commande> getAllCommandes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    //affichage des Emplacement
-    public ArrayList<Commande> AffichageCommande() {
+  
+    
+    
+                //affichage des Emplacement
+    public ArrayList<Commande>AffichageCommande(){
         ArrayList<Commande> result = new ArrayList<>();
 
         String url = PageWeb.BASE_URL + "commande/displayall";
@@ -140,9 +139,11 @@ public class ServiceCommande {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-
-    public void Add(Commande c, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "commande/ajoutMobilecomm?NbProduits=" + c.getNbProduits();
+   
+    
+    
+    public void Add(Commande c ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "commande/ajoutMobilecomm?NbProduits="+c.getNbProduits()+"&idProduit="+c.getIdProduit()+"&idUser="+c.getIdUser();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -155,8 +156,8 @@ public class ServiceCommande {
 
     }
 
-    public void Update(Commande c, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "commande/modifiermobilecomm?NbProduits=" + c.getNbProduits();
+ public void Update(Commande c ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "commande/modifiermobilecomm?NbProduits="+c.getNbProduits()+"&idProduit="+c.getIdProduit();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

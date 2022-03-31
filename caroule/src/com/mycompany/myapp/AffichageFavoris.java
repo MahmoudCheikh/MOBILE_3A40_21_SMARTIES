@@ -35,25 +35,24 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Commande;
-import com.mycompany.services.ServiceCommande;
+import com.mycompany.entity.Favoris;
+import com.mycompany.services.ServicesFavoris;
 import java.util.ArrayList;
-import static java.util.Collections.list;
-import java.util.Map;
 
 /**
  *
- * @author Lenovo
+ * @author PC
  */
-public class AffichageCommande extends BaseForm {
+public class AffichageFavoris extends BaseForm {
     Form current;
-public ArrayList<Commande> Commandes;
-    public AffichageCommande(Form previous,Resources res) {
-        super("liste Commande", BoxLayout.y());
+    //public ArrayList<Produit> Produit;
+    public ArrayList<Favoris> Favoris;
+    public AffichageFavoris(Form previous,Resources res){
+       super("Favoris", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Liste Commande");
+        setTitle("Liste des Favoris");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -103,60 +102,70 @@ public ArrayList<Commande> Commandes;
         
         Component.setSameSize(radioContainer, spacer1, spacer2);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
-        tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_EXIT_TO_APP, e -> new NewsfeedForm(res).show());
+        
         ButtonGroup barGroup = new ButtonGroup();
-       // RadioButton all = RadioButton.createToggle("All", barGroup);
-        //all.setUIID("SelectBar");
-        RadioButton Commande = RadioButton.createToggle("Commande", barGroup);
-        Commande.setUIID("SelectBar");
-        RadioButton Achat = RadioButton.createToggle("Achat", barGroup);
-        Achat.setUIID("SelectBar");
+        RadioButton Produits = RadioButton.createToggle("Tous les Produits", barGroup);
+        Produits.setUIID("SelectBar");
+        
+        RadioButton Favoris = RadioButton.createToggle("Les Favoris", barGroup);
+        Favoris.setUIID("SelectBar");
+        
+        RadioButton Emplacement = RadioButton.createToggle("Emplacement", barGroup);
+        Emplacement.setUIID("SelectBar");
+               
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(2, Commande,Achat),
+                GridLayout.encloseIn(3, Produits, Favoris, Emplacement),
                 FlowLayout.encloseBottom(arrow)
         ));
         
-       Commande.setSelected(true);
+        Favoris.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(Commande, arrow);
+            updateArrowPosition(Favoris, arrow);
         });
-        //bindButtonSelection(all, arrow);
-        bindButtonSelection(Commande, arrow);
-        bindButtonSelection(Achat, arrow);
-        //bindButtonSelection(myFavorite, arrow);
+        
+        bindButtonSelection(Produits, arrow);
+        bindButtonSelection(Favoris, arrow);
+        bindButtonSelection(Emplacement, arrow);
+        
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-   
-          Commande.addActionListener((ActionListener) (ActionEvent e) -> {
-        new AffichageCommande(current,res).show();       
+
+       SpanLabel sp = new SpanLabel();
+
+       ///Appel affichage données :***********************************************************************************************************
+        Produits.addActionListener((ActionListener) (ActionEvent e) -> {
+        new AffichageProduit(current,res).show();       
        
       }); 
-                   Achat.addActionListener((ActionListener) (ActionEvent e) -> {
-        new AffichageAchat(current,res).show();       
+               this.Favoris = ServicesFavoris.getInstance().affichageFavoris();
        
-      });    
-       SpanLabel sp = new SpanLabel();
-Commandes =ServiceCommande.getInstance().AffichageCommande();
-for (Commande c :Commandes)
-{ 
-    addButton(res.getImage("news-item-1.jpg"),c.getId(),c.getNbProduits());
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+       for( Favoris f : this.Favoris){
+          
+           addButton(res.getImage("news-item-1.jpg"),f.getId()+ "\n");
+         } 
+    tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     
-
-}
- // add(sp);   
-
- 
+            Emplacement.addActionListener((ActionListener) (ActionEvent e) -> {
+        new AffichageEmplacement(res).show();       
+       
+      }); 
+            
+                        Favoris.addActionListener((ActionListener) (ActionEvent e) -> {
+        new AffichageFavoris(current,   res).show();       
+       
+      }); 
     }
-    
-    private void updateArrowPosition(Button b, Label arrow) {
+        
+        //****************************************
+
+private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
         arrow.getParent().repaint();
         
@@ -195,22 +204,20 @@ for (Commande c :Commandes)
                             FlowLayout.encloseIn(likes, comments),
                             spacer
                         )
-                        
                 )
-                    
             );
- 
+
         swipe.addTab("", page1);
     }
-   
- private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount, Resources res) {
-       int height = Display.getInstance().convertToPixels(11.5f);
+   private void addButton(Image img, String title) {
+    
+int height = Display.getInstance().convertToPixels(11.5f);
        int width = Display.getInstance().convertToPixels(14f);
        Button image = new Button(img.fill(width, height));
        image.setUIID("Label");
        Container cnt = BorderLayout.west(image);
        cnt.setLeadComponent(image);
-       TextArea ta = new TextArea();
+       TextArea ta = new TextArea(title);
        ta.setUIID("NewsTopLine");
        ta.setEditable(false);
 
@@ -232,7 +239,7 @@ for (Commande c :Commandes)
                        BoxLayout.encloseX()
                ));
        add(cnt);
-       image.addActionListener(e -> ToastBar.showMessage("", FontImage.MATERIAL_INFO));
+       image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
         
         
     }
@@ -243,9 +250,50 @@ for (Commande c :Commandes)
             }
         });
     }
-    
- 
-  
+   /* private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount) {
+       int height = Display.getInstance().convertToPixels(11.5f);
+       int width = Display.getInstance().convertToPixels(14f);
+       Button image = new Button(img.fill(width, height));
+       image.setUIID("Label");
+       Container cnt = BorderLayout.west(image);
+       cnt.setLeadComponent(image);
+   
+       TextArea ta = new TextArea(title);
+       ta.setUIID("NewsTopLine");
+       ta.setEditable(false);
 
-  
+       Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
+       likes.setTextPosition(RIGHT);
+       if(!liked) {
+           FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
+       } else {
+           Style s = new Style(likes.getUnselectedStyle());
+           s.setFgColor(0xff2d55);
+           FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
+           likes.setIcon(heartImage);
+       }
+       Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
+       FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
+       
+       
+       cnt.add(BorderLayout.CENTER, 
+               BoxLayout.encloseY(
+                       ta,
+                       BoxLayout.encloseX(likes, comments)
+               ));
+       add(cnt);
+       image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
+   }
+    
+    private void bindButtonSelection(Button b, Label arrow) {
+        b.addActionListener(e -> {
+            if(b.isSelected()) {
+                updateArrowPosition(b, arrow);
+            }
+        });
+    }*/
+    
+    
+    
+    
 }

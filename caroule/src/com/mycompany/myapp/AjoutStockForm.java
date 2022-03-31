@@ -81,9 +81,7 @@ public class AjoutStockForm extends Form{
                                 s.setQuantite(Integer.valueOf(quantite.getText()));
                                 s.setDisponibilite(disponibilite.getText());
                                 
-                                Produit idProduit = s.getIdProduit();
-                                
-                                s.setIdProduit((Produit) idProduit);
+                                s.setIdProduit(Integer.valueOf(IdProduit.getText()));
                                 
                                 ServiceStock sp = new ServiceStock();
                                 Form previous = null;

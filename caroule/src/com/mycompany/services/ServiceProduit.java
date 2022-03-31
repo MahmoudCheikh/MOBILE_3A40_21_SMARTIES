@@ -171,7 +171,7 @@ public ArrayList<Produit> Produit;
         
         //Ajouter un produit
  public void AjouterProduit(Produit p ,Form previous,Resources res ) {
-        String url = PageWeb.BASE_URL + "/AjouterProduit?libelle="+p.getLibelle()+"&description="+p.getDescription()+"&image="+p.getImage()+"&prix="+p.getPrix()+"&type="+p.getType();
+        String url = PageWeb.BASE_URL + "AjouterProduit?libelle="+p.getLibelle()+"&description="+p.getDescription()+"&image="+p.getImage()+"&prix="+p.getPrix()+"&type="+p.getType();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

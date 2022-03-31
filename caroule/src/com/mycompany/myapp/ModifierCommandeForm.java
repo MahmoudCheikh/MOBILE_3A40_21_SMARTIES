@@ -83,7 +83,7 @@ public class ModifierCommandeForm extends Form {
                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
                }
            });
-            this.add(Id).add(nbProduits).add(modif);
+            this.add(nbProduits).add(modif);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         

@@ -136,13 +136,11 @@ public ArrayList<Achat> Achats;
         
     
        SpanLabel sp = new SpanLabel();
-Achats =ServiceAchat.getInstance().affichageAchat();
+Achats=ServiceAchat.getInstance().affichageAchat();
 for (Achat a :Achats)
 { 
-    addButton(res.getImage("news-item-1.jpg"),a.getId() +"\n" +a.getNomClient().toString()+ "\n" +a.getDate().toString());
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
-    
-           
+   addButton(res.getImage("news-item-1.jpg"),a.getId()+ "\n" +a.getDate()+ "\n" +a.getNomClient()+ "\n" +a.getNumeroClient(), false, 26, 32);
+         
 }
  // add(sp);   
 
@@ -196,9 +194,8 @@ for (Achat a :Achats)
         swipe.addTab("", page1);
     }
    
- private void addButton(Image img, String title) {
-    
-int height = Display.getInstance().convertToPixels(11.5f);
+ private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount) {
+       int height = Display.getInstance().convertToPixels(11.5f);
        int width = Display.getInstance().convertToPixels(14f);
        Button image = new Button(img.fill(width, height));
        image.setUIID("Label");
@@ -207,29 +204,30 @@ int height = Display.getInstance().convertToPixels(11.5f);
        TextArea ta = new TextArea(title);
        ta.setUIID("NewsTopLine");
        ta.setEditable(false);
-
-       Label likes = new Label("NewsBottomLine");
+        
+       Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
        likes.setTextPosition(RIGHT);
-       
+       if(!liked) {
+           FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
+       } else {
            Style s = new Style(likes.getUnselectedStyle());
            s.setFgColor(0xff2d55);
            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
            likes.setIcon(heartImage);
-       
-       Label comments = new Label( "NewsBottomLine");
+       }
+       Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
        
        
        cnt.add(BorderLayout.CENTER, 
                BoxLayout.encloseY(
                        ta,
-                       BoxLayout.encloseX()
+                       BoxLayout.encloseX(likes, comments)
                ));
        add(cnt);
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
         
-        
-    }
+   }
        private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {

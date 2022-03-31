@@ -159,6 +159,11 @@ public class AffichageProduit extends BaseForm {
         new AffichageEmplacement(res).show();       
        
       }); 
+            
+                        Favoris.addActionListener((ActionListener) (ActionEvent e) -> {
+        new AffichageFavoris(current,res).show();       
+       
+      }); 
     }
         
         //****************************************

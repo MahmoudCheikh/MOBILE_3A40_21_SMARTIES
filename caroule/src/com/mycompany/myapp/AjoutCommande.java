@@ -159,8 +159,8 @@ public class AjoutCommande extends Form {
                                           
                                           
                                 Commande c = new Commande();
-                                //c.setId(Id.getText());
-                                //c.setNbProduits(nbProduits.getText());
+                                //c.setId(Integer.valueOf(Id.getText()));
+                                c.setNbProduits(Integer.valueOf(NbProduits.getText()));
                                
                                 // p.setNb_participants(Integer.valueOf(nb_participants.getText()));
                                // p.setNb_places(Integer.valueOf(nb_places.getText()));
@@ -168,6 +168,7 @@ public class AjoutCommande extends Form {
                                ServiceCommande sp = new ServiceCommande();
                                 Form previous = null;
                                sp.affichageCommande();
+                               sp.Add(c, previous,res);
                                  Dialog.show("Ajout", "Ajout avec succés", "OK", null);
                                 //  String url = "http://localhost/pdf/ex.php";
 /*Button btn = new Button("hee");
@@ -210,7 +211,7 @@ btn.addActionListener(ll->{
         
         
         
-          this.add(Id).add(NbProduits).add(save);
+          this.add(NbProduits).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         

@@ -15,9 +15,18 @@ public class Stock {
     private String libelle;
     private int prix;
     private int quantite;
-    private Produit IdProduit;
+    private int IdProduit;
     private String disponibilite;
     private Emplacement emplacement;
+
+    public int getIdProduit() {
+        return IdProduit;
+    }
+
+    public void setIdProduit(int IdProduit) {
+        this.IdProduit = IdProduit;
+    }
+    
 
     public int getId() {
         return id;
@@ -51,13 +60,6 @@ public class Stock {
         this.quantite = quantite;
     }
 
-    public Produit getIdProduit() {
-        return IdProduit;
-    }
-
-    public void setIdProduit(Produit IdProduit) {
-        this.IdProduit = IdProduit;
-    }
 
     public String getDisponibilite() {
         return disponibilite;
@@ -75,7 +77,7 @@ public class Stock {
         this.emplacement = emplacement;
     }
 
-    public Stock(int id, String libelle, int prix, int quantite, Produit IdProduit, String disponibilite) {
+    public Stock(int id, String libelle, int prix, int quantite, int IdProduit, String disponibilite) {
         this.id = id;
         this.libelle = libelle;
         this.prix = prix;
@@ -84,7 +86,7 @@ public class Stock {
         this.disponibilite = disponibilite;
     }
 
-    public Stock(String libelle, int prix, int quantite, Produit IdProduit, String disponibilite) {
+    public Stock(String libelle, int prix, int quantite, int IdProduit, String disponibilite) {
         this.libelle = libelle;
         this.prix = prix;
         this.quantite = quantite;

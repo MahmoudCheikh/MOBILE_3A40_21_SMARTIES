@@ -148,7 +148,7 @@ public class DetailSujet extends BaseForm {
         }
         // add(sp);   
 
-    }
+    } 
 
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
