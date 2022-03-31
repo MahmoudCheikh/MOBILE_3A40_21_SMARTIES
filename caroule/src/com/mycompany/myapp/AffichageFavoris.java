@@ -36,6 +36,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Favoris;
+import com.mycompany.services.ServiceProduit;
 import java.util.ArrayList;
 
 /**
