@@ -29,6 +29,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.mycompany.services.ServiceUser;
 
 /**
  * Sign in UI
@@ -71,7 +72,8 @@ public class SignInForm extends BaseForm {
         content.setScrollableY(true);
         add(BorderLayout.SOUTH, content);
         signIn.requestFocus();
-        signIn.addActionListener(e -> new NewsfeedForm(res).show());
+        //signIn.addActionListener(e -> new NewsfeedForm(res).show());
+        signIn.addActionListener(e -> ServiceUser.getInstance().signin(username.getText().toString(), password.getText().toString() ,res));
     }
     
 }
