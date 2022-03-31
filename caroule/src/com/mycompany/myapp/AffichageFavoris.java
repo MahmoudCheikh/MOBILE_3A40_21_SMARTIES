@@ -36,6 +36,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Favoris;
+import com.mycompany.services.ServicesFavoris;
 import java.util.ArrayList;
 
 /**
@@ -119,11 +120,11 @@ public class AffichageFavoris extends BaseForm {
                 FlowLayout.encloseBottom(arrow)
         ));
         
-        Produits.setSelected(true);
+        Favoris.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(Produits, arrow);
+            updateArrowPosition(Favoris, arrow);
         });
         
         bindButtonSelection(Produits, arrow);
@@ -143,11 +144,11 @@ public class AffichageFavoris extends BaseForm {
         new AffichageProduit(current,res).show();       
        
       }); 
-               this.Favoris = ServiceProduit.getInstance().affichageFavoris();
+               this.Favoris = ServicesFavoris.getInstance().affichageFavoris();
        
        for( Favoris f : this.Favoris){
           
-           addButton(res.getImage("news-item-1.jpg"),f.getId()+ "\n" +f.getIdProduit()+ "\n" +f.getIdUser());
+           addButton(res.getImage("news-item-1.jpg"),f.getId()+ "\n");
          } 
     tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     
