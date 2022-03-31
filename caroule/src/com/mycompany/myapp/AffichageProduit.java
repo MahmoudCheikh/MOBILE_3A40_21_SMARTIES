@@ -153,7 +153,7 @@ public class AffichageProduit extends BaseForm {
           
            addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix());
          } 
-    tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_EXIT_TO_APP, e -> new NewsfeedForm(res).show());
+    tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     
             Emplacement.addActionListener((ActionListener) (ActionEvent e) -> {
         new AffichageEmplacement(res).show();       

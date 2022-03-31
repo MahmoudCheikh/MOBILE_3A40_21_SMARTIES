@@ -17,7 +17,7 @@ public class Activite {
     private String nom;
     private String description;
     private String image;
-    private Evenement idEvenement; 
+    private int idEvenement; 
     //les getters and setters 
 
     public int getId() {
@@ -54,18 +54,18 @@ public class Activite {
 
   
 
-    public Evenement getIdEvenement() {
+    public int getIdEvenement() {
         return idEvenement;
     }
 
-    public void setIdEvenement(Evenement idEvenement) {
+    public void setIdEvenement(int idEvenement) {
         this.idEvenement = idEvenement;
     }
 
    
     //les constructeurs 
 
-    public Activite(int id, String nom, String description, String image, Evenement idEvenement) {
+    public Activite(int id, String nom, String description, String image, int idEvenement) {
         this.id = id;
         this.nom = nom;
         this.description = description;
@@ -73,7 +73,7 @@ public class Activite {
         this.idEvenement = idEvenement;
     }
 
-    public Activite(String nom, String description, String image, Evenement idEvenement) {
+    public Activite(String nom, String description, String image, int idEvenement) {
         this.nom = nom;
         this.description = description;
         this.image = image;

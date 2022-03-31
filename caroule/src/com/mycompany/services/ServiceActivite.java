@@ -12,7 +12,10 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.ActiviteForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ public class ServiceActivite {
     public boolean resultOK;
     private ConnectionRequest req;
 
-    private ServiceActivite() {
+    public ServiceActivite() {
         req = new ConnectionRequest();
     }
 
@@ -59,12 +62,9 @@ public ArrayList<Activite> parseActivites(String jsonText) {
                 h.setNom(obj.get("nom").toString());
                 h.setDescription(obj.get("description").toString());
                 h.setImage(obj.get("image").toString());
-               
-                //h.setNb_participants((int) nb_participants);
-                //h.setNb_places((int) nb_places);
-               
+               // float IdEvenement = Float.parseFloat(obj.get("IdEvenement").toString());
+              //  h.setIdEvenement(IdEvenement);
 
-              //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
                
 
                 Activites.add(h);
@@ -78,7 +78,7 @@ public ArrayList<Activite> parseActivites(String jsonText) {
  public ArrayList<Activite> getAllActivites() {
         
  req = new ConnectionRequest();
-        String url = PageWeb.BASE_URL +"activite/afficherAct";
+        String url = PageWeb.BASE_URL +"activite/afficherActt";
         System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
@@ -91,5 +91,68 @@ public ArrayList<Activite> parseActivites(String jsonText) {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return Activites;
+    }
+  public ArrayList<Activite> getallActivites(int event) {
+        
+ req = new ConnectionRequest();
+        String url = PageWeb.BASE_URL +"activite/afficherAct?event=" + event;
+        System.out.println("===>" + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                Activites = parseActivites(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return Activites;
+    }
+ public void Add(Activite a ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "activite/addAct?nom="+a.getNom()+"&description="+a.getDescription()+"&image="+a.getImage()+"&idEvenement="+a.getIdEvenement();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        new ActiviteForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    
+    }
+   public boolean delete(int id) {
+        String url = PageWeb.BASE_URL + "activite/deleteAct/"+id;
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    return resultOK;
+    }
+      public void Update(Activite a ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "activite/updateAct?id="+a.getId()+"&nom="+a.getNom()+"&description="+a.getDescription()+"&image="+a.getImage();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        new ActiviteForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    
     }
 }

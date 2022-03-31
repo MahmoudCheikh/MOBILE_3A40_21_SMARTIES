@@ -49,7 +49,7 @@ public class AffichageActivite extends BaseForm{
     Form current;
 public ArrayList<Activite> Activites;
 public ArrayList<Evenement> Evenements;
-    public AffichageActivite(Resources res) {
+    public AffichageActivite(int idevent,Resources res) {
         super("liste activites", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -139,9 +139,8 @@ public ArrayList<Evenement> Evenements;
         
     
        SpanLabel sp = new SpanLabel();
-Activites =ServiceActivite.getInstance().getAllActivites();
 Evenements =ServiceEvenement.getInstance().getAllEvenements();
-
+Activites =ServiceActivite.getInstance().getallActivites(idevent);
 
     for (Activite e :Activites)
     { 

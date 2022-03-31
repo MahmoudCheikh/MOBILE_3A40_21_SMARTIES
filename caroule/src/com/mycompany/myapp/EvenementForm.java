@@ -31,6 +31,7 @@ import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.MyApplication;
 import com.mycompany.entity.Evenement;
 import com.mycompany.services.ServiceEvenement;
+import java.util.ArrayList;
 /**
  *
  * @author Lenovo
@@ -72,6 +73,7 @@ public class EvenementForm extends Form {
         });
 
         this.getToolbar().addSearchCommand(e -> {
+               
             String text = (String) e.getSource();
             if (text == null || text.length() == 0) {
                 // clear search
@@ -87,8 +89,7 @@ public class EvenementForm extends Form {
                     String line1 = mb.getTextLine1();
                     String line2 = mb.getTextLine2();
                   
-                    /*boolean show = line1 != null && line1.toLowerCase().indexOf(text) > -1
-                            || line2 != null && line2.toLowerCase().indexOf(text) > -1;*/
+                    
                    mb.setHidden(false);
                     mb.setVisible(true);
                 }
@@ -138,7 +139,7 @@ public class EvenementForm extends Form {
 //Click delete icon
 b5.addPointerPressedListener(l -> {
 Dialog dig = new Dialog("Suprression");
-if(dig.show("Suppression", "Vous voulez supprimezr ce reclamation ?","Annuler","Cui")) {
+if(dig.show("Suppression", "Vous voulez supprimer cet evenement ?","Annuler","Cui")) {
 dig.dispose ();
 }
 else {
@@ -150,12 +151,7 @@ new EvenementForm(Current,res);
 });
 Button skip = new Button("back");
         m.addActionListener(e -> {
-
             Form f2 = new Form("Detail",BoxLayout.y());
-      
-                 
-     
-     
             f2.add("nom : "+c.getNom()).add("date debut : "+c.getDateD()).add("date fin : "+c.getDateF()).add("type : "+c.getType()).add("lieu : "+c.getLieu()).add("nombre participants : "+c.getNb_participants()).add("nombre places : "+c.getNb_places()).add(skip);   
        
  f2.show();

@@ -46,6 +46,8 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Activite;
+import com.mycompany.entity.Sujet;
+
 
 
 /**
@@ -118,12 +120,14 @@ public class NewsfeedForm extends BaseForm {
         Evenement.setUIID("SelectBar");
         RadioButton Produit = RadioButton.createToggle("Produit", barGroup);
         Produit.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
+        RadioButton Commande = RadioButton.createToggle("Commande", barGroup);
+        Commande.setUIID("SelectBar");
+        RadioButton Forum = RadioButton.createToggle("Forum", barGroup);
+        Forum.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all,Evenement, Produit, myFavorite),
+                GridLayout.encloseIn(5, all,Evenement, Produit, Commande , Forum),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -136,7 +140,8 @@ public class NewsfeedForm extends BaseForm {
         bindButtonSelection(all, arrow);
         bindButtonSelection(Evenement, arrow);
         bindButtonSelection(Produit, arrow);
-        bindButtonSelection(myFavorite, arrow);
+        bindButtonSelection(Commande, arrow);
+        bindButtonSelection(Forum, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
@@ -155,6 +160,12 @@ public class NewsfeedForm extends BaseForm {
         Evenement.addActionListener( (e) -> {
             new AfficherEvenement(current,res).show();
 
+        });
+         Commande.addActionListener((ActionListener) (ActionEvent e) -> {
+            new AffichageCommande(current,res).show();
+        });
+         Forum.addActionListener((ActionListener) (ActionEvent e) -> {
+            new AffichageSujet(current,res).show();
         });
        /*  Activite.addActionListener( (e) -> {
             new AffichageActivite(current,res).show();

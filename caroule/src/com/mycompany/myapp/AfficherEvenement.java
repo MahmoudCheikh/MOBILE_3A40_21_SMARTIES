@@ -5,6 +5,8 @@
  */
 package com.mycompany.myapp;
 
+import com.codename1.components.InfiniteProgress;
+import com.codename1.components.MultiButton;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
@@ -16,6 +18,7 @@ import static com.codename1.ui.Component.CENTER;
 import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -25,6 +28,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -48,6 +52,7 @@ import java.util.Map;
  */
 public class AfficherEvenement extends BaseForm {
     Form current;
+    Evenement c;
 public ArrayList<Evenement> Evenements;
     public AfficherEvenement(Form previous,Resources res) {
         super("liste evenements", BoxLayout.y());
@@ -58,8 +63,7 @@ public ArrayList<Evenement> Evenements;
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
-        tb.addSearchCommand(e -> {});
-        
+     
         Tabs swipe = new Tabs();
 
         Label spacer1 = new Label();
@@ -137,18 +141,30 @@ public ArrayList<Evenement> Evenements;
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
         
-    
+ 
+/*this.getToolbar().addSearchCommand(e -> {
+    String text = (String) e.getSource(); 
+    if(text==c.getNom()){
+    ServiceEvenement sp = new ServiceEvenement();          
+    sp.rechercheEvent(c);
+    addButton(res.getImage("news-item-1.jpg"),c.getNom().toString()+ "\n" +c.getDateD().toString()+ "\n" +c.getDateF().toString()+ "\n" +c.getLieu().toString()+"\n" +c.getType().toString()+"\n" +c.getNb_participants()+"\n" +c.getNb_places(), false, 26, 32,res);
+    Dialog.show("modifier", "modifier avec succés", "OK", null);
+}    
+}
+    );*/
+
+  this.show();
+
        SpanLabel sp = new SpanLabel();
 Evenements =ServiceEvenement.getInstance().getAllEvenements();
+ 
 for (Evenement e :Evenements)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNom().toString()+ "\n" +e.getDateD().toString()+ "\n" +e.getDateF().toString()+ "\n" +e.getLieu().toString()+"\n" +e.getType().toString()+"\n" +e.getNb_participants()+"\n" +e.getNb_places(), false, 26, 32,res);
+{ addButton(res.getImage("news-item-1.jpg"),e.getNom().toString()+ "\n" +e.getDateD().toString()+ "\n" +e.getDateF().toString()+ "\n" +e.getLieu().toString()+"\n" +e.getType().toString()+"\n" +e.getNb_participants()+"\n" +e.getNb_places(), false, 26, 32,res,+e.getId());
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
     
-           
 }
  // add(sp);   
 
- 
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -198,7 +214,7 @@ for (Evenement e :Evenements)
         swipe.addTab("", page1);
     }
    
-  private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount, Resources res) {
+  private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount, Resources res,int idevent) {
        int height = Display.getInstance().convertToPixels(11.5f);
        int width = Display.getInstance().convertToPixels(14f);
        Button image = new Button(img.fill(width, height));
@@ -232,7 +248,7 @@ for (Evenement e :Evenements)
         Button b=new Button("Afficher Activité");
 	getContentPane().add(b);
 	setVisible(true);      
-        b.addActionListener(e -> new AffichageActivite(res).show());
+        b.addActionListener(e -> new AffichageActivite(idevent,res).show());
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
         
    }

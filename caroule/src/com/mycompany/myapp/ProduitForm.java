@@ -30,15 +30,28 @@ public class ProduitForm extends Form {
 
     Resources theme = UIManager.initFirstTheme("/theme");
 //  Resources themee = UIManager.initFirstTheme("/theme_1");
+    Form Current;
     public ProduitForm(Form previous,Resources res)
     {
            super("Produits Ajoutés",BoxLayout.y());
              this.add(new InfiniteProgress());
+              Current=this;
         Display.getInstance().scheduleBackgroundTask(() -> {
             // this will take a while...
 
             Display.getInstance().callSerially(() -> {
                 this.removeAll();
+                
+                Button skip = new Button("back");
+                 skip.setUIID("back");
+        skip.addActionListener(e -> new AjoutProduitForm(res).show());
+      add(skip);
+        Button b2=new Button("REFRESH");
+	b2.setUIID("refresh"); 
+        b2.addActionListener(l->new ProduitForm(Current,res).show());
+        add(b2);  
+                
+                
              for (Produit p : new ServiceProduit().getAllProduits()) {
 
             this.add(addItem_Publicite(p));
@@ -106,63 +119,53 @@ public class ProduitForm extends Form {
       //m.setVisible(true);
       
 /********************************************************************************************************************/      
-         Button b5=new Button("supprimer event");
+         Button b=new Button("supprimer Produit");
 	setVisible(true); 
-        Button b6=new Button("modifier event");
+        Button b1=new Button("modifier Produit");
 	setVisible(true);  
         //b.addActionListener(e -> new AffichageActivite(res).show());
-         add(b5);
-         add(b6);
+         add(b);
+         add(b1);
         Resources res = null;
          
-         b6.addActionListener(l->new ModifierProduitForm(res,p).show());
+         b1.addActionListener(l->new ModifierProduitForm(res,p).show());
        
 //Click delete icon
-b5.addPointerPressedListener(l -> {
+b.addPointerPressedListener(l -> {
     Dialog dig = new Dialog("Suprression");
-if(dig.show("Suppression", "Vous voulez supprimeer ce produit ?","Annuler","Oui")) {
-//ProduitForm(Form previous,Resources res).show;
-dig.dispose ();
+        if(dig.show("Suppression", "Vous voulez supprimeer ce produit ?","Annuler","Oui")) {
+        //ProduitForm(Form previous,Resources res).show;
+        dig.dispose ();
 
-}
-else {
-dig.dispose();
-if (ServiceProduit.getInstance().delete(p.getId())) {
-refreshTheme();
-}
+        }
+        else {
+        dig.dispose();
+        if (ServiceProduit.getInstance().delete(p.getId())) {
+        refreshTheme();
+        }
 }
 });
 /**************************************************************************************************************/
-         
+  Button skip = new Button("<< back");       
         m.addActionListener(e -> {
 
             Form f2 = new Form("Detail",BoxLayout.y());
            
          
         
-            f2.add("libelle : "+p.getLibelle()).add("description : "+p.getDescription()).add("Type : "+p.getType()).add("prix : "+p.getPrix());
-        String url2 = "http://localhost/image/"+p.getImage();
+            f2.add("libelle : "+p.getLibelle()).add("description : "+p.getDescription()).add("type : "+p.getType()).add("image : "+p.getImage()).add("prix : "+p.getPrix()).add(skip);
+       /* String url2 = "http://localhost/image/"+p.getImage();
 
   Image imge2;
         EncodedImage enc2;
         enc2 = EncodedImage.createFromImage(theme.getImage("bike3.png"), false);
         imge2 = URLImage.createToStorage(enc2, url2, url2);
-        f2.add(imge2);
-           
-      /* Personnes p=new Personnes();
-       p.setEmail(SessionManager.getEmail());*/
-         
-     /*  Button btnretour=new Button();
-      btnretour.setUIID("selectBar1");
-       btnretour.addActionListener(w -> new Brainovationuser(theme,p.getEmail()).show());
-           
-             f2.getToolbar().addCommandToOverflowMenu("back", null, ev -> {
-            new Brainovationuser(themee,p.getEmail()).show();
-        }); */
+        f2.add(imge2);*/
+
  f2.show();
         });
       
-     
+     skip.addActionListener(e -> new AjoutProduitForm(res).show());
 
      
         return m;

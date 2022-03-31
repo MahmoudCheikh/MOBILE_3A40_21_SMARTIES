@@ -13,7 +13,7 @@ public class Favoris {
     
     private int id;
     private int IdProduit;
-    private int IdUser;
+    private User idUser;
     
 
     public int getId() {
@@ -32,20 +32,20 @@ public class Favoris {
         this.IdProduit = IdProduit;
     }
 
-    public int getIdUser() {
-        return IdUser;
+    public User getIdUser() {
+        return idUser;
     }
 
-    public void setIdUser(int IdUser) {
-        this.IdUser = IdUser;
+    public void setIdUser(User IdUser) {
+        this.idUser = IdUser;
     }
 
     //constructeur
 
-    public Favoris(int id, int IdProduit, int IdUser) {
+    public Favoris(int id, int IdProduit, User IdUser) {
         this.id = id;
         this.IdProduit = IdProduit;
-        this.IdUser = IdUser;
+        this.idUser = IdUser;
     }
 
     public Favoris(int id, int IdProduit) {

@@ -34,8 +34,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Emplacement;
-
-import com.mycompany.services.ServiceProduit;
+import com.mycompany.services.ServiceEmplacement;
 import java.util.ArrayList;
 
 /**
@@ -135,7 +134,7 @@ public ArrayList<Emplacement> Emplacement;
         
     
        SpanLabel sp = new SpanLabel();
-Emplacement =ServiceProduit.getInstance().affichageEmplecement();
+Emplacement = ServiceEmplacement.getInstance().affichageEmplacement();
 
     for (Emplacement e :Emplacement)
     { 
