@@ -42,7 +42,7 @@ public class Favoris {
 
     //constructeur
 
-    public Favoris(int id, int IdProduit, User IdUser) {
+    public Favoris(int id, int IdProduit, int IdUser) {
         this.id = id;
         this.IdProduit = IdProduit;
         this.idUser = IdUser;

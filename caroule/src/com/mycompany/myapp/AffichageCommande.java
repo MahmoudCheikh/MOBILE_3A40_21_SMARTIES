@@ -146,7 +146,7 @@ public ArrayList<Commande> Commandes;
 Commandes =ServiceCommande.getInstance().AffichageCommande();
 for (Commande c :Commandes)
 { 
-    addButton(res.getImage("news-item-1.jpg"),c.getId(),c.getNbProduits());
+//    addButton(res.getImage("news-item-1.jpg"),c.getId(),c.getNbProduits());
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
     
 
