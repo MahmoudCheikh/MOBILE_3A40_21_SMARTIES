@@ -47,6 +47,7 @@ public class AffichageFavoris extends BaseForm {
     Form current;
     //public ArrayList<Produit> Produit;
     public ArrayList<Favoris> favorises;
+    Resources res;
     public AffichageFavoris(Form previous,Resources res){
        super("Favoris", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -144,11 +145,11 @@ public class AffichageFavoris extends BaseForm {
         new AffichageProduit(current,res).show();       
        
       }); 
-               favorises = ServicesFavoris.getInstance().affichageFavoris();
+               favorises = ServicesFavoris.getInstance().getAllFavoris();
        
        for( Favoris f : favorises){
           
-           addButton(res.getImage("news-item-1.jpg"),f.getId()+"\n"+f.getIdProduit()+"\n"+f.getIdUser()+"\n");
+           addButton(res.getImage("news-item-1.jpg"),f.getId()+"\n"+f.getIdProduit()+"\n"+f.getIdUser()+"");
            
          } 
     tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());

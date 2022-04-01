@@ -48,6 +48,7 @@ import java.util.Map;
  */
 public class AffichageProduit extends BaseForm {
     Form current;
+    Resources res;
     public ArrayList<Produit> Produit;
     public ArrayList<Emplacement> Emplecement;
     public AffichageProduit(Form previous,Resources res){
@@ -152,7 +153,8 @@ public class AffichageProduit extends BaseForm {
        for( Produit p : Produit){
           
            addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix());
-         } 
+         
+       } 
     tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     
             Emplacement.addActionListener((ActionListener) (ActionEvent e) -> {
@@ -242,10 +244,10 @@ int height = Display.getInstance().convertToPixels(11.5f);
                        BoxLayout.encloseX()
                ));
        add(cnt);
-       /*Button b=new Button("Favoris");
+       /* Button b=new Button("+Favoris");
 	getContentPane().add(b);
-	setVisible(true);
-        b.addActionListener(f -> new AffichageFavoris(current,res));*/
+	setVisible(true);      
+        b.addActionListener(e -> new AffichageFavoris(current, res));*/
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
         
         

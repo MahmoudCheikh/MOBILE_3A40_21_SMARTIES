@@ -25,7 +25,7 @@ import java.util.Map;
 public class ServicesFavoris {
     
   public ArrayList<Favoris> Favoris;
-
+    private static int id ;
     public static ServicesFavoris instance = null;
     public boolean resultOK;
     private ConnectionRequest req;
@@ -56,7 +56,6 @@ public class ServicesFavoris {
                 
                 float id = Float.parseFloat(obj.get("id").toString());
                 f.setId((int) id);
-             
                 Favoris.add(f);
             }
 
@@ -71,7 +70,7 @@ public class ServicesFavoris {
     public ArrayList<Favoris> getAllFavoris() {
         
  req = new ConnectionRequest();
-        String url = PageWeb.BASE_URL +"displayFavoris";
+        String url = PageWeb.BASE_URL +"displayFavoris/";
         System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
