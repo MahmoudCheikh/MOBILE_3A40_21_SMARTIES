@@ -23,38 +23,37 @@ import com.mycompany.services.ServiceMessage;
  * @author PC
  */
 public class MessageForm extends Form {
+
     Resources theme = UIManager.initFirstTheme("/theme");
 //  Resources themee = UIManager.initFirstTheme("/theme_1");
     Form Current;
-    
-    public MessageForm(Form previous,Resources res)
-    {
-        
-           super("Message",BoxLayout.y());
-           Current=this;
-             this.add(new InfiniteProgress());
-             
-       
+
+    public MessageForm(Form previous, Resources res) {
+
+        super("Message", BoxLayout.y());
+        Current = this;
+        this.add(new InfiniteProgress());
+
         Display.getInstance().scheduleBackgroundTask(() -> {
             // this will take a while...
 
             Display.getInstance().callSerially(() -> {
                 this.removeAll();
                 Button skip = new Button("back");
-                 skip.setUIID("back");
-        skip.addActionListener(e -> new AjoutMessageForm(res).show());
-      add(skip);
-        Button b7=new Button("REFRESH");
-	b7.setUIID("refresh"); 
-        b7.addActionListener(l->new MessageForm(Current,res).show());
-        add(b7);     
-             for (Message m : new ServiceMessage().afficherMessage()) {
+                skip.setUIID("back");
+                skip.addActionListener(e -> new AjoutMessageForm(res).show());
+                add(skip);
+                Button b7 = new Button("REFRESH");
+                b7.setUIID("refresh");
+                b7.addActionListener(l -> new MessageForm(Current, res).show());
+                add(b7);
+                for (Message m : new ServiceMessage().afficherMessage()) {
 
-            this.add(addItem_Publicite(m,res));
+                    this.add(addItem_Publicite(m, res));
 
-        }
-             
-              this.revalidate();
+                }
+
+                this.revalidate();
             });
         });
 
@@ -73,75 +72,69 @@ public class MessageForm extends Form {
                     MultiButton mb = (MultiButton) cmp;
                     String line1 = mb.getTextLine1();
                     String line2 = mb.getTextLine2();
-                   mb.setHidden(false);
+                    mb.setHidden(false);
                     mb.setVisible(true);
                 }
                 this.getContentPane().animateLayout(150);
             }
         }, 7);
-        
-        
-               this.getToolbar().addCommandToOverflowMenu("back", null, ev -> {
+
+        this.getToolbar().addCommandToOverflowMenu("back", null, ev -> {
             new AjoutMessageForm(res).show();
-        });         
+        });
     }
-     public MultiButton addItem_Publicite(Message s,Resources res) {
-  
- MultiButton m = new MultiButton();
- //  String url = "http://localhost/image/"+c.getImagee();
-   
-     m.setTextLine1(s.getContenu());
-      m.setTextLine2(s.getDate());
-        m.setTextLine3(String.valueOf(s.getIdSujet()));
-        m.setTextLine4(String.valueOf(s.getIdUser()));
-       // m.setText(s.getDate());
-      /* m.setTextLine4(String.valueOf(c.getNb_participants()));
+
+    public MultiButton addItem_Publicite(Message s, Resources res) {
+
+        MultiButton m = new MultiButton();
+        //  String url = "http://localhost/image/"+c.getImagee();
+
+        
+        System.out.println(s.getContenu());
+        m.setTextLine1(s.getContenu());
+       // m.setTextLine3(String.valueOf(s.getIdSujet()));
+       // m.setTextLine4(String.valueOf(s.getIdUser()));
+        /* m.setTextLine4(String.valueOf(c.getNb_participants()));
       m.setText(String.valueOf(c.getNb_places()));
         m.setText(c.getLieu());
           m.setText(c.getType());*/
-         m.setEmblem(theme.getImage("arrow.png"));
-         
-      m.setVisible(true);
-        Button b5=new Button("supprimer Message");
-	setVisible(true); 
-        Button b6=new Button("modifier Message");
-	setVisible(true);  
+        m.setEmblem(theme.getImage("arrow.png"));
+
+        m.setVisible(true);
+        Button b5 = new Button("supprimer Message");
+        setVisible(true);
+        Button b6 = new Button("modifier Message");
+        setVisible(true);
         //b.addActionListener(e -> new AffichageActivite(res).show());
-         add(b5);
-         add(b6);
-         b6.addActionListener(l->new ModifierMessageForm(res,s).show());
-         
-        
-       
+        add(b5);
+        add(b6);
+        b6.addActionListener(l -> new ModifierMessageForm(res, s).show());
+
 //Click delete icon
-b5.addPointerPressedListener(l -> {
-Dialog dig = new Dialog("Suprression");
-if(dig.show("Suppression", "Vous voulez supprimer ce Message ?","Annuler","Cui")) {
-dig.dispose ();
-}
-else {
-dig.dispose();
-if (ServiceMessage.getInstance().delete(s.getId())) {     
-new MessageForm(Current,res); 
-}
-}
-});
-Button skip = new Button("back");
+        b5.addPointerPressedListener(l -> {
+            Dialog dig = new Dialog("Suprression");
+            if (dig.show("Suppression", "Vous voulez supprimer ce Message ?", "Annuler", "Cui")) {
+                dig.dispose();
+            } else {
+                dig.dispose();
+                if (ServiceMessage.getInstance().delete(s.getId())) {
+                    new MessageForm(Current, res);
+                }
+            }
+        });
+        Button skip = new Button("back");
         m.addActionListener(e -> {
 
-            Form f2 = new Form("Detail",BoxLayout.y());
-      
-                 
-     
-     
-            f2.add("contenu : "+s.getContenu()).add("date : "+s.getDate()).add("Sujet: "+s.getIdSujet()).add("User : "+s.getIdUser()).add(skip);   
-       
- f2.show();
+            Form f2 = new Form("Detail", BoxLayout.y());
+
+            f2.add("contenu : " + s.getContenu()).add("date : " + s.getDate()).add("Sujet: " + s.getIdSujet()).add("User : " + s.getIdUser()).add(skip);
+
+            f2.show();
 
         });
-   
-  skip.addActionListener(e -> new AjoutMessageForm(res).show());
-     
+
+        skip.addActionListener(e -> new AjoutMessageForm(res).show());
+
         return m;
-}
+    }
 }

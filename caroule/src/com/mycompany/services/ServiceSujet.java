@@ -15,13 +15,17 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Evenement;
 import com.mycompany.entity.Sujet;
+import com.mycompany.myapp.AffichageSujet;
 import com.mycompany.myapp.EvenementForm;
+import com.mycompany.myapp.SessionManager;
 import com.mycompany.myapp.SujetForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -40,6 +44,27 @@ public class ServiceSujet {
         return instance;
     }
 
+    public String[] splitvirgule(String str) {
+        
+        System.out.println(str);
+        ArrayList<String> splitArray = new ArrayList<>();
+        StringTokenizer arr = new StringTokenizer(str, ", ");//split by commas
+        while (arr.hasMoreTokens()) {
+            splitArray.add(arr.nextToken());
+        }
+        return splitArray.toArray(new String[splitArray.size()]);
+    }
+
+    public String[] splitegal(String str) {
+        ArrayList<String> splitArray = new ArrayList<>();
+        StringTokenizer arr = new StringTokenizer(str, "=");//split by commas
+        while (arr.hasMoreTokens()) {
+            splitArray.add(arr.nextToken());
+        }
+        return splitArray.toArray(new String[splitArray.size()]);
+    }
+
+    
     public ServiceSujet() {
         req = new ConnectionRequest();
     }
@@ -96,7 +121,7 @@ public class ServiceSujet {
                 sujet.setNbReponses((int) nrf);
                 float nbv = Float.parseFloat(obj.get("nbVues").toString());
                 sujet.setNbVues((int) nbv);
-                sujet.setTitre(obj.get("titre").toString());
+                sujet.setTitre(obj.get("titre").toString());                
                 sujet.setContenu(obj.get("contenu").toString());
                 sujets.add(sujet);
             }
@@ -170,7 +195,7 @@ public class ServiceSujet {
     }
 
     public void Add(Sujet c, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "sujet/ajoutmobile?titre=" + c.getTitre() + "&contenu=" + c.getContenu() + "&idUser=" + 9;
+        String url = PageWeb.BASE_URL + "sujet/ajoutmobile?titre=" + c.getTitre() + "&contenu=" + c.getContenu() + "&idUser=" + SessionManager.getId();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -181,6 +206,21 @@ public class ServiceSujet {
             }
         });
         new SujetForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    }
+    
+     public void Addfront(Sujet c, Form previous, Resources res) {
+        String url = PageWeb.BASE_URL + "sujet/ajoutmobile?titre=" + c.getTitre() + "&contenu=" + c.getContenu() + "&idUser=" + SessionManager.getId();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                req.removeResponseListener(this);
+            }
+        });
+        new AffichageSujet(previous,res).show();
         NetworkManager.getInstance().addToQueueAndWait(req);
     }
 

@@ -49,7 +49,7 @@ public class DetailSujet extends BaseForm {
     public ArrayList<Sujet> sujet;
     public ArrayList<Message> message;
 
-    public DetailSujet(int idsujet ,Resources res) {
+    public DetailSujet(Sujet sujet ,Resources res) {
         super("sujet", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -63,6 +63,8 @@ public class DetailSujet extends BaseForm {
 
         Tabs swipe = new Tabs();
 
+        
+        
         Label spacer1 = new Label();
         Label spacer2 = new Label();
         addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
@@ -138,9 +140,23 @@ public class DetailSujet extends BaseForm {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
 
+        
         SpanLabel sp = new SpanLabel();
-        sujet = ServiceSujet.getInstance().getAllSujet();
-        message = ServiceMessage.getInstance().getAllMessage(idsujet);
+        Label titre = new Label("Titre: " + sujet.getTitre());
+        Label contenu = new Label("Contenu: " +sujet.getContenu());
+        
+        add(titre);
+        add(contenu);
+        Button b=new Button("repondre");
+       
+	add(b);
+	Button b7 = new Button("REFRESH");
+        b7.setUIID("refresh");
+        b7.addActionListener(l -> new DetailSujet(sujet, res).show());
+        add(b7);
+        b.addActionListener(e->new AddMessageFront(sujet , res).show() );
+        
+        message = ServiceMessage.getInstance().getAllMessage(sujet.getId());
         for (Message e : message) {
             System.out.println(e.getContenu() + e.getDate());
             addButton(res.getImage("news-item-1.jpg"), e.getContenu() + "\n" + e.getDate().toString() + "\n" , false, 26, 32);

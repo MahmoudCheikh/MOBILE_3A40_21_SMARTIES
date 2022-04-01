@@ -41,7 +41,8 @@ import java.util.ArrayList;
  *
  * @author user
  */
-public class AffichageSujet extends BaseForm{
+public class AffichageSujet extends BaseForm {
+
     public ArrayList<Sujet> sujets;
 
     public AffichageSujet(Form previous, Resources res) {
@@ -129,16 +130,23 @@ public class AffichageSujet extends BaseForm{
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
 
-        
+        Button addsujet = new Button("Ajouter");
+        Button b7 = new Button("REFRESH");
+        b7.setUIID("refresh");
+        b7.addActionListener(l -> new AffichageSujet(null, res).show());
+        add(b7);
+        this.add(addsujet);
+
         SpanLabel sp = new SpanLabel();
         sujets = ServiceSujet.getInstance().getAllSujet();
         for (Sujet c : sujets) {
-            addButton(res.getImage("news-item-1.jpg"),c.getTitre(), false, c.getNbReponses(), c.getNbVues(),res , c.getId());
+            System.out.println("kezalkezalmeklmazz" + c.getIdUser());
+            addButton(res.getImage("news-item-1.jpg"), c.getTitre(), false, c.getNbReponses(), c.getNbVues(), res, c);
             //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
 
         }
         // add(sp);   
-
+        addsujet.addActionListener(e -> new AddSujetFront(res).show());
     }
 
     private void updateArrowPosition(Button b, Label arrow) {
@@ -185,44 +193,44 @@ public class AffichageSujet extends BaseForm{
         swipe.addTab("", page1);
     }
 
-  private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount, Resources res , int idsujet) {
-       int height = Display.getInstance().convertToPixels(11.5f);
-       int width = Display.getInstance().convertToPixels(14f);
-       Button image = new Button(img.fill(width, height));
-       image.setUIID("Label");
-       Container cnt = BorderLayout.west(image);
-       cnt.setLeadComponent(image);
-       TextArea ta = new TextArea(title);
-       ta.setUIID("NewsTopLine");
-       ta.setEditable(false);
-        
-       Label likes = new Label(likeCount + " Vue  ", "NewsBottomLine");
-       likes.setTextPosition(RIGHT);
-       if(!liked) {
-           FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
-       } else {
-           Style s = new Style(likes.getUnselectedStyle());
-           s.setFgColor(0xff2d55);
-           FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
-           likes.setIcon(heartImage);
-       }
-       Label comments = new Label(commentCount + " Reponses", "NewsBottomLine");
-       FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
-       
-       
-       cnt.add(BorderLayout.CENTER, 
-               BoxLayout.encloseY(
-                       ta,
-                       BoxLayout.encloseX(likes, comments)
-               ));
-       add(cnt);
-       Button b=new Button("Afficher Activité");
-	getContentPane().add(b);
-	setVisible(true);      
-        b.addActionListener(e -> new DetailSujet(idsujet,res).show());
-       image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
-        
-   }
+    private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount, Resources res, Sujet sujet) {
+        int height = Display.getInstance().convertToPixels(11.5f);
+        int width = Display.getInstance().convertToPixels(14f);
+        Button image = new Button(img.fill(width, height));
+        image.setUIID("Label");
+        Container cnt = BorderLayout.west(image);
+        cnt.setLeadComponent(image);
+        TextArea ta = new TextArea(title);
+        ta.setUIID("NewsTopLine");
+        ta.setEditable(false);
+
+        Label likes = new Label(likeCount + " Vue  ", "NewsBottomLine");
+        likes.setTextPosition(RIGHT);
+        if (!liked) {
+            FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
+        } else {
+            Style s = new Style(likes.getUnselectedStyle());
+            s.setFgColor(0xff2d55);
+            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
+            likes.setIcon(heartImage);
+        }
+        Label comments = new Label(commentCount + " Reponses", "NewsBottomLine");
+        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
+
+        cnt.add(BorderLayout.CENTER,
+                BoxLayout.encloseY(
+                        ta,
+                        BoxLayout.encloseX(likes, comments)
+                ));
+        add(cnt);
+        Button b = new Button("Afficher Sujet");
+
+        getContentPane().add(b);
+        setVisible(true);
+        b.addActionListener(e -> new DetailSujet(sujet, res).show());
+        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
+
+    }
 
     private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {

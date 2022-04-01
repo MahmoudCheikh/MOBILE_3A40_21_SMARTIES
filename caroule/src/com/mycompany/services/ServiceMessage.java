@@ -15,7 +15,9 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Message;
 import com.mycompany.entity.Sujet;
+import com.mycompany.myapp.DetailSujet;
 import com.mycompany.myapp.MessageForm;
+import com.mycompany.myapp.SessionManager;
 import com.mycompany.myapp.SujetForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
@@ -56,6 +58,7 @@ public class ServiceMessage {
         }
         return splitArray.toArray(new String[splitArray.size()]);
     }
+
     public String[] splitegal(String str) {
         ArrayList<String> splitArray = new ArrayList<>();
         StringTokenizer arr = new StringTokenizer(str, "=");//split by commas
@@ -82,18 +85,6 @@ public class ServiceMessage {
                 System.out.println(obj);
                 m.setContenu(obj.get("contenu").toString());
                 m.setDate(obj.get("Date").toString());
-
-                Map<String, String> map = new HashMap<>();
-                String usertomap = obj.get("idUser").toString().substring(1, obj.get("idUser").toString().length() - 1 );
-                System.out.println(usertomap);
-                
-                for(String keyValue : splitvirgule(usertomap)) {
-        		String[] key = splitegal(keyValue);
-        		map.put(key[0], key[1]);
-    		}
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-    System.out.println(entry.getKey() + "=" + entry.getValue());
-}
                 messages.add(m);
                 System.out.println(messages);
             }
@@ -121,32 +112,43 @@ public class ServiceMessage {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return messages;
     }
+
     //affichage back
-            public ArrayList<Message>afficherMessage(){
+    public ArrayList<Message> afficherMessage() {
         ArrayList<Message> result = new ArrayList<>();
-        
-        String url = PageWeb.BASE_URL+"message/affichage";
+
+        String url = PageWeb.BASE_URL + "message/affichage";
         req.setUrl(url);
-        
+
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 JSONParser jsonp;
                 jsonp = new JSONParser();
-                
-                try{
-                    Map<String,Object>mapMessage= jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
-                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapMessage.get("root");
-                
-                for(Map<String,Object> obj : listOfMaps) {
-                    Message m = new Message();
-                    float id = Float.parseFloat(obj.get("id").toString());
-                    
-                //inserer les données dans une liste
-                result.add(m);
-                }                
-                }
-                catch(Exception ex){
+
+                try {
+                    Map<String, Object> mapMessage = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
+                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapMessage.get("root");
+
+                    for (Map<String, Object> obj : listOfMaps) {
+                        Message m = new Message();
+                        float id = Float.parseFloat(obj.get("id").toString());
+                        m.setContenu(obj.get("contenu").toString());
+                        // m.sletIdUser((int) Float.parseFloat(obj.get("idUser").toString()));
+
+                      /*  Map<String, String> map = new HashMap<>();
+                        String usertomap = obj.get("idUser").toString().substring(1, obj.get("idUser").toString().length() - 1);
+                        System.out.println(usertomap);
+
+                        for (String keyValue : splitvirgule(usertomap)) {
+                            String[] key = splitegal(keyValue);
+                            map.put(key[0], key[1]);
+                        }*/
+//                         m.setIdUser((int) Float.parseFloat(map.get("id")));
+
+                        result.add(m);
+                    }
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
@@ -154,8 +156,9 @@ public class ServiceMessage {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return result;
     }
+
     //delete
-        public boolean delete(int id) {
+    public boolean delete(int id) {
         String url = PageWeb.BASE_URL + "message/deletemobile/" + id;
         req.setUrl(url);
         //req.setPost(false);
@@ -170,10 +173,10 @@ public class ServiceMessage {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return true;
     }
-        //ajout
-        
-        public void Add(Message m, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "message/ajoutmobile?contenu=" + m.getContenu()+ "&idSujet=" + m.getIdSujet()+ "&idUser=" + m.getIdUser();
+    //ajout
+
+    public void Add(Message m, Form previous, Resources res) {
+        String url = PageWeb.BASE_URL + "message/ajoutmobile?contenu=" + m.getContenu() + "&idSujet=" + m.getIdSujet() + "&idUser=" + m.getIdUser();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -183,13 +186,28 @@ public class ServiceMessage {
                 req.removeResponseListener(this);
             }
         });
-        new MessageForm(previous,res).show();
+        new MessageForm(previous, res).show();
         NetworkManager.getInstance().addToQueueAndWait(req);
     }
-        //update
-        
-            public void Update(Message m, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "message/modifiermobile?id="+m.getId()+"&contenu=" + m.getContenu()+ "&date=" + m.getDate();
+    
+    public void AddFront(Message m, Form previous, Resources res , Sujet sujet) {
+        String url = PageWeb.BASE_URL + "message/ajoutmobile?contenu=" + m.getContenu() + "&idSujet=" + m.getIdSujet() + "&idUser=" + SessionManager.getId();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                req.removeResponseListener(this);
+            }
+        });
+        new DetailSujet(sujet,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    }
+    //update
+
+    public void Update(Message m, Form previous, Resources res) {
+        String url = PageWeb.BASE_URL + "message/modifiermobile?id=" + m.getId() + "&contenu=" + m.getContenu() + "&date=" + m.getDate();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
