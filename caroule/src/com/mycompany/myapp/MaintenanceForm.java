@@ -26,7 +26,7 @@ import com.mycompany.services.ServiceMaintenance;
  * @author PC
  */
 public class MaintenanceForm extends Form {
-
+/*
     Resources theme = UIManager.initFirstTheme("/theme");
 //  Resources themee = UIManager.initFirstTheme("/theme_1");
     Form Current;
@@ -169,4 +169,5 @@ b.addPointerPressedListener(l -> {
      
         return m;
 }
+*/
 }
