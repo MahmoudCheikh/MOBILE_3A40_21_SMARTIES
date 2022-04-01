@@ -16,6 +16,7 @@ import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.NewsfeedForm;
 import com.mycompany.utils.PageWeb;
 import com.mycompany.myapp.SessionManager;
+import com.mycompany.myapp.SignInForm;
 import java.util.Map;
 
 /**
@@ -45,30 +46,40 @@ public class ServiceUser {
     }
 
     //Signup
-    public void signup(TextField username, TextField password, TextField email, TextField confirmPassword, ComboBox<String> roles, Resources res) {
+    public void signup(String nom, String prenom, String password, String email, String address, Resources res) {
 
-        String url = PageWeb.BASE_URL + "/user/signup?username=" + username.getText().toString() + "&email=" + email.getText().toString()
-                + "&password=" + password.getText().toString() + "&roles=" + roles.getSelectedItem().toString();
+        String url = PageWeb.BASE_URL + "registermobile?nom=" + nom + "&prenom=" + prenom + "&email=" + email
+                + "&password=" + password + "&adresse=" + address;
+        req = new ConnectionRequest(url, false); //false ya3ni url mazlt matba3thtich lel server
 
         req.setUrl(url);
-
+        System.out.println(url);
         //Control saisi
-        if (username.getText().equals(" ") && password.getText().equals(" ") && email.getText().equals(" ")) {
+        if (nom.equals(" ") && password.equals(" ") && email.equals(" ")) {
 
             Dialog.show("Erreur", "Veuillez remplir les champs", "OK", null);
 
         }
+        try {
+            req.addResponseListener((e) -> {
 
-        //hethi wa9t tsir execution ta3 url 
-        req.addResponseListener((e) -> {
+                //njib data ly7atithom fi form 
+                byte[] data = (byte[]) e.getMetaData();//lazm awl 7aja n7athrhom ke meta data ya3ni na5o id ta3 kol textField 
+                String responseData = new String(data);//ba3dika na5o content 
 
-            //njib data ly7atithom fi form 
-            byte[] data = (byte[]) e.getMetaData();//lazm awl 7aja n7athrhom ke meta data ya3ni na5o id ta3 kol textField 
-            String responseData = new String(data);//ba3dika na5o content 
+                System.out.println("data ===>" + responseData);
+                if (responseData.equals("true")) {
 
-            System.out.println("data ===>" + responseData);
+                    new SignInForm(res).show();
+                }
+
+            }
+            );
+
+        } catch (Exception e) {
+            Dialog.show("Echec de creation", "verifiez vos données", "OK", null);
         }
-        );
+        //hethi wa9t tsir execution ta3 url 
 
         //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
         NetworkManager.getInstance().addToQueueAndWait(req);
@@ -106,8 +117,6 @@ public class ServiceUser {
                     SessionManager.setEmail(user.get("email").toString());
 
                     //photo 
-                    
-
                     if (user.size() > 0) // l9a user
                     // new ListReclamationForm(rs).show();//yemchi lel list reclamation
                     {
@@ -154,6 +163,70 @@ public class ServiceUser {
         //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
         NetworkManager.getInstance().addToQueueAndWait(req);
         return json;
+    }
+
+    public void requestcode(String email, Resources res) {
+        String url = PageWeb.BASE_URL + "users/resetmobile?email=" + email;
+        req = new ConnectionRequest(url, false); //false ya3ni url mazlt matba3thtich lel server
+
+        req.setUrl(url);
+        System.out.println(url);
+        //Control saisi
+        if (email.equals(" ")) {
+            Dialog.show("Erreur", "Veuillez remplir les champs", "OK", null);
+        }
+        try {
+            req.addResponseListener((e) -> {
+                //njib data ly7atithom fi form 
+                byte[] data = (byte[]) e.getMetaData();//lazm awl 7aja n7athrhom ke meta data ya3ni na5o id ta3 kol textField 
+                String responseData = new String(data);//ba3dika na5o content 
+
+                System.out.println("data ===>" + responseData);
+                if (responseData.equals("true")) {
+                    new SignInForm(res).show();
+                }
+            }
+            );
+
+        } catch (Exception e) {
+            Dialog.show("Echec de creation", "verifiez vos données", "OK", null);
+        }
+        //hethi wa9t tsir execution ta3 url 
+
+        //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    }
+
+    public void resetpass(String code, String password, Resources res) {
+        String url = PageWeb.BASE_URL + "users/resetpass?code=" + code + "&password=" + password;
+        req = new ConnectionRequest(url, false); //false ya3ni url mazlt matba3thtich lel server
+
+        req.setUrl(url);
+        System.out.println(url);
+        //Control saisi
+        if (code.equals(" ")) {
+            Dialog.show("Erreur", "Veuillez remplir les champs", "OK", null);
+        }
+        try {
+            req.addResponseListener((e) -> {
+                //njib data ly7atithom fi form 
+                byte[] data = (byte[]) e.getMetaData();//lazm awl 7aja n7athrhom ke meta data ya3ni na5o id ta3 kol textField 
+                String responseData = new String(data);//ba3dika na5o content 
+
+                System.out.println("data ===>" + responseData);
+                if (responseData.equals("true")) {
+                    new SignInForm(res).show();
+                }
+            }
+            );
+
+        } catch (Exception e) {
+            Dialog.show("Echec de creation", "verifiez vos données", "OK", null);
+        }
+        //hethi wa9t tsir execution ta3 url 
+
+        //ba3d execution ta3 requete ely heya url nestanaw response ta3 server.
+        NetworkManager.getInstance().addToQueueAndWait(req);
     }
 
 }

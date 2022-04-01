@@ -16,7 +16,6 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-
 package com.mycompany.myapp;
 
 import com.codename1.components.FloatingHint;
@@ -38,9 +37,9 @@ import com.mycompany.services.ServiceUser;
  *
  * @author Shai Almog
  */
-public class SignUpForm extends BaseForm {
+public class MdpForm extends BaseForm {
 
-    public SignUpForm(Resources res) {
+    public MdpForm(Resources res) {
         super(new BorderLayout());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -49,48 +48,42 @@ public class SignUpForm extends BaseForm {
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
         setUIID("SignIn");
-                
-        TextField nom = new TextField("", "nom", 20, TextField.ANY);
-        TextField prenom = new TextField("", "prenom", 20, TextField.ANY);
-        TextField adresse = new TextField("", "adresse", 20, TextField.ANY);
+
         TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
+        TextField code = new TextField("", "code", 20, TextField.ANY);
         TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
-        
-        nom.setSingleLineTextArea(true);
-        prenom.setSingleLineTextArea(true);
-        adresse.setSingleLineTextArea(true);
+
         email.setSingleLineTextArea(true);
-        password.setSingleLineTextArea(true);
-        
+
         Button next = new Button("Next");
+        Button reset = new Button("Reset");
+
         Button signIn = new Button("Sign In");
         signIn.addActionListener(e -> previous.showBack());
         signIn.setUIID("Link");
         Label alreadHaveAnAccount = new Label("Already have an account?");
-        
+
         Container content = BoxLayout.encloseY(
                 new Label("Sign Up", "LogoLabel"),
-                new FloatingHint(nom),
-                createLineSeparator(),
-                new FloatingHint(prenom),
-                createLineSeparator(),
                 new FloatingHint(email),
                 createLineSeparator(),
-                new FloatingHint(password),
+                new FloatingHint(code),
                 createLineSeparator(),
-                new FloatingHint(adresse),
+                new FloatingHint(password),
                 createLineSeparator()
         );
         content.setScrollableY(true);
         add(BorderLayout.CENTER, content);
         add(BorderLayout.SOUTH, BoxLayout.encloseY(
                 next,
+                reset,
                 FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
         ));
         next.requestFocus();
         //next.addActionListener(e -> new ActivateForm(res).show());
-        next.addActionListener(e -> ServiceUser.getInstance().signup(nom.getText().toString(),prenom.getText().toString(),
-                password.getText().toString() , email.getText().toString() , adresse.getText().toString(),res));
+        next.addActionListener(e -> ServiceUser.getInstance().requestcode(email.getText().toString(), res));
+        reset.addActionListener(e -> ServiceUser.getInstance().resetpass(code.getText().toString(), password.getText().toString(), res));
+        
     }
-    
+
 }
