@@ -148,6 +148,23 @@ public ArrayList<Evenement> parseEvenements(String jsonText) {
         NetworkManager.getInstance().addToQueueAndWait(req);
     
     }
-
-          
+  
+     public ArrayList<Evenement> recherche(String nom) {
+        
+ req = new ConnectionRequest();
+        String url = PageWeb.BASE_URL +"evenement/recherche?nom=" + nom;
+        System.out.println("===>" + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                Evenements = parseEvenements(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return Evenements;
+    }
+        
 }

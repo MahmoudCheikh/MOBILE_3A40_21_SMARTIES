@@ -54,6 +54,7 @@ public class AfficherEvenement extends BaseForm {
     Form current;
     Evenement c;
 public ArrayList<Evenement> Evenements;
+public ArrayList<Evenement> Event;
     public AfficherEvenement(Form previous,Resources res) {
         super("liste evenements", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -68,9 +69,15 @@ public ArrayList<Evenement> Evenements;
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
+        
         addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
         addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
-                
+           //TextField contenu = new TextField("", "search event", 20, TextArea.TEXT_CURSOR);      
+           //this.add(contenu); 
+         // Button a= new Button("recherche"); 
+          //this.add(a); 
+          //addGUIs(res);
+           
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
         swipe.hideTabs();
@@ -142,31 +149,77 @@ public ArrayList<Evenement> Evenements;
         });
         
  
-/*this.getToolbar().addSearchCommand(e -> {
-    String text = (String) e.getSource(); 
-    if(text==c.getNom()){
-    ServiceEvenement sp = new ServiceEvenement();          
-    sp.rechercheEvent(c);
-    addButton(res.getImage("news-item-1.jpg"),c.getNom().toString()+ "\n" +c.getDateD().toString()+ "\n" +c.getDateF().toString()+ "\n" +c.getLieu().toString()+"\n" +c.getType().toString()+"\n" +c.getNb_participants()+"\n" +c.getNb_places(), false, 26, 32,res);
-    Dialog.show("modifier", "modifier avec succés", "OK", null);
-}    
-}
-    );*/
+//this.getToolbar().addSearchCommand(e -> {
+  //      String text = (String) e.getSource(); 
+//  Evenements = ServiceEvenement.getInstance().recherche(text);
+   /*for (int iter = 0; iter < Evenements.size(); iter++) {
+  addButton(res.getImage("news-item-1.jpg"),Evenements.get(iter).getNom().toString()+ "\n" +Evenements.get(iter).getDateD().toString()+ "\n" +Evenements.get(iter).getDateF().toString()+ "\n" +Evenements.get(iter).getLieu().toString()+"\n" +Evenements.get(iter).getType().toString()+"\n" +Evenements.get(iter).getNb_participants()+"\n" +Evenements.get(iter).getNb_places(), false, 26, 32,res,+Evenements.get(iter).getId());          
+   }*/
+  
+  //  });*/
 
   this.show();
+  TextField search = new TextField("", "Chercher un evenement par nom");
+this.add(search);
+ RadioButton recherche = RadioButton.createToggle("resultat recherche", barGroup);
+ recherche.setUIID("SelectBar");
 
        SpanLabel sp = new SpanLabel();
+       
 Evenements =ServiceEvenement.getInstance().getAllEvenements();
- 
-for (Evenement e :Evenements)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNom().toString()+ "\n" +e.getDateD().toString()+ "\n" +e.getDateF().toString()+ "\n" +e.getLieu().toString()+"\n" +e.getType().toString()+"\n" +e.getNb_participants()+"\n" +e.getNb_places(), false, 26, 32,res,+e.getId());
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
-    
-}
- // add(sp);   
+    for (Evenement e :Evenements)
+    {
+     addButton(res.getImage("news-item-1.jpg"),e.getNom().toString()+ "\n" +e.getDateD().toString()+ "\n" +e.getDateF().toString()+ "\n" +e.getLieu().toString()+"\n" +e.getType().toString()+"\n" +e.getNb_participants()+"\n" +e.getNb_places(), false, 26, 32,res,+e.getId());
+} 
 
+  add(recherche);
+ search.addDataChangedListener((d, t) -> { 
+          for (Evenement e :Evenements){
+    if (e.getNom().equals(search.getText())) {
+    addButton(res.getImage("news-item-1.jpg"),e.getNom().toString()+ "\n" +e.getDateD().toString()+ "\n" +e.getDateF().toString()+ "\n" +e.getLieu().toString()+"\n" +e.getType().toString()+"\n" +e.getNb_participants()+"\n" +e.getNb_places(), false, 26, 32,res,+e.getId());
+}}});
+
+
+        Form pre = null;
+  
     }
-    
+    TextField searchTF;
+     ArrayList<Component> componentModels;
+   private void addGUIs(Resources res) {
+        ArrayList<Evenement> listHotels = ServiceEvenement.getInstance().getAllEvenements();
+        componentModels = new ArrayList<>();
+
+        searchTF = new TextField("", "Chercher un evenement par nom");
+        searchTF.addDataChangedListener((d, t) -> {
+           /* if (componentModels.size() > 0) {
+                for (Component componentModel : componentModels) {
+                    this.removeComponent(componentModel);
+                }
+            }*/
+            componentModels = new ArrayList<>();
+            for (Evenement listHotel : listHotels) {
+                if (listHotel.getNom().startsWith(searchTF.getText())) {
+                    addButton(res.getImage("news-item-1.jpg"),listHotel.getNom().toString()+ "\n" +listHotel.getDateD().toString()+ "\n" +listHotel.getDateF().toString()+ "\n" +listHotel.getLieu().toString()+"\n" +listHotel.getType().toString()+"\n" +listHotel.getNb_participants()+"\n" +listHotel.getNb_places(), false, 26, 32,res,+listHotel.getId());
+                  
+                }
+                else{
+                    addButton(res.getImage("news-item-1.jpg"),listHotel.getNom().toString()+ "\n" +listHotel.getDateD().toString()+ "\n" +listHotel.getDateF().toString()+ "\n" +listHotel.getLieu().toString()+"\n" +listHotel.getType().toString()+"\n" +listHotel.getNb_participants()+"\n" +listHotel.getNb_places(), false, 26, 32,res,+listHotel.getId());
+                }
+            }
+            this.revalidate();
+        });
+        this.add(searchTF);
+
+       /* if (listHotels.size() > 0) {
+            for (Evenement listHotel : listHotels) {
+               addButton(res.getImage("news-item-1.jpg"),listHotel.getNom().toString()+ "\n" +listHotel.getDateD().toString()+ "\n" +listHotel.getDateF().toString()+ "\n" +listHotel.getLieu().toString()+"\n" +listHotel.getType().toString()+"\n" +listHotel.getNb_participants()+"\n" +listHotel.getNb_places(), false, 26, 32,res,+listHotel.getId());
+                
+            }
+        } else {
+            this.add(new Label("Aucune donnée"));
+        }*/
+    }
+ 
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
         arrow.getParent().repaint();
@@ -179,6 +232,7 @@ for (Evenement e :Evenements)
         if(img.getHeight() < size) {
             img = img.scaledHeight(size);
         }
+      
         Label likes = new Label(likesStr);
         Style heartStyle = new Style(likes.getUnselectedStyle());
         heartStyle.setFgColor(0xff2d55);
