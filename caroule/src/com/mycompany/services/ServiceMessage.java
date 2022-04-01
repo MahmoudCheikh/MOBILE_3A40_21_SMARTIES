@@ -132,7 +132,7 @@ public class ServiceMessage {
 
                     for (Map<String, Object> obj : listOfMaps) {
                         Message m = new Message();
-                        float id = Float.parseFloat(obj.get("id").toString());
+                        m.setId((int)Float.parseFloat(obj.get("id").toString()));
                         m.setContenu(obj.get("contenu").toString());
                         // m.sletIdUser((int) Float.parseFloat(obj.get("idUser").toString()));
 
@@ -207,7 +207,7 @@ public class ServiceMessage {
     //update
 
     public void Update(Message m, Form previous, Resources res) {
-        String url = PageWeb.BASE_URL + "message/modifiermobile?id=" + m.getId() + "&contenu=" + m.getContenu() + "&date=" + m.getDate();
+        String url = PageWeb.BASE_URL + "message/modifiermobile?id=" + m.getId() + "&contenu=" + m.getContenu();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

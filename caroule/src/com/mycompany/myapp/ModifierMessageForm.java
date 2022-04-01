@@ -27,9 +27,6 @@ public class ModifierMessageForm extends Form{
         super("Message", BoxLayout.y());
 
         TextField contenu = new TextField(m.getContenu(), "titre", 20, TextArea.TEXT_CURSOR);
-        TextField date = new TextField(m.getDate(), "contenu", 20, TextArea.TEXT_CURSOR);
-        TextField sujet = new TextField(String.valueOf(m.getIdSujet()), "titre", 20, TextArea.TEXT_CURSOR);
-        TextField user = new TextField(String.valueOf(m.getIdUser()), "contenu", 20, TextArea.TEXT_CURSOR);
 
         Button modif = new Button("modifier");
         Button b8 = new Button("liste Message");
@@ -38,20 +35,10 @@ public class ModifierMessageForm extends Form{
         modif.addActionListener(l
                 -> {
 
-            if (date.getText().equals("")) {
-                Dialog.show("Erreur", "Champ vide de nom ", "OK", null);
-
-            } else if (contenu.getText().equals("")) {
+            if (contenu.getText().equals("")) {
                 Dialog.show("Erreur", "Champ vide de Date debut ", "OK", null);
-            } else if (sujet.getText().equals("")) {
-                Dialog.show("Erreur", "Champ vide de lieu ", "OK", null);
-            } else if (user.getText().equals("")) {
-                Dialog.show("Erreur", "Champ vide de type ", "OK", null);
             } else {                
                 m.setContenu(contenu.getText());
-                m.setDate(date.getText());
-                m.setIdSujet(Integer.valueOf(sujet.getText()));
-                m.setIdUser(Integer.valueOf(user.getText()));
                 
                 ServiceMessage sp = new ServiceMessage();
                 Form previous = null;
@@ -63,7 +50,7 @@ public class ModifierMessageForm extends Form{
                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
             }
         });
-        this.add(contenu).add(date).add(sujet).add(user).add(modif);
+        this.add(contenu).add(modif);
         /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
 

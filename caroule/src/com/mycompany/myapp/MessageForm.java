@@ -89,11 +89,10 @@ public class MessageForm extends Form {
         MultiButton m = new MultiButton();
         //  String url = "http://localhost/image/"+c.getImagee();
 
-        
         System.out.println(s.getContenu());
         m.setTextLine1(s.getContenu());
-       // m.setTextLine3(String.valueOf(s.getIdSujet()));
-       // m.setTextLine4(String.valueOf(s.getIdUser()));
+        // m.setTextLine3(String.valueOf(s.getIdSujet()));
+        // m.setTextLine4(String.valueOf(s.getIdUser()));
         /* m.setTextLine4(String.valueOf(c.getNb_participants()));
       m.setText(String.valueOf(c.getNb_places()));
         m.setText(c.getLieu());
@@ -117,6 +116,7 @@ public class MessageForm extends Form {
                 dig.dispose();
             } else {
                 dig.dispose();
+                System.out.println(s.getId());
                 if (ServiceMessage.getInstance().delete(s.getId())) {
                     new MessageForm(Current, res);
                 }
