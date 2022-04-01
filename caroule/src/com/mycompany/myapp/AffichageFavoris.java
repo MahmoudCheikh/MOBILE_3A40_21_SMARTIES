@@ -46,7 +46,7 @@ import java.util.ArrayList;
 public class AffichageFavoris extends BaseForm {
     Form current;
     //public ArrayList<Produit> Produit;
-    public ArrayList<Favoris> Favoris;
+    public ArrayList<Favoris> favorises;
     public AffichageFavoris(Form previous,Resources res){
        super("Favoris", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -144,11 +144,12 @@ public class AffichageFavoris extends BaseForm {
         new AffichageProduit(current,res).show();       
        
       }); 
-               this.Favoris = ServicesFavoris.getInstance().affichageFavoris();
+               favorises = ServicesFavoris.getInstance().affichageFavoris();
        
-       for( Favoris f : this.Favoris){
+       for( Favoris f : favorises){
           
-           addButton(res.getImage("news-item-1.jpg"),f.getId()+ "\n");
+           addButton(res.getImage("news-item-1.jpg"),f.getId()+"\n"+f.getIdProduit()+"\n"+f.getIdUser()+"\n");
+           
          } 
     tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     

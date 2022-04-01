@@ -21,7 +21,7 @@ public class Produit {
     private String description;
     private float prix;
     private String type;
-    private Collection<Favoris> favoris ;
+    private Favoris favoris ;
     private Achat achats;
     private Commande commandes;
     private Stock stock;
@@ -50,11 +50,11 @@ public class Produit {
         this.commandes = commandes;
     }
 
-    public Collection<Favoris> getFavoris() {
+    public Favoris getFavoris() {
         return favoris;
     }
 
-    public void setFavoris(Collection<Favoris> favoris) {
+    public void setFavoris(Favoris favoris) {
         this.favoris = favoris;
     }
    
@@ -138,7 +138,7 @@ public class Produit {
         this.description = description;
         this.prix = prix;
         this.type = type;
-        //this.favoris = favoris;
+        this.favoris = favoris;
     }
 
     public Produit(String libelle, String description, String type) {

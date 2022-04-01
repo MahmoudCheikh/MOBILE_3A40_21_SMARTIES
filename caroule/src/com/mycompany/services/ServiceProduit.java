@@ -49,14 +49,15 @@ public ArrayList<Produit> Produit;
     }
     
   //parseproduit
-    public ArrayList<Produit> parseEquipes(String jsonText) {
+    public ArrayList<Produit> parseProduits(String jsonText) {
         try {
             Produit = new ArrayList<>();
             JSONParser j = new JSONParser();
-            Map<String, Object> EquipeListJson
+            
+            Map<String, Object> ProduitListJson
                     = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
 
-            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) EquipeListJson.get("root");
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) ProduitListJson.get("root");
             for(Map<String,Object> obj :list){
            
                 Produit p = new Produit();
@@ -94,14 +95,13 @@ public ArrayList<Produit> Produit;
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                Produit = parseEquipes(new String(req.getResponseData()));
+                Produit = parseProduits(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return Produit;
     }
-    
 
     
     //afficher les détails d'un produits
@@ -131,42 +131,6 @@ public ArrayList<Produit> Produit;
                 NetworkManager.getInstance().addToQueueAndWait(req);
 
                 return prod;
-    }
-    
-    
-    //affichage des favoris
-    
-        public ArrayList<Favoris>affichageFavoris(){
-        ArrayList<Favoris> result = new ArrayList<>();
-        
-        String url = PageWeb.BASE_URL+"displayFavoris";
-        req.setUrl(url);
-        
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
-                
-                try{
-                    Map<String,Object>mapFavoris= jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
-                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapFavoris.get("root");
-                
-                for(Map<String,Object> obj : listOfMaps) {
-                    Favoris fav = new Favoris();
-                    float id = Float.parseFloat(obj.get("id").toString());
-                    
-                //inserer les données dans une liste
-                result.add(fav);
-                }                
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
     }
         
         //Ajouter un produit

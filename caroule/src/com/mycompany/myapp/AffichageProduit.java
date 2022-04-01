@@ -242,6 +242,10 @@ int height = Display.getInstance().convertToPixels(11.5f);
                        BoxLayout.encloseX()
                ));
        add(cnt);
+       /*Button b=new Button("Favoris");
+	getContentPane().add(b);
+	setVisible(true);
+        b.addActionListener(f -> new AffichageFavoris(current,res));*/
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
         
         

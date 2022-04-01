@@ -61,7 +61,7 @@ public class ServiceStock {
         new StockForm(previous,res).show();
         NetworkManager.getInstance().addToQueueAndWait(req);
     
-    }
+    }   
          
          //delete
          

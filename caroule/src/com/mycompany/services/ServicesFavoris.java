@@ -43,33 +43,27 @@ public class ServicesFavoris {
     
     //affichage front 
     //parseproduit
-    public ArrayList<Favoris> parseEquipes(String jsonText) {
-        try {
+    public ArrayList<Favoris> parseFavoris(String jsonText) {
+                try {
             Favoris = new ArrayList<>();
             JSONParser j = new JSONParser();
-            Map<String, Object> EquipeListJson
-                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            Map<String, Object> ReclamationListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
 
-            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) EquipeListJson.get("root");
-            for(Map<String,Object> obj :list){
-           
+            List<Map<String, Object>> list = (List<Map<String, Object>>) ReclamationListJson.get("root");
+
+            for (Map<String, Object> obj : list) {
                 Favoris f = new Favoris();
-
+                
                 float id = Float.parseFloat(obj.get("id").toString());
-                float idProduit = Float.parseFloat(obj.get("idProduit").toString());
-                float idUser = Float.parseFloat(obj.get("idUser").toString());
                 f.setId((int) id);
-                f.setIdProduit((int) idProduit);
-                f.setIdUser((int) idUser);
-              //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
-               
-
+             
                 Favoris.add(f);
             }
 
         } catch (IOException ex) {
-
+            System.out.println("Exception in parsing reclamations ");
         }
+
         return Favoris;
     }
     
@@ -84,7 +78,7 @@ public class ServicesFavoris {
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override   
             public void actionPerformed(NetworkEvent evt) {
-                Favoris = parseEquipes(new String(req.getResponseData()));
+                Favoris = parseFavoris(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
@@ -97,36 +91,20 @@ public class ServicesFavoris {
         //affichage des favoris
     
         public ArrayList<Favoris>affichageFavoris(){
-        ArrayList<Favoris> result = new ArrayList<>();
         
         String url = PageWeb.BASE_URL+"displayFavoris";
-        req.setUrl(url);
         
+                req.setUrl(url);
+        req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
-                
-                try{
-                    Map<String,Object>mapFavoris= jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
-                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapFavoris.get("root");
-                
-                for(Map<String,Object> obj : listOfMaps) {
-                    Favoris fav = new Favoris();
-                    float id = Float.parseFloat(obj.get("id").toString());
-                    
-                //inserer les données dans une liste
-                result.add(fav);
-                }                
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
-                }
+                Favoris = parseFavoris(new String(req.getResponseData()));
+                req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
+        return Favoris;
     }
     
 }

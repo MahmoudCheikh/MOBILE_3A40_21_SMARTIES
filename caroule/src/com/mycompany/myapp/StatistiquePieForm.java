@@ -46,6 +46,8 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.entity.Produit;
+import com.mycompany.entity.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +62,8 @@ public class StatistiquePieForm extends BaseForm {
     private boolean drawOnMutableImage;
    
     
-    private double Produit = 45;
-    private double Stock = 29;
+    private double Produits = 45;
+    private double Stocks = 29;
    
     Form current;
 BaseForm form;
@@ -127,7 +129,7 @@ BaseForm form;
         RadioButton all = RadioButton.createToggle("Feedback", barGroup);
        
         all.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Categorie Reclamation", barGroup);
+        RadioButton popular = RadioButton.createToggle("Categorie Stock", barGroup);
         popular.setUIID("SelectBar");
         RadioButton feedback = RadioButton.createToggle("Feedback", barGroup);
         feedback.setUIID("SelectBar");
@@ -273,12 +275,12 @@ BaseForm form;
     public void createPieChartForm() {
         
         //chna3ml stat feedback par rapport l reclamation 
-        double total = Produit + Stock;
+        double total = Produits + Stocks;
         
         //values
-        double prcntFeed = (Produit *100)/total;
+        double Produits1 = (Produits *100)/total;
         
-        double prcntRec = (Stock * 100)/total;
+        double Stocks1 = (Stocks * 100)/total;
         
         //colors set:
         int[]colors = new int[]{0xf4b342, 0x52b29a};
@@ -296,7 +298,7 @@ BaseForm form;
         r.setHighlighted(true);
         
         //CREATe the chart ...
-        PieChart chart = new PieChart(buildDataset("title",Math.round(prcntFeed),Math.round(prcntRec)), renderer);
+        PieChart chart = new PieChart(buildDataset("title",Math.round(Produits1),Math.round(Stocks1)), renderer);
         
         // n7oto chart fi component
         ChartComponent c  = new ChartComponent(chart);
