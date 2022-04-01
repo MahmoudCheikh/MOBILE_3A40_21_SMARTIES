@@ -104,6 +104,8 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Activites", FontImage.MATERIAL_MESSAGE, e -> new AjoutActivite(res).show());
             tb.addMaterialCommandToSideMenu("Abonnement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutAbonnementForm(res).show());
             tb.addMaterialCommandToSideMenu("Maintenace", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjouterMaintenance(res).show());
+        
+ 	tb.addMaterialCommandToSideMenu("Ajouter Location", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutLocationForm(res).show());
         }
         
 
