@@ -90,7 +90,7 @@ public class ServiceCommande {
     public ArrayList<Commande>AffichageCommande(){
         ArrayList<Commande> result = new ArrayList<>();
 
-        String url = PageWeb.BASE_URL + "commande/displayall";
+        String url = PageWeb.BASE_URL + "commande/displayall?idUser="+4;
         req.setUrl(url);
 
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -143,7 +143,7 @@ public class ServiceCommande {
     
     
     public void Add(Commande c ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "commande/ajoutMobilecomm?NbProduits="+c.getNbProduits()+"&idProduit="+c.getIdProduit()+"&idUser="+c.getIdUser();
+        String url = PageWeb.BASE_URL + "commande/ajoutMobilecomm?NbProduits="+c.getNbProduits()+"&idProduit="+1+"&idUser="+4;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
