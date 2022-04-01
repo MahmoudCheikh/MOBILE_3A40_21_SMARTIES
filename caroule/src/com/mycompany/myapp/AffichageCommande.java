@@ -143,7 +143,7 @@ public ArrayList<Commande> Commandes;
        
       });    
        SpanLabel sp = new SpanLabel();
-Commandes =ServiceCommande.getInstance().AffichageCommande();
+Commandes =ServiceCommande.getInstance().getAllCommandes();
 for (Commande c :Commandes)
 { 
     addButton(res.getImage("news-item-1.jpg"),c.getId()+ "\n" +c.getNbProduits(), false, 26, 32,res);

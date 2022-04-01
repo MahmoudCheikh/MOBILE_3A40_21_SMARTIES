@@ -1,4 +1,5 @@
-/*
+
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -33,11 +34,11 @@ public class AjoutAchatForm extends Form{
       add(skip);
                    TextField iduser = new TextField("", "idUser", 20, TextArea.TEXT_CURSOR);
                 
-                //TextField date = new TextField("", "date", 20, TextArea.TEXT_CURSOR);
+                TextField date = new TextField("", "date", 20, TextArea.TEXT_CURSOR);
                 
-                 //TextField nomclient = new TextField("", "nom client", 20, TextArea.TEXT_CURSOR);
+                 TextField nomclient = new TextField("", "nom client", 20, TextArea.TEXT_CURSOR);
                  
-                 //TextField numeroClient = new TextField("", "numero client", 20, TextArea.TEXT_CURSOR);
+                 TextField numeroClient = new TextField("", "numero client", 20, TextArea.TEXT_CURSOR);
                  
                  TextField idProduit = new TextField("", "Id Produit", 20, TextArea.NUMERIC);
 
@@ -56,18 +57,18 @@ public class AjoutAchatForm extends Form{
                                 Dialog.show("Erreur", "Champ vide de id ", "OK", null);
 
                             } 
-                           /* else if (date.getText().equals("")) {
+                            else if (date.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de date ", "OK", null);
 
                             }
-                           /* else if (nomclient.getText().equals("")) {
+                            else if (nomclient.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de nom ", "OK", null);
 
                             } 
-                            /*  else if (numeroClient.getText().equals("")) {
+                              else if (numeroClient.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de numeroclient ", "OK", null);
 
-                            }*/
+                            }
                                   else if (idProduit.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de produit ", "OK", null);
 
@@ -76,9 +77,9 @@ public class AjoutAchatForm extends Form{
                             else {       
                                 Achat s = new Achat();
                                 s.setIdUser(Integer.valueOf(iduser.getText()));
-                                //s.setDate(date.getText());
-                                //s.setNomClient(nomclient.getText());
-                              //  s.setNumeroClient(Integer.valueOf(numeroClient.getText()));
+                                s.setDate(date.getText());
+                                s.setNomClient(nomclient.getText());
+                              s.setNumeroClient(Integer.valueOf(numeroClient.getText()));
                                 
                                 s.setIdProduit(Integer.valueOf(idProduit.getText()));
                                 
@@ -92,7 +93,7 @@ public class AjoutAchatForm extends Form{
                                  NetworkManager.getInstance().addToQueueAndWait(cnreq);
                                 }
                             });
-         this.add(iduser)./*add(date)./*add(nomclient)./*add(numeroClient).*/add(idProduit).add(save);
+         this.add(iduser).add(date).add(nomclient).add(numeroClient).add(idProduit).add(save);
          
             add(b11);
             Form pre = null;

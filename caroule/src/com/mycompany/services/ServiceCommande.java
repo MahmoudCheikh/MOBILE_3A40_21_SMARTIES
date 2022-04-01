@@ -15,6 +15,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Produit;
 import com.mycompany.entity.Commande;
+import com.mycompany.myapp.AchatForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import java.util.Map;
 import java.util.List;
 import com.mycompany.myapp.AjoutCommande;
 import com.mycompany.myapp.CommandeFrom;
+import com.mycompany.myapp.SessionManager;
+import com.mycompany.myapp.SujetForm;
 
 /**
  *
@@ -29,11 +32,10 @@ import com.mycompany.myapp.CommandeFrom;
  */
 public class ServiceCommande {
 
-    public ArrayList<Commande> Commande;
-
-    public boolean resultOK;
+    public ArrayList<Commande> Commandes;
 
     public static ServiceCommande instance = null;
+    public boolean resultOK;
     private ConnectionRequest req;
 
     public static ServiceCommande getInstance() {
@@ -48,80 +50,61 @@ public class ServiceCommande {
     }
 
     //affichage des Commandes :
-    public ArrayList<Commande> affichageCommande() {
-        ArrayList<Commande> result = new ArrayList<>();
+    //affichage des Emplacement
+    public ArrayList<Commande> parseAchats(String jsonText) {
+        try {
 
-        String url = PageWeb.BASE_URL + "commande/displayall";
-        req.setUrl(url);
+            System.out.println(jsonText);
+            Commandes = new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String, Object> AchatListJson
+                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
 
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) AchatListJson.get("root");
+            for (Map<String, Object> obj : list) {
 
-                try {
-                    Map<String, Object> mapCommande = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
-                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapCommande.get("root");
+                Commande h = new Commande();
 
-                    for (Map<String, Object> obj : listOfMaps) {
-                        Commande comm = new Commande();
-                        float id = Float.parseFloat(obj.get("id").toString());
-                        float idUser = Float.parseFloat(obj.get("idUser").toString());
-                        float idProduit = Float.parseFloat(obj.get("idProduit").toString());
-                        float nbProduits = Float.parseFloat(obj.get("nbProduits").toString());
+                float id = Float.parseFloat(obj.get("id").toString());
+                System.out.println(id);
+                h.setId((int) id);
 
-//inserer les données dans une liste
-                        result.add(comm);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                //  float idUser = Float.parseFloat(obj.get("IdUser").toString());
+                //   h.setIdUser((int) idUser);
+                float nbProduits = Float.parseFloat(obj.get("nbProduits").toString());
+                h.setNbProduits((int) nbProduits);
+                System.out.println(nbProduits);
+
+                // float nb_participants = Float.parseFloat(obj.get("nb_participants").toString());
+                //h.setNb_participants((int) obj.get("nb_participants"));
+                //float nb_places = Float.parseFloat(obj.get("nb_places").toString());
+                //h.setNb_places((int)obj.get("nb_participants"));
+                Commandes.add(h);
             }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
+
+        } catch (IOException ex) {
+
+        }
+        return Commandes;
     }
 
-  
-    
-    
-                //affichage des Emplacement
-    public ArrayList<Commande>AffichageCommande(){
-        ArrayList<Commande> result = new ArrayList<>();
+    //affichage des Emplacement
+    public ArrayList<Commande> getAllCommandes() {
 
-        String url = PageWeb.BASE_URL + "commande/displayall?idUser="+4;
+        req = new ConnectionRequest();
+        String url = PageWeb.BASE_URL + "commande/afficherCommande";
+        System.out.println("===>" + url);
         req.setUrl(url);
-
+        req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
-
-                try {
-                    Map<String, Object> mapCommande = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
-                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapCommande.get("root");
-
-                    for (Map<String, Object> obj : listOfMaps) {
-                        Commande c = new Commande();
-
-                        float id = Float.parseFloat(obj.get("id").toString());
-                        c.setId((int) id);
-                        float nbProduits = Float.parseFloat(obj.get("nbProduits").toString());
-                        c.setId((int) id);
-                        c.setNbProduits((int) nbProduits);
-
-                        //inserer les données dans une liste
-                        result.add(c);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                Commandes = parseAchats(new String(req.getResponseData()));
+                req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
+        return Commandes;
     }
 
     public boolean delete(int id) {
@@ -139,11 +122,11 @@ public class ServiceCommande {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-   
-    
-    
-    public void Add(Commande c ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "commande/ajoutMobilecomm?NbProduits="+c.getNbProduits()+"&idProduit="+1+"&idUser="+4;
+
+    public void Add(Commande c, Form previous, Resources res) { 
+        String url = PageWeb.BASE_URL + "commande/ajoutMobilecomm?NbProduits=" + c.getNbProduits() + "&idProduit=" + c.getIdProduit() + "&idUser=" + SessionManager.getId();
+        System.out.println(url);
+
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -153,11 +136,13 @@ public class ServiceCommande {
                 req.removeResponseListener(this);
             }
         });
+        new CommandeFrom(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
 
     }
 
- public void Update(Commande c ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "commande/modifiermobilecomm?NbProduits="+c.getNbProduits()+"&idProduit="+c.getIdProduit();
+    public void Update(Commande c, Form previous, Resources res) {
+        String url = PageWeb.BASE_URL + "commande/modifiermobilecomm?NbProduits=" + c.getNbProduits() + "&idProduit=" + c.getIdProduit() + "&id=" + c.getId();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

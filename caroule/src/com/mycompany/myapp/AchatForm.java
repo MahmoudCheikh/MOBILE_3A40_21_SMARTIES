@@ -44,7 +44,7 @@ public class AchatForm extends Form {
 	b7.setUIID("refresh"); 
         b7.addActionListener(l->new AchatForm(Current,res).show());
         add(b7);     
-             for (Achat s : new ServiceAchat().affichageAchat()) {
+             for (Achat s : new ServiceAchat().getAllAchats()) {
 
             this.add(addItem_Publicite(s,res));
 
@@ -89,13 +89,13 @@ public class AchatForm extends Form {
  MultiButton m = new MultiButton();
  //  String url = "http://localhost/image/"+c.getImagee();
    
-       m.setTextLine1(String.valueOf(s.getId()));
-  
-        m.setTextLine2(s.getDate());
-        // m.setTextLine3(s.getNomClient());
-      m.setTextLine3(String.valueOf(s.getIdProduit()));
-      m.setTextLine4(String.valueOf(s.getIdUser()));
-        //m.setText(String.valueOf(s.getNumeroClient()));
+       
+      m.setText(String.valueOf(s.getIdProduit()));
+      m.setText(String.valueOf(s.getIdUser()));
+        m.setText(String.valueOf(s.getNumeroClient()));
+        m.setText(s.getDate());
+         m.setText(s.getNomClient());
+         m.setText(String.valueOf(s.getId()));
 
         m.setEmblem(theme.getImage("arrow.png"));
          
@@ -104,7 +104,7 @@ public class AchatForm extends Form {
 	setVisible(true); 
         Button b6=new Button("modifier Achat");
 	setVisible(true);  
-        //b.addActionListener(e -> new AffichageActivite(res).show());
+        
          add(b5);
          add(b6);
          b6.addActionListener(l->new ModifierAchatForm(res,s).show());
@@ -114,7 +114,7 @@ public class AchatForm extends Form {
 //Click delete icon
 b5.addPointerPressedListener(l -> {
 Dialog dig = new Dialog("Suprression");
-if(dig.show("Suppression", "Vous voulez supprimezr cette Achat ?","Annuler","Cui")) {
+if(dig.show("Suppression", "Vous voulez supprimer cet Achat ?","Annuler","Cui")) {
 dig.dispose ();
 }
 else {

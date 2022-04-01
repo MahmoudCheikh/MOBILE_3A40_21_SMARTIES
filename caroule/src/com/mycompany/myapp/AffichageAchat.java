@@ -25,6 +25,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -136,12 +137,31 @@ public ArrayList<Achat> Achats;
         
     
        SpanLabel sp = new SpanLabel();
-Achats=ServiceAchat.getInstance().affichageAchat();
-for (Achat a :Achats)
+Achats=ServiceAchat.getInstance().getAllAchats();
+
+            TextField search = new TextField("", "Chercher un Achat par Nom Client");
+this.add(search);
+ RadioButton recherche = RadioButton.createToggle("resultat recherche", barGroup);
+ recherche.setUIID("SelectBar");
+
+       
+Achats =ServiceAchat.getInstance().getAllAchats();
+   for (Achat a :Achats)
 { 
-   addButton(res.getImage("news-item-1.jpg"),a.getId()+ "\n" +a.getDate()+ "\n" +a.getNomClient()+ "\n" +a.getNumeroClient(), false, 26, 32);
-         
+   addButton(res.getImage("news-item-1.jpg"),a.getId()+ "\n" +a.getDate()+ "\n" +a.getNomClient()+"\n" +a.getNumeroClient(), false, 26, 32);
+                            
+                
 }
+
+  add(recherche);
+ search.addDataChangedListener((d, t) -> { 
+          for (Achat a :Achats){
+    if (a.getNomClient().equals(search.getText())) {
+       addButton(res.getImage("news-item-1.jpg"),a.getId()+ "\n" +a.getDate()+ "\n" +a.getNomClient()+"\n" +a.getNumeroClient(), false, 26, 32);
+
+}}});
+            
+
  // add(sp);   
 
  

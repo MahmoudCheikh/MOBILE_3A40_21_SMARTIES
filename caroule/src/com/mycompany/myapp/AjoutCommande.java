@@ -59,23 +59,21 @@ import java.util.Date;
  * @author Ahmed Elmoez
  */
 public class AjoutCommande extends Form {
-    
- public AjoutCommande(Resources res)  {
-                super("Commande", BoxLayout.y());
-                Button skip = new Button("back");
-                 skip.setUIID("back");
-        skip.addActionListener(e -> new NewsfeedForm(res).show());
-      add(skip);
-                   //TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
-                
-                TextField NbProduits = new TextField("", "nbProduits",20, TextArea.TEXT_CURSOR);
-                
-                                 TextField idProduit = new TextField("", "idProduit",20, TextArea.TEXT_CURSOR);
-                TextField idUser = new TextField("", "IdUser",20, TextArea.TEXT_CURSOR);
 
-                 
-         
-                 /*Label lab = new Label("0 DT");
+    public AjoutCommande(Resources res) {
+        super("Commande", BoxLayout.y());
+        Button skip = new Button("back");
+        skip.setUIID("back");
+        skip.addActionListener(e -> new NewsfeedForm(res).show());
+        add(skip);
+        //TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
+
+        TextField NbProduits = new TextField("", "nbProduits", 20, TextArea.TEXT_CURSOR);
+
+        TextField idProduit = new TextField("", "idProduit", 20, TextArea.TEXT_CURSOR);
+        TextField idUser = new TextField("", "IdUser", 20, TextArea.TEXT_CURSOR);
+
+        /*Label lab = new Label("0 DT");
                  affichage.addActionListener(www->{
                      
                     lab.setText(String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT");
@@ -100,12 +98,11 @@ public class AjoutCommande extends Form {
                             val_mail.addConstraint(mail, new LengthConstraint(8));
                             val_mail.addConstraint(mail, new RegexConstraint(text_mail, ""));*/
         Button save = new Button("Ajouter");
-       Button b7=new Button("liste Commande"); 
-         setVisible(true);
-         
-       //btnsupp.addActionListener(w -> new NewsfeedForm(res).show())
-               
-      /*  upload.addActionListener(new ActionListener() {
+        Button b7 = new Button("liste Commande");
+        setVisible(true);
+
+        //btnsupp.addActionListener(w -> new NewsfeedForm(res).show())
+        /*  upload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
@@ -132,91 +129,67 @@ public class AjoutCommande extends Form {
                                         
             }
         });   */
-           save.addActionListener(l
-                                -> {
+        save.addActionListener(l
+                -> {
 
-                          
-                            //if (Id.getText().equals("")) {
-                                //Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
+            //if (Id.getText().equals("")) {
+            //Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
 
-                            /*} else if (.isValid()) {
+            /*} else if (.isValid()) {
                                 Dialog.show("Erreur FIRSTNAME !", "il faut saisir des caracteres  !", "OK", null);*/
+            //}
+            if (NbProduits.getText().equals("")) {
+                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
 
-                            //}
-                            if (NbProduits.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
+            } else if (idProduit.getText().equals("")) {
+                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
 
-                            }
-                            
-                            else if (idProduit.getText().equals("")) 
-                            {
-                                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
-
-                            }
-                            else if (idUser.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de email ", "OK", null);/*else if (val_lastname.isValid()) {
+            } else if (idUser.getText().equals("")) {
+                Dialog.show("Erreur", "Champ vide de email ", "OK", null);/*else if (val_lastname.isValid()) {
                                 Dialog.show("Erreur LASTNAME !", "il faut saisir des caracteres  !", "OK", null);
 
                             } */
-                            
-                             /*else if (!val_mail.isValid()) {
+
+ /*else if (!val_mail.isValid()) {
                                 Dialog.show("Erreur EMAIL !", "email incorrect", "OK", null);
 
                             }  */
-                             
-                            }      
-                                                                 
-                            else {
-                                          
-                                          
-                                Commande p = new Commande();
-                                //c.setId(Integer.valueOf(Id.getText()));
-                                p.setNbProduits(Integer.valueOf(NbProduits.getText()));
-                               
-                                // p.setIdProduit(Integer.valueOf(idProduit.getText()));
-                               // p.setIdUser(Integer.valueOf(idUser.getText()));
-                               
-                               ServiceCommande sp = new ServiceCommande();
-                                Form previous = null;
-                               sp.Add(p, previous,res);
-                                 Dialog.show("Ajout", "Ajout avec succés", "OK", null);
-                                //  String url = "http://localhost/pdf/ex.php";
+
+            } else {
+
+                Commande p = new Commande();
+                p.setIdUser(Integer.valueOf(idUser.getText()));
+                p.setNbProduits(Integer.valueOf(NbProduits.getText()));
+                p.setIdProduit(Integer.valueOf(idProduit.getText()));
+                System.out.println("user " + p.getIdUser() + "prod" + p.getIdProduit()+ "id " + p.getNbProduits());
+                // p.setIdProduit(Integer.valueOf(idProduit.getText()));
+                // p.setIdUser(Integer.valueOf(idUser.getText()));
+                ServiceCommande sc = new ServiceCommande();
+                Form previous = null;
+                sc.Add(p, previous, res);
+                Dialog.show("Ajout", "Ajout avec succés", "OK", null);
+                //  String url = "http://localhost/pdf/ex.php";
 /*Button btn = new Button("hee");
 this.add(btn);
 
 btn.addActionListener(ll->{
 
 });
-*/
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
-               
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                                                    
-                            }
-           });
-        
-         
-                  
-        
-        
-        
-        
-          this.add(NbProduits).add(idUser).add(idProduit).add(save);
-          /*        Personnes p=new Personnes();
+                 */
+    //           ConnectionRequest cnreq = new ConnectionRequest();
+  //              cnreq.setPost(false);
+
+//                NetworkManager.getInstance().addToQueueAndWait(cnreq);
+
+            }
+        });
+
+        this.add(NbProduits).add(idUser).add(idProduit).add(save);
+        /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
-        
-         
-        
+
         add(b7);
-         Form pre = null;
- b7.addActionListener(e -> new CommandeFrom(pre,res).show());                 
-     }
+        Form pre = null;
+        b7.addActionListener(e -> new CommandeFrom(pre, res).show());
+    }
 }

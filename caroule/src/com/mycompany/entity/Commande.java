@@ -5,14 +5,13 @@
  */
 package com.mycompany.entity;
 
-
 public class Commande {
-      
+
     private int id;
-     private int idUser;
+    private int idUser;
     private int idProduit;
     private int nbProduits;
-            
+
     public int getIdUser() {
         return idUser;
     }
@@ -20,7 +19,8 @@ public class Commande {
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-   ;
+
+    ;
 
 
     
@@ -32,14 +32,12 @@ public class Commande {
         this.id = id;
     }
 
-  
-
     public int getIdProduit() {
         return idProduit;
     }
 
     public void setIdProduit(int idProduit) {
-        this. idProduit =  idProduit;
+        this.idProduit = idProduit;
     }
 
     public int getNbProduits() {
@@ -50,34 +48,14 @@ public class Commande {
         this.nbProduits = nbProduits;
     }
 
-    
-    
-      //constructeurs 
-
-        public Commande(int id, int idUser, int idProduit, int  nbProduits) {
+    //constructeurs 
+    public Commande(int id, int idUser, int idProduit, int nbProduits) {
         this.id = id;
         this.idProduit = idProduit;
         this.nbProduits = nbProduits;
     }
-        
-        public Commande() {
+
+    public Commande() {
     }
-
-    public String getid() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-        
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

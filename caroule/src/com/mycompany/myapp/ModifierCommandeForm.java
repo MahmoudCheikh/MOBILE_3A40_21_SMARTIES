@@ -71,8 +71,8 @@ public class ModifierCommandeForm extends Form {
                                
                                ServiceCommande sp = new ServiceCommande();
                                 Form previous = null;
-                               //sp.Update(c, previous,res);
-                               sp.affichageCommande();
+                               sp.Update(c, previous,res);
+                               //sp.getAllCommandes();
 
                                  Dialog.show("modifier", "modifier avec succés", "OK", null);
 
