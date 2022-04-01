@@ -98,8 +98,14 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Evenement", FontImage.MATERIAL_EVENT_AVAILABLE, e -> new AjoutEvenementForm(res).show());
         tb.addMaterialCommandToSideMenu("Sujet", FontImage.MATERIAL_NOTE_ADD, e -> new AjoutSujetForm(res).show());
         tb.addMaterialCommandToSideMenu("Messages", FontImage.MATERIAL_MESSAGE, e -> new AjoutMessageForm(res).show());
-         tb.addMaterialCommandToSideMenu("Activites", FontImage.MATERIAL_MESSAGE, e -> new AjoutActivite(res).show());
+                 tb.addMaterialCommandToSideMenu("Commandes", FontImage.MATERIAL_MESSAGE, e -> new AjoutCommande(res).show());
+         tb.addMaterialCommandToSideMenu("Achat", FontImage.MATERIAL_MESSAGE, e -> new AjoutAchatForm(res).show());
+
+        tb.addMaterialCommandToSideMenu("Activites", FontImage.MATERIAL_MESSAGE, e -> new AjoutActivite(res).show());
             tb.addMaterialCommandToSideMenu("Abonnement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutAbonnementForm(res).show());
+        
+        
+        
         }
         
 

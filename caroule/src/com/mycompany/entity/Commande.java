@@ -5,24 +5,22 @@
  */
 package com.mycompany.entity;
 
-/**
- *
- * @author PC
- */
+
 public class Commande {
       
     private int id;
-
-    public User getIdUser() {
+     private int idUser;
+    private int idProduit;
+    private int nbProduits;
+            
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(User idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
-    private User idUser;
-    private Produit idProduit;
-    private int nbProduits;
+   ;
 
 
     
@@ -36,11 +34,11 @@ public class Commande {
 
   
 
-    public Produit getIdProduit() {
+    public int getIdProduit() {
         return idProduit;
     }
 
-    public void setIdProduit(Produit idProduit) {
+    public void setIdProduit(int idProduit) {
         this. idProduit =  idProduit;
     }
 
@@ -56,7 +54,7 @@ public class Commande {
     
       //constructeurs 
 
-        public Commande(int id, int idUser, Produit idProduit, int  nbProduits) {
+        public Commande(int id, int idUser, int idProduit, int  nbProduits) {
         this.id = id;
         this.idProduit = idProduit;
         this.nbProduits = nbProduits;

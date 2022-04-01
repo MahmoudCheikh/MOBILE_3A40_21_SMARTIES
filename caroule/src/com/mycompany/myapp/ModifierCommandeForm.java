@@ -40,7 +40,7 @@ public class ModifierCommandeForm extends Form {
      public ModifierCommandeForm(Resources res,Commande c)  {
                 super("Commande", BoxLayout.y());
               
-                 TextField Id = new TextField(String.valueOf(c.getId()), "Numero De Commande", 20, TextArea.TEXT_CURSOR);
+                // TextField Id = new TextField(String.valueOf(c.getId()), "Numero De Commande", 20, TextArea.TEXT_CURSOR);
                  TextField nbProduits = new TextField(String.valueOf(c.getNbProduits()), "Nombre De Produit", 20, TextArea.TEXT_CURSOR);
                  
                   Button modif = new Button("modifier");
@@ -52,21 +52,21 @@ public class ModifierCommandeForm extends Form {
                                 -> {
 
                           
-                            if (Id.getText().equals("")) {
+                            if (nbProduits.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de nom ", "OK", null);
 
                             } 
                               
-                            else if (nbProduits.getText().equals(""))
+                          /*  else if (nbProduits.getText().equals(""))
                             {
                                 Dialog.show("Erreur", "Champ vide de Date debut ", "OK", null);
 
                             }
                                 
-                        
+                        */
                             else {
                                 
-                              c.setId(Integer.valueOf(Id.getText()));
+                          //    c.setId(Integer.valueOf(Id.getText()));
                              c.setNbProduits(Integer.valueOf(nbProduits.getText()));
                                
                                ServiceCommande sp = new ServiceCommande();

@@ -66,11 +66,13 @@ public class AjoutCommande extends Form {
                  skip.setUIID("back");
         skip.addActionListener(e -> new NewsfeedForm(res).show());
       add(skip);
-                   TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
+                   //TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
                 
                 TextField NbProduits = new TextField("", "nbProduits",20, TextArea.TEXT_CURSOR);
                 
-                 
+                                 TextField idProduit = new TextField("", "idProduit",20, TextArea.TEXT_CURSOR);
+                TextField idUser = new TextField("", "IdUser",20, TextArea.TEXT_CURSOR);
+
                  
          
                  /*Label lab = new Label("0 DT");
@@ -134,16 +136,25 @@ public class AjoutCommande extends Form {
                                 -> {
 
                           
-                            if (Id.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
+                            //if (Id.getText().equals("")) {
+                                //Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
 
                             /*} else if (.isValid()) {
                                 Dialog.show("Erreur FIRSTNAME !", "il faut saisir des caracteres  !", "OK", null);*/
 
-                            } else if (NbProduits.getText().equals("")) {
+                            //}
+                            if (NbProduits.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
 
-                            }/*else if (val_lastname.isValid()) {
+                            }
+                            
+                            else if (idProduit.getText().equals("")) 
+                            {
+                                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
+
+                            }
+                            else if (idUser.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de email ", "OK", null);/*else if (val_lastname.isValid()) {
                                 Dialog.show("Erreur LASTNAME !", "il faut saisir des caracteres  !", "OK", null);
 
                             } */
@@ -153,22 +164,21 @@ public class AjoutCommande extends Form {
 
                             }  */
                              
-                                   
+                            }      
                                                                  
                             else {
                                           
                                           
-                                Commande c = new Commande();
+                                Commande p = new Commande();
                                 //c.setId(Integer.valueOf(Id.getText()));
-                                c.setNbProduits(Integer.valueOf(NbProduits.getText()));
+                                p.setNbProduits(Integer.valueOf(NbProduits.getText()));
                                
-                                // p.setNb_participants(Integer.valueOf(nb_participants.getText()));
-                               // p.setNb_places(Integer.valueOf(nb_places.getText()));
+                                // p.setIdProduit(Integer.valueOf(idProduit.getText()));
+                               // p.setIdUser(Integer.valueOf(idUser.getText()));
                                
                                ServiceCommande sp = new ServiceCommande();
                                 Form previous = null;
-                               sp.affichageCommande();
-                               sp.Add(c, previous,res);
+                               sp.Add(p, previous,res);
                                  Dialog.show("Ajout", "Ajout avec succés", "OK", null);
                                 //  String url = "http://localhost/pdf/ex.php";
 /*Button btn = new Button("hee");
@@ -178,21 +188,9 @@ btn.addActionListener(ll->{
 
 });
 */
- ;
                 ConnectionRequest cnreq = new ConnectionRequest();
                 cnreq.setPost(false);
-               /* String data = "Nom : " + Nom.getText() + "<br>  Prenom : " + DateD.getText() + " <br>  mail :" + mail.getText() + " <br> domaine : " + domaine.getText() + " <br> lien : " + lien.getText()+ " <br> Prix : " + String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT"+"<br> Merci pour votre confiance &#128525;";
-
-                cnreq.addArgument("data", data);
-                cnreq.setUrl(url);
-                cnreq.addResponseListener(evx
-                        -> {
-                    String valeur = new String(cnreq.getResponseData());
-                     Dialog.show("PDF", "PDF", "OK", null);
-                
-
-                }
-                );*/
+               
                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
                                  
                                  
@@ -211,7 +209,7 @@ btn.addActionListener(ll->{
         
         
         
-          this.add(NbProduits).add(save);
+          this.add(NbProduits).add(idUser).add(idProduit).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         
