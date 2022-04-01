@@ -90,7 +90,8 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
-        tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_PRODUCTION_QUANTITY_LIMITS, e -> new AjoutProduitForm(res).show());
+        if (SessionManager.getId() == 9) {
+             tb.addMaterialCommandToSideMenu("Ajouter Produit", FontImage.MATERIAL_PRODUCTION_QUANTITY_LIMITS, e -> new AjoutProduitForm(res).show());
         tb.addMaterialCommandToSideMenu("Emplacement", FontImage.MATERIAL_MAP, e -> new AjoutEmplacementForm(res).show());
         tb.addMaterialCommandToSideMenu("Stock", FontImage.MATERIAL_ADD, e -> new AjoutStockForm(res).show());
         tb.addMaterialCommandToSideMenu("Statistique", FontImage.MATERIAL_STACKED_BAR_CHART, e -> new StatistiquePieForm(res).show());
@@ -99,10 +100,8 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Messages", FontImage.MATERIAL_MESSAGE, e -> new AjoutMessageForm(res).show());
          tb.addMaterialCommandToSideMenu("Activites", FontImage.MATERIAL_MESSAGE, e -> new AjoutActivite(res).show());
             tb.addMaterialCommandToSideMenu("Abonnement", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutAbonnementForm(res).show());
+        }
         
-        
-        tb.addMaterialCommandToSideMenu("Commande", FontImage.MATERIAL_EXIT_TO_APP, e -> new AjoutCommande(res).show());
-
 
     }
 }
