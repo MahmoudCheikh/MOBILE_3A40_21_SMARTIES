@@ -22,9 +22,9 @@ import com.mycompany.services.ServiceSujet;
  *
  * @author user
  */
-public class AjoutSujetForm extends Form {
+public class AddSujetFront extends Form {
 
-    public AjoutSujetForm(Resources res) {
+    public AddSujetFront(Resources res) {
         super("Sujet", BoxLayout.y());
         Button skip = new Button("back");
         skip.setUIID("back");
@@ -39,7 +39,6 @@ public class AjoutSujetForm extends Form {
         TextField titre = new TextField("", "titre", 20, TextArea.TEXT_CURSOR);
 
         Button save = new Button("Ajouter");
-        Button b7 = new Button("liste Sujet");
         setVisible(true);
 
         save.addActionListener(l
@@ -58,23 +57,22 @@ public class AjoutSujetForm extends Form {
                 s.setContenu(contenu.getText());
                 s.setTitre(titre.getText());
                 ServiceSujet sp = new ServiceSujet();
-                sp.Add(s, this, res);
+                sp.Addfront(s, this, res);
                 Form previous = null;
                 sp.getAllSujet();
                 Dialog.show("Ajout", "Ajout avec succés", "OK", null);
 
                 ConnectionRequest cnreq = new ConnectionRequest();
                 cnreq.setPost(false);
-
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
+                try {
+                    NetworkManager.getInstance().addToQueueAndWait(cnreq);
+                } catch (Exception e) { 
+                }
+                
 
             }
         });
 
         this.add(titrelabel).add(titre).add(contenulabel).add(contenu).add(save);
-
-        add(b7);
-        Form pre = null;
-        b7.addActionListener(e -> new SujetForm(pre, res).show());
     }
 }

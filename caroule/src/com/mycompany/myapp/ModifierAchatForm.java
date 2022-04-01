@@ -5,117 +5,97 @@
  */
 package com.mycompany.myapp;
 
-import com.codename1.capture.Capture;
-import com.codename1.components.InfiniteProgress;
 import com.codename1.io.ConnectionRequest;
-import com.codename1.io.MultipartRequest;
 import com.codename1.io.NetworkManager;
-import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Form;
-import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.codename1.ui.validation.LengthConstraint;
-import com.codename1.ui.validation.RegexConstraint;
-import com.codename1.ui.validation.Validator;
-import com.mycompany.myapp.MyApplication;
+import com.mycompany.entity.Produit;
 import com.mycompany.entity.Achat;
-import java.io.IOException;
-import java.util.Date;
 import com.mycompany.services.ServiceAchat;
-
 
 /**
  *
- * @author Ahmed Elmoez
+ * @author PC
  */
 public class ModifierAchatForm extends Form {
     
-     public ModifierAchatForm(Resources res,Achat a)  {
+     public ModifierAchatForm(Resources res,Achat s)  {
                 super("Achat", BoxLayout.y());
               
-                 TextField Id = new TextField(String.valueOf(a.getId()), "Numero De Commande", 20, TextArea.TEXT_CURSOR);
-                TextField Date = new TextField(a.getDate(), "Date D'Achat", 20, TextArea.TEXT_CURSOR);
-                TextField NomClient = new TextField(a.getNomClient(), "Nom Du Client", 20, TextArea.TEXT_CURSOR);
-                TextField NumeroClient = new TextField(String.valueOf(a.getNumeroClient()), "Numero De Client", 20, TextArea.TEXT_CURSOR);
+                  //    TextField id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
+                
+                //TextField date = new TextField("", "date", 20, TextArea.TEXT_CURSOR);
+                
+                 //TextField nomclient = new TextField("", "nom client", 20, TextArea.TEXT_CURSOR);
+                 
+                 //TextField numeroClient = new TextField("", "numero client", 20, TextArea.TEXT_CURSOR);
+                 
+                 TextField idProduit = new TextField("", "Id Produit", 20, TextArea.NUMERIC);
+
                  
                   Button modif = new Button("modifier");
-                  Button b8=new Button("My Commande"); 
+                  Button b12=new Button("liste Achat"); 
                   setVisible(true);
-                  
                   
                   modif.addActionListener(l
                                 -> {
 
                           
-                            if (Id.getText().equals("")) {
+                              /*if (id.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de id ", "OK", null);
+
+                            } else if (date.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de date ", "OK", null);
+
+                            }
+                            /*else if (nomclient.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de nom ", "OK", null);
 
                             } 
-                              
-                            else if (Date.getText().equals(""))
-                            {
-                                Dialog.show("Erreur", "Champ vide de Date debut ", "OK", null);
+                             /* else if (numeroClient.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de numeroclient ", "OK", null);
 
-                            }
-                            else if (NomClient.getText().equals(""))
-                            {
-                                Dialog.show("Erreur", "Champ vide de Date debut ", "OK", null);
+                            }*/
+                                   if (idProduit.getText().equals("")) {
+                                Dialog.show("Erreur", "Champ vide de produit ", "OK", null);
 
                             }
                             
-                            else if (NumeroClient.getText().equals(""))
-                            {
-                                Dialog.show("Erreur", "Champ vide de Date debut ", "OK", null);
-
-                            }
+                            else {       
+                                 // s.setId(Integer.valueOf(id.getText()));
+                              //  s.setDate(date.getText());
+                               // s.setNomClient(nomclient.getText());
+                               // s.setNumeroClient(Integer.valueOf(numeroClient.getText()));
                                 
-                        
-                            else {
+                                s.setIdProduit(Integer.valueOf(idProduit.getText()));
                                 
-                              a.setId(Integer.valueOf(Id.getText()));
-                               a.setDate(Date.getText());
-                                a.setNomClient(NomClient.getText());
-                             a.setNumeroClient(Integer.valueOf(NumeroClient.getText()));
-                               
+                                
                                 ServiceAchat sp = new ServiceAchat();
                                 Form previous = null;
-                               //sp.Update(c, previous,res);
-                               sp.affichageAchat();
-
+                               sp.Update(s, previous,res);
                                  Dialog.show("modifier", "modifier avec succés", "OK", null);
 
- ;
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
-             
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
-               }
-           });
-            this.add(Id).add(NomClient).add(NumeroClient).add(modif);
+              ConnectionRequest cnreq = new ConnectionRequest();
+                                 cnreq.setPost(false);
+                                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
+                                }
+                            });
+         this.add(idProduit).add(modif);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         
          
         
-        add(b8);
+        add(b12);
          Form pre = null;
-        b8.addActionListener(l->new AchatForm(pre,res).show());
+        b12.addActionListener(l->new AchatForm(pre,res).show());
       
      }     
         
                   
 }
-
-    
-
-
-
-

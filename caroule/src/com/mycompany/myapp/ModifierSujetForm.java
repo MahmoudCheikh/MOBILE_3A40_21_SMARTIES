@@ -10,6 +10,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.Button;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Form;
+import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
@@ -26,10 +27,10 @@ public class ModifierSujetForm extends Form{
     public ModifierSujetForm(Resources res, Sujet e) {
         super("Sujet", BoxLayout.y());
 
+           Label contenulabel = new Label("contenu");
+       Label titrelabel = new Label("titre");
         TextField titre = new TextField(e.getTitre(), "titre", 20, TextArea.TEXT_CURSOR);
         TextField contenu = new TextField(e.getContenu(), "contenu", 20, TextArea.TEXT_CURSOR);
-        TextField nbVues = new TextField(String.valueOf(e.getNbVues()), "titre", 20, TextArea.TEXT_CURSOR);
-        TextField nbReponses = new TextField(String.valueOf(e.getNbReponses()), "contenu", 20, TextArea.TEXT_CURSOR);
 
         Button modif = new Button("modifier");
         Button b8 = new Button("liste Sujet");
@@ -43,15 +44,9 @@ public class ModifierSujetForm extends Form{
 
             } else if (contenu.getText().equals("")) {
                 Dialog.show("Erreur", "Champ vide de Date debut ", "OK", null);
-            } else if (nbVues.getText().equals("")) {
-                Dialog.show("Erreur", "Champ vide de lieu ", "OK", null);
-            } else if (nbReponses.getText().equals("")) {
-                Dialog.show("Erreur", "Champ vide de type ", "OK", null);
-            } else {
+            }  else {
                 e.setTitre(titre.getText());
                 e.setContenu(contenu.getText());
-                e.setNbReponses(Integer.valueOf(nbReponses.getText()));
-                e.setNbVues(Integer.valueOf(nbVues.getText()));
                 ServiceSujet sp = new ServiceSujet();
                 Form previous = null;
                 sp.Update(e, previous, res);
@@ -62,7 +57,7 @@ public class ModifierSujetForm extends Form{
                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
             }
         });
-        this.add(titre).add(contenu).add(nbReponses).add(nbVues).add(modif);
+        this.add(titrelabel).add(titre).add(contenulabel).add(contenu).add(modif);
         /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
 

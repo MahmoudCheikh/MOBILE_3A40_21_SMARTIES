@@ -15,31 +15,28 @@ import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
+import com.mycompany.entity.Message;
 import com.mycompany.entity.Sujet;
+import com.mycompany.services.ServiceMessage;
 import com.mycompany.services.ServiceSujet;
 
 /**
  *
  * @author user
  */
-public class AjoutSujetForm extends Form {
+public class AddMessageFront extends Form {
 
-    public AjoutSujetForm(Resources res) {
-        super("Sujet", BoxLayout.y());
+    public AddMessageFront(Sujet sujet , Resources res) {
+        super("Message", BoxLayout.y());
         Button skip = new Button("back");
         skip.setUIID("back");
         skip.addActionListener(e -> new NewsfeedForm(res).show());
         add(skip);
-
-        //TextField Id = new TextField("", "id", 20, TextArea.TEXT_CURSOR);
+        
         Label contenulabel = new Label("contenu");
-       Label titrelabel = new Label("titre");
-       
         TextField contenu = new TextField("", "contenu", 20, TextArea.TEXT_CURSOR);
-        TextField titre = new TextField("", "titre", 20, TextArea.TEXT_CURSOR);
-
+        System.out.println("ejzakejzalkazjlejlazk"+ sujet.getId());
         Button save = new Button("Ajouter");
-        Button b7 = new Button("liste Sujet");
         setVisible(true);
 
         save.addActionListener(l
@@ -51,30 +48,27 @@ public class AjoutSujetForm extends Form {
             } else */if (contenu.getText().equals("")) {
                 Dialog.show("Erreur", "Champ vide  ", "OK", null);
 
-            } else if (titre.getText().equals("")) {
-                Dialog.show("Erreur", "Champ vide  ", "OK", null);
             } else {
-                Sujet s = new Sujet();
-                s.setContenu(contenu.getText());
-                s.setTitre(titre.getText());
-                ServiceSujet sp = new ServiceSujet();
-                sp.Add(s, this, res);
+                Message m = new Message();
+                m.setContenu(contenu.getText());
+                m.setIdSujet(sujet.getId());
+                ServiceMessage sm = new ServiceMessage();
+                sm.AddFront(m, this, res , sujet);
                 Form previous = null;
-                sp.getAllSujet();
                 Dialog.show("Ajout", "Ajout avec succés", "OK", null);
 
                 ConnectionRequest cnreq = new ConnectionRequest();
                 cnreq.setPost(false);
-
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
+                
+                try {
+                    NetworkManager.getInstance().addToQueueAndWait(cnreq);
+                } catch (Exception e) { 
+                }
+                
 
             }
         });
 
-        this.add(titrelabel).add(titre).add(contenulabel).add(contenu).add(save);
-
-        add(b7);
-        Form pre = null;
-        b7.addActionListener(e -> new SujetForm(pre, res).show());
+        this.add(contenulabel).add(contenu).add(save);
     }
 }

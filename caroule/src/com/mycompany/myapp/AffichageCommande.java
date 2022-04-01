@@ -146,8 +146,8 @@ public ArrayList<Commande> Commandes;
 Commandes =ServiceCommande.getInstance().AffichageCommande();
 for (Commande c :Commandes)
 { 
-//    addButton(res.getImage("news-item-1.jpg"),c.getId(),c.getNbProduits());
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+    addButton(res.getImage("news-item-1.jpg"),c.getId()+ "\n" +c.getNbProduits(), false, 26, 32,res);
+      //  sp.setText(sp.getText()+"\n"+e.getDescription()oString());
     
 
 }
@@ -210,32 +210,33 @@ for (Commande c :Commandes)
        image.setUIID("Label");
        Container cnt = BorderLayout.west(image);
        cnt.setLeadComponent(image);
-       TextArea ta = new TextArea();
+       TextArea ta = new TextArea(title);
        ta.setUIID("NewsTopLine");
        ta.setEditable(false);
-
-       Label likes = new Label("NewsBottomLine");
+        
+       Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
        likes.setTextPosition(RIGHT);
-       
+       if(!liked) {
+           FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
+       } else {
            Style s = new Style(likes.getUnselectedStyle());
            s.setFgColor(0xff2d55);
            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
            likes.setIcon(heartImage);
-       
-       Label comments = new Label( "NewsBottomLine");
+       }
+       Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
        
        
        cnt.add(BorderLayout.CENTER, 
                BoxLayout.encloseY(
                        ta,
-                       BoxLayout.encloseX()
+                       BoxLayout.encloseX(likes, comments)
                ));
-       add(cnt);
-       image.addActionListener(e -> ToastBar.showMessage("", FontImage.MATERIAL_INFO));
+       add(cnt);     
+       image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
         
-        
-    }
+   }
        private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {

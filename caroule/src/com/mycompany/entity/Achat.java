@@ -5,10 +5,7 @@
  */
 package com.mycompany.entity;
 
-/**
- *
- * @author PC
- */
+
 public class Achat {
             
     // declaration
@@ -17,8 +14,8 @@ public class Achat {
     private String date;
     private String nomClient;
     private int numeroClient;
-    //private User idUser;
-    //private Produit idProduit;
+    private int idUser;
+    private int idProduit;
    
   
     public int getId() {
@@ -54,25 +51,36 @@ public class Achat {
         this.numeroClient = numeroClient;
     }
 
-/*
-    public Produit getIdProduit() {
+
+    public int getIdProduit() {
         return idProduit;
     }
 
-    public void setIdProduit(Produit idProduit) {
+    public void setIdProduit(int idProduit) {
         this.idProduit = idProduit;
     }
-    */
+    
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+    
+    
+    
 
       //constructeurs 
 
-        public Achat(int id, String date, String nomClient, int  numeroClient) {
+        public Achat(int id, String date, String nomClient, int  numeroClient , int idProduit, int idUser) 
+        {
         this.id = id;
         this.date = date;
         this.nomClient = nomClient;
         this.numeroClient = numeroClient;
-        //this.idUser = idUser;
-        //this.idProduit = idProduit;
+        this.idUser = idUser;
+        this.idProduit = idProduit;
     }
         
         public Achat() {

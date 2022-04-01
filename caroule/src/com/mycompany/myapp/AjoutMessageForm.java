@@ -34,7 +34,6 @@ public class AjoutMessageForm extends Form{
                 
                 TextField contenu = new TextField("", "Nom Message", 20, TextArea.TEXT_CURSOR);
                 
-                TextField date = new TextField("", "Date Message ", 20, TextArea.TEXT_CURSOR);
                 
                 TextField idSujet = new TextField("", "Sujet", 20, TextArea.EMAILADDR);
                  
@@ -51,19 +50,7 @@ public class AjoutMessageForm extends Form{
                           
                             if (contenu.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de Prenom ", "OK", null);
-
-                            /*} else if (.isValid()) {
-                                Dialog.show("Erreur FIRSTNAME !", "il faut saisir des caracteres  !", "OK", null);*/
-
-                            } else if (date.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
-
-                            }/*else if (val_lastname.isValid()) {
-                                Dialog.show("Erreur LASTNAME !", "il faut saisir des caracteres  !", "OK", null);
-
-                            } */
-                            
-                            
+                            }
                             else if (idSujet.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de email ", "OK", null);
 
@@ -77,7 +64,6 @@ public class AjoutMessageForm extends Form{
                                           
                                 Message m = new Message();
                                 m.setContenu(contenu.getText());
-                                m.setDate(date.getText());
                                 m.setIdSujet(Integer.valueOf(idSujet.getText()));
                                 m.setIdUser(Integer.valueOf(idUser.getText()));
 
@@ -96,7 +82,7 @@ public class AjoutMessageForm extends Form{
         
         
         
-          this.add(contenu).add(date).add(idSujet).add(idUser).add(save);
+          this.add(contenu).add(idSujet).add(idUser).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         

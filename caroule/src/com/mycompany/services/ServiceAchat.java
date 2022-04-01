@@ -14,46 +14,40 @@ import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entity.Achat;
-import com.mycompany.myapp.AffichageAchat;
-import com.mycompany.utils.PageWeb;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map; 
-import java.util.List; 
-import com.mycompany.myapp.AjoutAchatForm;
+import com.mycompany.entity.Produit;
 import com.mycompany.myapp.AchatForm;
+import com.mycompany.utils.PageWeb;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
- * @author Ahmed Elmoez
+ * @author PC
  */
 public class ServiceAchat {
-    
-    
- 
-    public ArrayList<Achat> Commande;
+                   
 
-        public boolean resultOK;
 
     public static ServiceAchat instance = null;
+    public boolean resultOK;
     private ConnectionRequest req;
-    
-    public static ServiceAchat getInstance(){
-        if(instance ==null)
-            instance = new ServiceAchat();
-            return instance;
-    }
-        
-    public ServiceAchat(){
+
+    public ServiceAchat() {
         req = new ConnectionRequest();
     }
-    
-    
-     //affichage des Commandes :
+
+    public static ServiceAchat getInstance() {
+        if (instance == null) {
+            instance = new ServiceAchat();
+        }
+        return instance;
+    }
+     //affichage des Emplacement
     public ArrayList<Achat>affichageAchat(){
         ArrayList<Achat> result = new ArrayList<>();
         
-        String url = PageWeb.BASE_URL+"achat/displayachats";
+        String url = PageWeb.BASE_URL+"achat/displayachats?idUser="+4;
         req.setUrl(url);
         
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -67,62 +61,19 @@ public class ServiceAchat {
                     List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapAchat.get("root");
                 
                 for(Map<String,Object> obj : listOfMaps) {
-                    Achat a = new Achat();
+                    Achat s = new Achat();
+                    
                     float id = Float.parseFloat(obj.get("id").toString());
-                    //float idUser = Float.parseFloat(obj.get("idUser").toString());
-                    //float idProduit = Float.parseFloat(obj.get("idProduit").toString());
-                    float numeroClient = Float.parseFloat(obj.get("numeroClient").toString());
-                    
-                    a.setNomClient(obj.get("NomClient").toString());
-                a.setDate(obj.get("date").toString());
-                        
-                    
-//inserer les données dans une liste
-                     result.add(a);
-                }                
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
-                }
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
-    }
+                    s.setId((int) id);
+                s.setDate(obj.get("date").toString());
+                //s.setNomClient(obj.get("Nom Client").toString());
+                   //float numeroclient = Float.parseFloat(obj.get("Numero Client").toString());
 
-    public ArrayList<Achat> getAllAchats() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-                //affichage des Emplacement
-    public ArrayList<Achat>AffichageAchat(){
-        ArrayList<Achat> result = new ArrayList<>();
-        
-        String url = PageWeb.BASE_URL+"achat/displayachats";
-        req.setUrl(url);
-        
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                JSONParser jsonp;
-                jsonp = new JSONParser();
-                
-                try{
-                    Map<String,Object>mapAchat = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));   
-                    List<Map<String,Object> > listOfMaps = (List<Map<String,Object> >) mapAchat.get("root");
-                
-                for(Map<String,Object> obj : listOfMaps) {
-                    Achat c = new Achat();
-                    
-                    float id = Float.parseFloat(obj.get("id").toString());
-                    c.setId((int) id);
-                    c.setDate(obj.get("date").toString());
-                    c.setNomClient(obj.get("nomClient").toString());
-                   c.setNumeroClient(  (int) obj.get("numeroClient"));
+
+               // s.setNumeroClient((int) numeroclient);
                     
                 //inserer les données dans une liste
-                result.add(c);
+                result.add(s);
                 }                
                 }
                 catch(Exception ex){
@@ -132,49 +83,10 @@ public class ServiceAchat {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return result;
-    
     }
-
-      
-
-
-public boolean delete(int id) {
-        String url = PageWeb.BASE_URL + "achat/deletemobileachat/"+id;
-        req.setUrl(url);
-        //req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-               
-                req.removeResponseListener(this);
-            }
-        });
-        
-        NetworkManager.getInstance().addToQueueAndWait(req);
-    return resultOK;
-    }
-   
     
-    
- public void Add(Achat a ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "achat/ajoutmobileachat?Id="+a.getId()+"&date="+a.getDate()+"&NomClient"+a.getNomClient();
-        req.setUrl(url);
-        req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-               
-                req.removeResponseListener(this);
-            }
-        });
-    
-    }
-
-
-
-
- public void Update(Achat a ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "achat/modifiermobileacha?Id="+a.getId();
+     public void add(Achat s ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "achat/ajoutmobileachat?IdUser="+s.getIdUser()+"&idProduit"+s.getIdProduit();
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -189,12 +101,36 @@ public boolean delete(int id) {
         NetworkManager.getInstance().addToQueueAndWait(req);
     
     }
-
-
-
-
-
-
-
-
+        public void Update(Achat s ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "achat/modifiermobileachat?IdProduit="+s.getIdProduit();
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        new AchatForm(previous,res).show();
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    
+    }
+        
+        public boolean delete(int id) {
+        String url = PageWeb.BASE_URL + "achat/deletemobileachat"+id;
+        req.setUrl(url);
+        //req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               
+                req.removeResponseListener(this);
+            }
+        });
+        
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    return resultOK;
+    }
 }
