@@ -42,6 +42,10 @@ public class AjoutStockForm extends Form{
                  TextField disponibilite = new TextField("", "disponibilite", 20, TextArea.TEXT_CURSOR);
                  
                  TextField IdProduit = new TextField("", "IdProduit", 20, TextArea.NUMERIC);
+                 
+                 TextField emplacement = new TextField("", "emplacement", 20, TextArea.NUMERIC);
+                 
+                 
 
                  
         //buttons
@@ -80,7 +84,7 @@ public class AjoutStockForm extends Form{
                                 s.setPrix(Integer.valueOf(prix.getText()));
                                 s.setQuantite(Integer.valueOf(quantite.getText()));
                                 s.setDisponibilite(disponibilite.getText());
-                                
+                                s.setEmplacement(Integer.valueOf(emplacement.getText()));
                                 s.setIdProduit(Integer.valueOf(IdProduit.getText()));
                                 
                                 ServiceStock sp = new ServiceStock();
@@ -90,7 +94,7 @@ public class AjoutStockForm extends Form{
 
                                 }
                             });
-         this.add(libelle).add(prix).add(quantite).add(disponibilite).add(IdProduit).add(save);
+         this.add(libelle).add(prix).add(quantite).add(disponibilite).add(IdProduit).add(emplacement).add(save);
          
             add(b11);
             Form pre = null;

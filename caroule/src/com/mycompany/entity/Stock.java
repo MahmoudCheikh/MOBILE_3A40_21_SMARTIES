@@ -17,7 +17,7 @@ public class Stock {
     private int quantite;
     private int IdProduit;
     private String disponibilite;
-    private Emplacement emplacement;
+    private int emplacement;
 
     public int getIdProduit() {
         return IdProduit;
@@ -69,11 +69,11 @@ public class Stock {
         this.disponibilite = disponibilite;
     }
 
-    public Emplacement getEmplacement() {
+    public int getEmplacement() {
         return emplacement;
     }
 
-    public void setEmplacement(Emplacement emplacement) {
+    public void setEmplacement(int emplacement) {
         this.emplacement = emplacement;
     }
 

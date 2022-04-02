@@ -47,10 +47,6 @@ public class AjouterMaintenance extends Form{
       add(skip);
                    TextField idProduit = new TextField("", "produit à maintenire", 20, TextArea.TEXT_CURSOR);
                 
-                TextField Dated = new TextField("", "Date debut ", 20, TextArea.TEXT_CURSOR);
-                
-                 TextField Datef = new TextField("", "Date fin", 20, TextArea.EMAILADDR);
-                 
                  TextField adresse = new TextField("", "adresse", 20, TextArea.TEXT_CURSOR);
                  
                  TextField reclamation = new TextField("", "Reclamation", 20, TextArea.NUMERIC);
@@ -77,19 +73,7 @@ public class AjouterMaintenance extends Form{
                             /*} else if (.isValid()) {
                                 Dialog.show("Erreur FIRSTNAME !", "il faut saisir des caracteres  !", "OK", null);*/
 
-                            } else if (Dated.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de Nom ", "OK", null);
-
-                            }/*else if (val_lastname.isValid()) {
-                                Dialog.show("Erreur LASTNAME !", "il faut saisir des caracteres  !", "OK", null);
-
-                            } */
-                            
-                            
-                            else if (Datef.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de email ", "OK", null);
-
-                            } /*else if (!val_mail.isValid()) {
+                            }  /*else if (!val_mail.isValid()) {
                                 Dialog.show("Erreur EMAIL !", "email incorrect", "OK", null);
 
                             }  */
@@ -117,14 +101,12 @@ public class AjouterMaintenance extends Form{
                                           
                                 Maintenance p = new Maintenance();
                                 p.setId_produit_id(Integer.valueOf(idProduit.getText()));
-                                p.setDate_debut(Dated.getText());
-                                p.setDate_fin(Datef.getText());
                                  p.setRelation_id(Integer.valueOf(relation.getText()));
                                  p.setReclamation_id(Integer.valueOf(reclamation.getText()));
                                  p.setDescription(desc.getText());
                                  p.setEtat(etat.getText());
                                  p.setAdresse(adresse.getText());
-                                // p.setIdUser(adresse.getText());
+                                p.setIdUser(Integer.valueOf(relation.getText()));
                                // p.setNb_places(Integer.valueOf(nb_places.getText()));
                                
                                ServiceMaintenance sp = new ServiceMaintenance();
@@ -149,7 +131,7 @@ btn.addActionListener(ll->{
                             }
            });
 
-          this.add(idProduit).add(Dated).add(Datef).add(desc).add(reclamation).add(relation).add(adresse).add(etat).add(save);
+          this.add(idProduit).add(desc).add(reclamation).add(relation).add(adresse).add(etat).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
 

@@ -84,7 +84,8 @@ public class ServiceStock {
     //ajout
     
          public void AjouterStock(Stock s ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "AjouterStock?libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite() + "&idProduit=" + 101 +"&idEmplacement=" + 44 ;
+        String url = PageWeb.BASE_URL + "AjouterStock?libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()
+                +"&disponibilite="+s.getDisponibilite() + "&idProduit=" + s.getIdProduit() +"&idEmplacement=" + s.getEmplacement() ;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

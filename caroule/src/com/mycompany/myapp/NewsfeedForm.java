@@ -58,11 +58,11 @@ import com.mycompany.entity.Sujet;
 public class NewsfeedForm extends BaseForm {
  Form current;
     public NewsfeedForm(Resources res) {
-        super("Newsfeed", BoxLayout.y());
+        super("Ca Roule", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
+        setTitle("Ca Roule");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -72,9 +72,9 @@ public class NewsfeedForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
-                
+        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "  ", "", " ");
+       // addTab(swipe, res.getImage("dog.jpg"), spacer2, "  ", "", "");
+           
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
         swipe.hideTabs();
@@ -114,7 +114,7 @@ public class NewsfeedForm extends BaseForm {
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
+        RadioButton all = RadioButton.createToggle("", barGroup);
         all.setUIID("SelectBar");
         RadioButton Evenement= RadioButton.createToggle("Evenement", barGroup);
         Evenement.setUIID("SelectBar");
@@ -130,7 +130,7 @@ public class NewsfeedForm extends BaseForm {
         Abonnement.setUIID("SelectBar");
 
         RadioButton Reclamation = RadioButton.createToggle("Reclamation", barGroup);
-        Forum.setUIID("SelectBar");
+        Reclamation.setUIID("SelectBar");
         
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
@@ -161,11 +161,6 @@ public class NewsfeedForm extends BaseForm {
         });
        
          
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
-            
         Produit.addActionListener((ActionListener) (ActionEvent e) -> {
             new AffichageProduit(current,res).show();
         });

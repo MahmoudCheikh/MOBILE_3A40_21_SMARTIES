@@ -185,8 +185,8 @@ btn.addActionListener(ll->{
 });
 */
  ;
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
+             //   ConnectionRequest cnreq = new ConnectionRequest();
+             //   cnreq.setPost(false);
                /* String data = "Nom : " + Nom.getText() + "<br>  Prenom : " + DateD.getText() + " <br>  mail :" + mail.getText() + " <br> domaine : " + domaine.getText() + " <br> lien : " + lien.getText()+ " <br> Prix : " + String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT"+"<br> Merci pour votre confiance &#128525;";
 
                 cnreq.addArgument("data", data);
@@ -199,7 +199,7 @@ btn.addActionListener(ll->{
 
                 }
                 );*/
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
+              //  NetworkManager.getInstance().addToQueueAndWait(cnreq);
                                  
                                  
                                  

@@ -124,7 +124,8 @@ public boolean resultOK;
     
     
      public void Add(Form previous,Resources res , Maintenance p) {
-        String url = PageWeb.BASE_URL + "maintenance/ajoutermaintenance?adresse=" + p.getAdresse()+ "&description=" + p.getDescription()+"&date_debut="+p.getDate_debut()+"&date_fin=" + p.getDate_fin() + "&etat=" + p.getEtat() + "&relation_id=" + 10 + "&reclamation=" + 10 + "&idProduit="+ 101 + "&idUser=" + 9;
+        String url = PageWeb.BASE_URL + "maintenance/ajoutermaintenance?adresse=" + p.getAdresse()+ "&description=" + p.getDescription()+ "&etat=" + p.getEtat() + "&relation_id=" 
+                + p.getRelation_id() + "&reclamation=" + p.getReclamation_id() + "&idProduit="+ p.getId_produit_id() + "&idUser=" + p.getIdUser();
          System.out.println(url);
         req.setUrl(url);
         req.setPost(false);
