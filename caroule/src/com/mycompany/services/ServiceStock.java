@@ -43,11 +43,48 @@ public class ServiceStock {
         }
         return instance;
     }
-    
+    //afficahge
+          //parseproduit
+    public ArrayList<Stock> parseStock(String jsonText) {
+        try {
+            Stock = new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String, Object> EquipeListJson
+                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) EquipeListJson.get("root");
+            for(Map<String,Object> obj :list){
+           
+                Stock s = new Stock();
+
+                float id = Float.parseFloat(obj.get("id").toString());
+                float prix = Float.parseFloat(obj.get("prix").toString());
+               float quantite = Float.parseFloat(obj.get("quantite").toString());
+
+
+                s.setLibelle(obj.get("libelle").toString());
+                s.setDisponibilite(obj.get("disponibilite").toString());
+                
+                s.setPrix((int)prix);
+                s.setId((int)id);
+                s.setQuantite((int) quantite);
+               
+
+              //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
+               
+
+                Stock.add(s);
+            }
+
+        } catch (IOException ex) {
+
+        }
+        return Stock;
+    }
     //ajout
     
          public void AjouterStock(Stock s ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "AjouterStock?libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite() + "&idProduit=" + 101;
+        String url = PageWeb.BASE_URL + "AjouterStock?libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite() + "&idProduit=" + 101 +"&idEmplacement=" + 44 ;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -82,8 +119,9 @@ public class ServiceStock {
     }
            //update
         public void Update(Stock s ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "updateStock?id="+s.getId()+ "libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite()+"&idProduit="+s.getIdProduit();
+        String url = PageWeb.BASE_URL + "updateStock?id="+s.getId()+ "&libelle="+s.getLibelle()+"&quantite="+s.getQuantite()+"&prix="+s.getPrix()+"&disponibilite="+s.getDisponibilite();
         req.setUrl(url);
+        System.out.println("===>" + url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -97,43 +135,7 @@ public class ServiceStock {
         NetworkManager.getInstance().addToQueueAndWait(req);
     
     }
-        //afficahge
-          //parseproduit
-    public ArrayList<Stock> parseStock(String jsonText) {
-        try {
-            Stock = new ArrayList<>();
-            JSONParser j = new JSONParser();
-            Map<String, Object> EquipeListJson
-                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
-
-            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) EquipeListJson.get("root");
-            for(Map<String,Object> obj :list){
-           
-                Stock s = new Stock();
-
-                float id = Float.parseFloat(obj.get("id").toString());
-                float prix = Float.parseFloat(obj.get("prix").toString());
-//                float quantite = Float.parseFloat(obj.get("quantite").toString());
-
-
-                s.setLibelle(obj.get("libelle").toString());
-//                s.setDisponibilite(obj.get("disponibilite").toString());
-                
-                s.setPrix((int)prix);
-               // s.setQuantite((int) quantite);
-               
-
-              //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
-               
-
-                Stock.add(s);
-            }
-
-        } catch (IOException ex) {
-
-        }
-        return Stock;
-    }
+        
     
     //affichage des produits :
     public ArrayList<Stock> getAllStocks() {

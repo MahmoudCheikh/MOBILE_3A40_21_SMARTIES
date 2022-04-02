@@ -120,11 +120,7 @@ public class ModifierProduitForm extends Form {
                                 Form previous = null;
                                 sp.AjouterProduit(p, previous, res);
                                  Dialog.show("Modifier", "Modifié avec succés", "OK", null);
-                                 
-                                 ConnectionRequest cnreq = new ConnectionRequest();
-                                  cnreq.setPost(false);
-                                  NetworkManager.getInstance().addToQueueAndWait(cnreq);
-                                         
+                                                                          
                                     }
                          });
                  

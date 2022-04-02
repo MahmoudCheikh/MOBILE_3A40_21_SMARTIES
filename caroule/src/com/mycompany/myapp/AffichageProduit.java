@@ -25,6 +25,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -140,21 +141,46 @@ public class AffichageProduit extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-
-       SpanLabel sp = new SpanLabel();
-
        ///Appel affichage données :***********************************************************************************************************
         Produits.addActionListener((ActionListener) (ActionEvent e) -> {
         new AffichageProduit(current,res).show();       
        
       }); 
+        
+        /*
+       SpanLabel sp = new SpanLabel();
+
+
                Produit = ServiceProduit.getInstance().getAllProduits();
        
        for( Produit p : Produit){
           
            addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix());
          
-       } 
+       } */
+        
+        TextField search = new TextField("", "Chercher un Produit par son nom");
+this.add(search);
+ RadioButton recherche = RadioButton.createToggle("resultat recherche", barGroup);
+ recherche.setUIID("SelectBar");
+
+       SpanLabel sp = new SpanLabel();
+       
+Produit =ServiceProduit.getInstance().getAllProduits();
+    for( Produit p : Produit){
+     addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix()+p.getId());
+} 
+
+  add(recherche);
+ search.addDataChangedListener((d, t) -> { 
+          for( Produit p : Produit){
+    if (p.getLibelle().equals(search.getText())) {
+    addButton(res.getImage("news-item-1.jpg"),p.getLibelle().toString()+ "\n" +p.getDescription().toString()+ "\n" +p.getType().toString()+ "\n" +p.getPrix() +p.getId());
+}}});
+ 
+ 
+ 
+ 
     tb.addMaterialCommandToRightBar("Back", FontImage.MATERIAL_BACKUP, e -> new NewsfeedForm(res).show());
     
             Emplacement.addActionListener((ActionListener) (ActionEvent e) -> {

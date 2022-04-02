@@ -74,10 +74,8 @@ public class AjoutEmplacementForm extends Form{
                                 Form previous = null;
                                sp.AjouterEmplacement(e, previous,res);
                            
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
+
                                  Dialog.show("Ajout", "Ajout avec succés", "OK", null);
-                                                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
                             
                                                                     
                             }

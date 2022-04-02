@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.mycompany.services;
+
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -12,29 +13,29 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Maintenance;
-import com.mycompany.entity.Sujet;
-import com.mycompany.myapp.MaintenanceForm;
+import com.mycompany.entity.Reclamation;
+import com.mycompany.myapp.ReclamationForm;
 import com.mycompany.utils.PageWeb;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.StringTokenizer;
+
 /**
  *
  * @author PC
  */
-public class ServiceMaintenance {
-     public ArrayList<Maintenance> Maintenances;
-public boolean resultOK;
-  public static boolean resultOk;
+public class ServiceReclamation {
+    public ArrayList<Reclamation> Reclamations;
+     public boolean resultOK;
+     public static boolean resultOk;
 
-    public static ServiceMaintenance instance = null;
+    public static ServiceReclamation instance = null;
     private ConnectionRequest req;
 
-    public static ServiceMaintenance getInstance() {
+    public static ServiceReclamation getInstance() {
         if (instance == null) {
-            instance = new ServiceMaintenance();
+            instance = new ServiceReclamation();
         }
         return instance;
     }
@@ -60,23 +61,24 @@ public boolean resultOK;
     }
 
     
-    public ServiceMaintenance() {
+    public ServiceReclamation() {
         req = new ConnectionRequest();
     }
 //parser
-        public ArrayList<Maintenance> parseMaintenance(String jsonText) {
-        ArrayList<Maintenance> Maintenances = new ArrayList<>();
+        public ArrayList<Reclamation> parseReclamation(String jsonText) {
+        ArrayList<Reclamation> Reclamations = new ArrayList<>();
 
         try {
             JSONParser j = new JSONParser();
-            Map<String, Object> MaintenanceListJson
+            Map<String, Object> ReclamationListJson
                     = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
 
-            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) MaintenanceListJson.get("root");
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) ReclamationListJson.get("root");
             for (Map<String, Object> obj : list) {
-                Maintenance Maintenance = new Maintenance();
+                Reclamation Reclamation = new Reclamation();
+                
                 float id = Float.parseFloat(obj.get("id").toString());
-                Maintenance.setId((int) id);
+                Reclamation.setId((int) id);
                 
                /* float Id_produit_id = Float.parseFloat(obj.get("id_produit_id").toString());
                 Maintenance.setId_produit_id((int) Id_produit_id);
@@ -87,44 +89,43 @@ public boolean resultOK;
                 float Relation_id = Float.parseFloat(obj.get("relation_id").toString());
                 Maintenance.setRelation_id((int) Reclamation_id);*/
                 
-                Maintenance.setAdresse(obj.get("adresse").toString());                
+                Reclamation.setDescription(obj.get("description").toString());                
                 //Maintenance.setDate_debut(obj.get("date_debut").toString());
                //Maintenance.setDate_fin(obj.get("date_fin").toString());
-                Maintenance.setDescription(obj.get("description").toString());                
-                Maintenance.setEtat(obj.get("etat").toString());
-                Maintenance.setAdresse(obj.get("adresse").toString());
+                Reclamation.setDate(obj.get("date").toString());                
+                Reclamation.setObjet(obj.get("objet").toString());
                 
-                Maintenances.add(Maintenance);
+                Reclamations.add(Reclamation);
             }
 
         } catch (IOException ex) {
 
         }
-        return Maintenances;
+        return Reclamations;
     }
-        public ArrayList<Maintenance> getAllMaintenance() {
+        public ArrayList<Reclamation> getAllReclamation() {
 
         req = new ConnectionRequest();
-        String url = PageWeb.BASE_URL + "maintenance/displayall";
+        String url = PageWeb.BASE_URL + "reclamation/afficherRec";
         System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                Maintenances = parseMaintenance(new String(req.getResponseData()));
+                Reclamations = parseReclamation(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return Maintenances;
+        return Reclamations;
     }
 
     
     
     
-     public void Add(Form previous,Resources res , Maintenance p) {
-        String url = PageWeb.BASE_URL + "maintenance/ajoutermaintenance?adresse=" + p.getAdresse()+ "&description=" + p.getDescription()+"&date_debut="+p.getDate_debut()+"&date_fin=" + p.getDate_fin() + "&etat=" + p.getEtat() + "&relation_id=" + 10 + "&reclamation=" + 10 + "&idProduit="+ 101 + "&idUser=" + 9;
+     public void Add(Form previous,Resources res , Reclamation p) {
+        String url = PageWeb.BASE_URL + "reclamation/ajoutRec?objet=" + p.getObjet()+ "&description=" + p.getDescription()+"&date="+ p.getDate()+"&idUser="+ 9;
          System.out.println(url);
         req.setUrl(url);
         req.setPost(false);
@@ -142,7 +143,7 @@ public boolean resultOK;
     }
      //delete
        public boolean delete(int id) {
-        String url = PageWeb.BASE_URL + "maintenance/deleteMain/"+id;
+        String url = PageWeb.BASE_URL + "reclamation/deleteRec/"+id;
         req.setUrl(url);
         //req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -158,8 +159,8 @@ public boolean resultOK;
     }
        //update
        
-          public void Update(Maintenance p ,Form previous,Resources res) {
-        String url = PageWeb.BASE_URL + "maintenance/modifierMain?id="+ p.getId() + "&adresse=" + p.getAdresse()+ "&description=" + p.getDescription()+ "&etat=" + p.getEtat();
+          public void Update(Reclamation p ,Form previous,Resources res) {
+        String url = PageWeb.BASE_URL + "reclamation/modifierRec?id="+ p.getId() + "&objet=" + p.getObjet()+ "&description=" + p.getDescription();
         req.setUrl(url);
         System.out.println("===>" + url);
         req.setPost(false);
@@ -171,7 +172,7 @@ public boolean resultOK;
             }
         });
         
-        new MaintenanceForm(previous,res).show();
+        new ReclamationForm(previous,res).show();
         NetworkManager.getInstance().addToQueueAndWait(req);
     
     }

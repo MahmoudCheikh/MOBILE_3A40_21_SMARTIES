@@ -20,6 +20,15 @@ public class Maintenance {
     private String adresse;
     private String etat;
     private String description;
+    private int idUser;
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
 
     public int getId() {
         return id;

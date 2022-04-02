@@ -92,12 +92,12 @@ public class StockForm extends Form {
  MultiButton m = new MultiButton();
  //  String url = "http://localhost/image/"+c.getImagee();
    
-     m.setTextLine1(s.getLibelle());
+     m.setTextLine4(s.getLibelle());
       m.setTextLine2(String.valueOf(s.getPrix()));
         m.setTextLine3(String.valueOf(s.getQuantite()));
-      m.setTextLine4(s.getDisponibilite());
-      m.setText(String.valueOf(s.getIdProduit()));
-        m.setText(String.valueOf(s.getEmplacement()));
+      m.setText(s.getDisponibilite());
+     // m.setText(String.valueOf(s.getIdProduit()));
+        //m.setText(String.valueOf(s.getEmplacement()));
 
         m.setEmblem(theme.getImage("arrow.png"));
          

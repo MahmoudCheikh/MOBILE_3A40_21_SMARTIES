@@ -12,7 +12,7 @@ package com.mycompany.entity;
 public class Reclamation {
     
     private int id;
-    private int id_user_id;
+    private int idUser;
     private String description ;
     private String date ;
     private String objet;
@@ -25,12 +25,12 @@ public class Reclamation {
         this.id = id;
     }
 
-    public int getId_user_id() {
-        return id_user_id;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setId_user_id(int id_user_id) {
-        this.id_user_id = id_user_id;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getDescription() {
@@ -57,9 +57,9 @@ public class Reclamation {
         this.objet = objet;
     }
 
-    public Reclamation(int id, int id_user_id, String description, String date, String objet) {
+    public Reclamation(int id, int idUser, String description, String date, String objet) {
         this.id = id;
-        this.id_user_id = id_user_id;
+        this.idUser = idUser;
         this.description = description;
         this.date = date;
         this.objet = objet;

@@ -87,10 +87,7 @@ public class AjoutStockForm extends Form{
                                 Form previous = null;
                                sp.AjouterStock(s, previous,res);
                                  Dialog.show("Ajout", "Ajout avec succés", "OK", null);
-                                 
-                                 ConnectionRequest cnreq = new ConnectionRequest();
-                                 cnreq.setPost(false);
-                                 NetworkManager.getInstance().addToQueueAndWait(cnreq);
+
                                 }
                             });
          this.add(libelle).add(prix).add(quantite).add(disponibilite).add(IdProduit).add(save);

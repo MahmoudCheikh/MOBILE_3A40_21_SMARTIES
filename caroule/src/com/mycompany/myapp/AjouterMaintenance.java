@@ -51,7 +51,7 @@ public class AjouterMaintenance extends Form{
                 
                  TextField Datef = new TextField("", "Date fin", 20, TextArea.EMAILADDR);
                  
-                 TextField adress = new TextField("", "adress", 20, TextArea.TEXT_CURSOR);
+                 TextField adresse = new TextField("", "adresse", 20, TextArea.TEXT_CURSOR);
                  
                  TextField reclamation = new TextField("", "Reclamation", 20, TextArea.NUMERIC);
                  
@@ -93,7 +93,7 @@ public class AjouterMaintenance extends Form{
                                 Dialog.show("Erreur EMAIL !", "email incorrect", "OK", null);
 
                             }  */
-                              else if (adress.getText().equals("")) {
+                              else if (adresse.getText().equals("")) {
                                 Dialog.show("Erreur", "Champ vide de domaine ", "OK", null);
 
                             }
@@ -123,11 +123,13 @@ public class AjouterMaintenance extends Form{
                                  p.setReclamation_id(Integer.valueOf(reclamation.getText()));
                                  p.setDescription(desc.getText());
                                  p.setEtat(etat.getText());
+                                 p.setAdresse(adresse.getText());
+                                // p.setIdUser(adresse.getText());
                                // p.setNb_places(Integer.valueOf(nb_places.getText()));
                                
                                ServiceMaintenance sp = new ServiceMaintenance();
                                 Form previous = null;
-                               sp.Add(p, previous,res);
+                               sp.Add(previous,res,p);
                                  Dialog.show("Ajout", "Ajout avec succés", "OK", null);
                                 //  String url = "http://localhost/pdf/ex.php";
 /*Button btn = new Button("hee");
@@ -147,12 +149,12 @@ btn.addActionListener(ll->{
                             }
            });
 
-          this.add(idProduit).add(Dated).add(Datef).add(desc).add(reclamation).add(relation).add(adress).add(etat).add(save);
+          this.add(idProduit).add(Dated).add(Datef).add(desc).add(reclamation).add(relation).add(adresse).add(etat).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
 
         add(b7);
          Form pre = null;
- //b7.addActionListener(e -> new MaintenanceForm(pre,res).show());                 
+ b7.addActionListener(e -> new MaintenanceForm(pre,res).show());                 
      }
 }

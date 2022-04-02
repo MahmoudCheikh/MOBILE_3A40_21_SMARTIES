@@ -7,35 +7,30 @@ package com.mycompany.myapp;
 
 import com.codename1.components.InfiniteProgress;
 import com.codename1.components.MultiButton;
-import static com.codename1.io.Log.p;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
-import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Image;
-import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.mycompany.entity.Maintenance;
-import com.mycompany.services.ServiceMaintenance;
-import java.util.ArrayList;
+import com.mycompany.entity.Reclamation;
+import com.mycompany.services.ServiceReclamation;
 
 /**
  *
  * @author PC
  */
-public class MaintenanceForm extends Form {
+public class ReclamationForm extends Form {
     Resources theme = UIManager.initFirstTheme("/theme");
 //  Resources themee = UIManager.initFirstTheme("/theme_1");
     Form Current;
     
-    public MaintenanceForm(Form previous,Resources res)
+    public ReclamationForm(Form previous,Resources res)
     {
         
-           super("Maintenance",BoxLayout.y());
+           super("v",BoxLayout.y());
            Current=this;
              this.add(new InfiniteProgress());
              
@@ -47,15 +42,13 @@ public class MaintenanceForm extends Form {
                 this.removeAll();
                 Button skip = new Button("back");
                  skip.setUIID("back");
-        skip.addActionListener(e -> new AjouterMaintenance(res).show());
+        skip.addActionListener(e -> new AjoutReclamationForm(res).show());
       add(skip);
         Button b7=new Button("REFRESH");
 	b7.setUIID("refresh"); 
-        b7.addActionListener(p->new MaintenanceForm(Current,res).show());
-        add(b7);    
-        
-             for (Maintenance c : new ServiceMaintenance().getAllMaintenance()) {
-                    
+        b7.addActionListener(l->new ReclamationForm(Current,res).show());
+        add(b7);     
+             for (Reclamation c : new ServiceReclamation().getAllReclamation()) {
 
             this.add(addItem_Publicite(c,res));
 
@@ -92,7 +85,7 @@ public class MaintenanceForm extends Form {
         
         
                this.getToolbar().addCommandToOverflowMenu("back", null, ev -> {
-            new AjouterMaintenance(res).show();
+            new AjoutReclamationForm(res).show();
         });
                   /* this.getToolbar().addCommandToOverflowMenu("Ajouter", null, ev -> {
          new AjoutEvenementForm(res).show();
@@ -103,20 +96,14 @@ public class MaintenanceForm extends Form {
                       
     }
     
-     public MultiButton addItem_Publicite(Maintenance c,Resources res) {
+     public MultiButton addItem_Publicite(Reclamation c,Resources res) {
   
  MultiButton m = new MultiButton();
  //  String url = "http://localhost/image/"+c.getImagee();
    
-     m.setTextLine1(String.valueOf(c.getId_produit_id()));
-     m.setTextLine1(String.valueOf(c.getReclamation_id()));
-     m.setTextLine1(String.valueOf(c.getRelation_id()));
-     m.setTextLine1(c.getEtat());
-     
-      m.setTextLine2(c.getDate_debut());
-        m.setTextLine3(c.getDate_fin());
-        m.setTextLine3(c.getAdresse());
-        m.setTextLine3(c.getDescription());
+     m.setTextLine1(c.getDescription());
+      m.setTextLine2(c.getDate());
+        m.setTextLine3(c.getObjet());
       /* m.setTextLine4(String.valueOf(c.getNb_participants()));
       m.setText(String.valueOf(c.getNb_places()));
         m.setText(c.getLieu());
@@ -124,40 +111,40 @@ public class MaintenanceForm extends Form {
          m.setEmblem(theme.getImage("arrow.png"));
          
       m.setVisible(true);
-        Button b5=new Button("supprimer maintenance");
+        Button b5=new Button("supprimer event");
 	setVisible(true); 
-        Button b6=new Button("modifier maintenance");
+        Button b6=new Button("modifier event");
 	setVisible(true);  
         //b.addActionListener(e -> new AffichageActivite(res).show());
          add(b5);
          add(b6);
-         b6.addActionListener(l->new ModifierMaintenance(res,c).show());
+         b6.addActionListener(l->new ModifierReclamationForm(res,c).show());
          
         
        
 //Click delete icon
 b5.addPointerPressedListener(l -> {
 Dialog dig = new Dialog("Suprression");
-if(dig.show("Suppression", "Vous voulez supprimer cette maintenance ?","Annuler","Cui")) {
+if(dig.show("Suppression", "Vous voulez supprimer cet Reclamation ?","Annuler","Cui")) {
 dig.dispose ();
 }
 else {
 dig.dispose();
-if (ServiceMaintenance.getInstance().delete(c.getId())) {     
-new EvenementForm(Current,res); 
+if (ServiceReclamation.getInstance().delete(c.getId())) {     
+new ReclamationForm(Current,res); 
 }
 }
 });
 Button skip = new Button("back");
         m.addActionListener(e -> {
             Form f2 = new Form("Detail",BoxLayout.y());
-            f2.add("adress : "+c.getAdresse()).add("date debut : "+c.getDate_debut()).add("date fin : "+c.getDate_fin()).add("description : "+c.getDescription()).add("etat : "+c.getEtat()).add("produit : "+c.getId_produit_id()).add("nombre places : "+c.getReclamation_id()).add("reclamation: "+c.getReclamation_id()).add("relation: "+c.getRelation_id()).add(skip);   
+            f2.add("Objet : "+c.getObjet()).add("Description: "+c.getDescription()).add("date: "+c.getDate()).add(skip);   
        
  f2.show();
 
         });
    
-  skip.addActionListener(e -> new AjouterMaintenance(res).show());
+  skip.addActionListener(e -> new AjoutReclamationForm(res).show());
      
         return m;
 }

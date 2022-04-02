@@ -62,11 +62,6 @@ public class ModifierEmplacementForm extends Form {
                                sp.Update(e, previous,res);
                                  Dialog.show("modifier", "modifier avec succés", "OK", null);
 
- ;
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
-             
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
                }
            });
             this.add(Lieu).add(Capacite).add(Stock).add(modif);

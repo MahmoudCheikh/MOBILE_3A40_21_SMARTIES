@@ -182,21 +182,7 @@ btn.addActionListener(ll->{
 
 });
 */
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);/*
-                String data = "Nom : " + Libelle.getText() + "<br>  Prenom : " + Description.getText() + " <br>  mail :" + mail.getText() + " <br> domaine : " + domaine.getText() + " <br> lien : " + lien.getText()+ " <br> Prix : " + String.valueOf( Integer.valueOf(affichage.getText())*  2000           )+" DT"+"<br> Merci pour votre confiance &#128525;";
 
-                cnreq.addArgument("data", data);
-                cnreq.setUrl(url);
-                cnreq.addResponseListener(evx
-                        -> {
-                    String valeur = new String(cnreq.getResponseData());
-                     Dialog.show("PDF", "PDF", "OK", null);
-                
-
-                }
-                );*/
-                                NetworkManager.getInstance().addToQueueAndWait(cnreq);
                                          
                             }
            });

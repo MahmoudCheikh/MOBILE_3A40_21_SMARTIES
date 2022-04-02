@@ -35,8 +35,6 @@ public class ModifierStockForm extends Form {
                  
                  TextField dispo = new TextField(s.getDisponibilite(), "dispo", 20, TextArea.TEXT_CURSOR);
                  
-                 TextField idProd = new TextField(String.valueOf(s.getIdProduit()), "idProd", 20, TextArea.NUMERIC);
-                 
                   Button modif = new Button("modifier");
                   Button b12=new Button("liste Stock"); 
                   setVisible(true);
@@ -64,31 +62,22 @@ public class ModifierStockForm extends Form {
                                 Dialog.show("Erreur", "Champ vide de lieu ", "OK", null);
 
                             }
-                                  else if (idProd.getText().equals("")) {
-                                Dialog.show("Erreur", "Champ vide de type ", "OK", null);
-
-                            }
                             
                             else {
+                                  s.setId(s.getId());
                                 s.setLibelle(libelle.getText());
                                 s.setPrix(Integer.valueOf(prix.getText()));
                                 s.setQuantite(Integer.valueOf(quantite.getText()));
                                 s.setDisponibilite(dispo.getText());
-                                s.setIdProduit(Integer.valueOf(idProd.getText()));
+                                
                                
                                 ServiceStock sp = new ServiceStock();
                                 Form previous = null;
                                sp.Update(s, previous,res);
                                  Dialog.show("modifier", "modifier avec succés", "OK", null);
-
- ;
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
-             
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
                }
            });
-            this.add(libelle).add(prix).add(quantite).add(dispo).add(idProd).add(modif);
+            this.add(libelle).add(prix).add(quantite).add(dispo).add(modif);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         

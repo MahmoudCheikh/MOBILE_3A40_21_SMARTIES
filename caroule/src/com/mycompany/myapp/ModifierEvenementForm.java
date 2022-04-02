@@ -58,7 +58,7 @@ public class ModifierEvenementForm extends Form {
                   Button b8=new Button("liste event"); 
                   setVisible(true);
                   
-                  modif.addActionListener(l
+                  modif.addActionListener(m
                                 -> {
 
                           
@@ -107,12 +107,10 @@ public class ModifierEvenementForm extends Form {
                                 Form previous = null;
                                sp.Update(e, previous,res);
                                  Dialog.show("modifier", "modifier avec succés", "OK", null);
-
- ;
-                ConnectionRequest cnreq = new ConnectionRequest();
-                cnreq.setPost(false);
+           //     ConnectionRequest cnreq = new ConnectionRequest();
+            //    cnreq.setPost(false);
              
-                NetworkManager.getInstance().addToQueueAndWait(cnreq);
+            //    NetworkManager.getInstance().addToQueueAndWait(cnreq);
                }
            });
             this.add(Nom).add(Dated).add(Datef).add(lieu).add(type).add(nb_participants).add(nb_places).add(modif);
@@ -123,7 +121,7 @@ public class ModifierEvenementForm extends Form {
         
         add(b8);
          Form pre = null;
-        b8.addActionListener(l->new EvenementForm(pre,res).show());
+        b8.addActionListener(m->new EvenementForm(pre,res).show());
       
      }     
         

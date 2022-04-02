@@ -189,7 +189,7 @@ BaseForm form;
     
     private void addTab(Tabs swipe, Image img, Label spacer, String text) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
-        if(img.getHeight() < size) {
+        if(img.getHeight() <= size) {
             img = img.scaledHeight(size);
         }
 
