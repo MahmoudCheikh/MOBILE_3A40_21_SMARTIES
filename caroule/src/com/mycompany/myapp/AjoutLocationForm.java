@@ -55,9 +55,9 @@ public class AjoutLocationForm extends Form{
                 
                  TextField Duree = new TextField("", "Duree", 20, TextArea.NUMERIC);
            
-                            /*      TextField IdAbonnement = new TextField("", "IdAbonnement", 20, TextArea.NUMERIC);
+                      TextField IdAbonnement = new TextField("", "IdAbonnement", 20, TextArea.NUMERIC);
                     TextField IdUser = new TextField("", "IdUser", 20, TextArea.NUMERIC);
-                 */
+                 
              
               
   
@@ -93,7 +93,10 @@ public class AjoutLocationForm extends Form{
                                 lc.setDate(Date.getText());
                                 lc.setHeure(Heure.getText());
                                 lc.setDuree(Integer.valueOf(Duree.getText()));
-                          //      lc.setIdAbonnement(Integer.valueOf(IdAbonnement.getText()));
+                                
+                                
+                                lc.setIdUser(Integer.valueOf(IdUser.getText()));
+                                lc.setIdAbonnement(Integer.valueOf(IdAbonnement.getText()));
                                
                                ServiceLocation loc = new ServiceLocation();
                                 Form previous = null;
@@ -102,7 +105,7 @@ public class AjoutLocationForm extends Form{
                                                                     
                             }
            });
-       this.add(Date).add(Heure).add(Duree).add(save);
+       this.add(Date).add(Heure).add(Duree).add(IdUser).add(IdAbonnement).add(save);
           /*        Personnes p=new Personnes();
        p.setEmail(SessionManager.getEmail());*/
         

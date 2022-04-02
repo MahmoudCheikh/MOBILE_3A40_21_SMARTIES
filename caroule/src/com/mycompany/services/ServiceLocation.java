@@ -48,9 +48,11 @@ public class ServiceLocation {
     
     public boolean addLocation(Location l){
        // +"moyenne="+"null"+"&" +"net="+ "null"+
-        String url = PageWeb.BASE_URL + "espritApi/newLocation"+"?"+"Date="+l.getDate()+ "&" +"Heure="+ l.getHeure()+"&"+"Duree="+ l.getDuree();
+        String url = PageWeb.BASE_URL + "espritApi/newLocation"+"?"+"Date="+l.getDate()+ "&" +"Heure="+ l.getHeure()+"&"+"Duree="+ l.getDuree()+"&"+"IdUser="+ l.getIdUser()+"&"+"IdAbonnement="+ l.getIdAbonnement();
+        System.out.println(url);
         req.setUrl(url);
         req.setPost(false);
+        System.out.println(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -84,7 +86,7 @@ public class ServiceLocation {
     }
      
   public boolean Update(Location l ) {
-     String url = PageWeb.BASE_URL + "espritApi/updateLocation?id="+l.getId()+ "&Date="+l.getDate()+"&Heure="+l.getHeure()+"&Duree="+l.getDuree();
+     String url = PageWeb.BASE_URL + "espritApi/updateLocation?id="+l.getId()+ "&Date="+l.getDate()+"&Heure="+l.getHeure()+"&Duree="+l.getDuree()+"&"+"IdUser="+ l.getIdUser()+"&"+"IdAbonnement="+ l.getIdAbonnement();
     req.setUrl(url);
     req.setPost(false);
     req.addResponseListener(new ActionListener<NetworkEvent>() {
