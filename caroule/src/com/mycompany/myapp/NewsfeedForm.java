@@ -83,13 +83,13 @@ public class NewsfeedForm extends BaseForm {
         int size = Display.getInstance().convertToPixels(1);
         Image unselectedWalkthru = Image.createImage(size, size, 0);
         Graphics g = unselectedWalkthru.getGraphics();
-        g.setColor(0xffffff);
+        g.setColor(0x515151);
         g.setAlpha(100);
         g.setAntiAliased(true);
         g.fillArc(0, 0, size, size, 0, 360);
         Image selectedWalkthru = Image.createImage(size, size, 0);
         g = selectedWalkthru.getGraphics();
-        g.setColor(0xffffff);
+        g.setColor(0x515151);
         g.setAntiAliased(true);
         g.fillArc(0, 0, size, size, 0, 360);
         RadioButton[] rbs = new RadioButton[swipe.getTabCount()];

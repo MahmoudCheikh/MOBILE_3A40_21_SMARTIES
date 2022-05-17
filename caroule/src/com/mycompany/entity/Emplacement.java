@@ -10,12 +10,11 @@ package com.mycompany.entity;
  * @author PC
  */
 public class Emplacement {
+
     private int id;
     private String lieu;
     private int capacite;
     private Stock Stock;
-
-
 
     public Stock getStock() {
         return Stock;
@@ -49,8 +48,7 @@ public class Emplacement {
         this.capacite = capacite;
     }
 
- //constructeurs
-
+    //constructeurs
     public Emplacement(int id, String lieu, int capacite) {
         this.id = id;
         this.lieu = lieu;
@@ -72,6 +70,5 @@ public class Emplacement {
 
     public Emplacement() {
     }
-    
-    
+
 }
