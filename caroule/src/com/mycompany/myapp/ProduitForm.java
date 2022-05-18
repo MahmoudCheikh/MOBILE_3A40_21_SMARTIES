@@ -102,7 +102,7 @@ public class ProduitForm extends Form {
      public MultiButton addItem_Publicite(Produit p) {
 
  MultiButton m = new MultiButton();
-   String url = "http://localhost/image/"+p.getImage();
+   String url = "C:\\xampp\\htdocs\\PI_3A40_21_SMARTIES\\pi\\public\\img\\bik"+p.getImage();
    
       m.setText(p.getLibelle());
       m.setTextLine2(p.getDescription());

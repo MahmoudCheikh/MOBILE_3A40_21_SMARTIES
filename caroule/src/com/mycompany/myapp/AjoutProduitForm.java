@@ -123,7 +123,8 @@ public class AjoutProduitForm extends Form {
                     
                     fileNameInServer += out + ".jpg";
                     System.err.println("path2 =" + fileNameInServer);
-                    file=fileNameInServer;
+                    //file=fileNameInServer;
+                    file = "bike8.png";
                     InfiniteProgress prog = new InfiniteProgress();
                     Dialog dlg = prog.showInifiniteBlocking();
                     cr.setDisposeOnCompletion(dlg);
